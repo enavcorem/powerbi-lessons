@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 1 — להכיר את פאוור BI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="intro">
+  <p class="eyebrow"><a href="index.html">פאוור BI</a> · שיעור 1 · 5.10</p>
+  <h1>להכיר את פאוור BI</h1>
+  <p class="lede">מתקינות, טוענות טבלה, בונות שני גרפים, ורואות איך <strong>קליק אחד מסנן את כל הדוח</strong>.
+  בדרך נשאל את השאלה שאנליסטית שואלת תמיד: האם הגרף הזה באמת עונה על מה ששאלנו?
+  היום נוגעות בשלבים 1, 5 ו־6 מתוך <a href="index.html#steps">9 השלבים לבניית דוח</a>.</p>
+  <ul class="cycle" aria-label="מחזור הנתונים: היום מציצות בהצגה, ומשבוע הבא בטיוב">
+    <li>שאלה</li><li class="arr" aria-hidden="true">←</li>
+    <li>איסוף נתונים</li><li class="arr" aria-hidden="true">←</li>
+    <li>טיוב והכנה</li><li class="arr" aria-hidden="true">←</li>
+    <li>ניתוח</li><li class="arr" aria-hidden="true">←</li>
+    <li class="here">הצגה — הצצה</li><li class="arr" aria-hidden="true">←</li>
+    <li>החלטה</li>
+  </ul>
+  <ul class="toc">
+    <li><a href="#rec">הקלטה</a></li>
+    <li><a href="#install">לפני: התקנה</a></li>
+    <li><a href="#a">א. עושות יחד</a></li>
+    <li><a href="#b">ב. התרגיל</a></li>
+    <li><a href="#c">ג. על המסד שלכן (י״ב)</a></li>
+    <li><a href="#stuck">נתקעתי</a></li>
+    <li><a href="#done">איך אדע שהצלחתי</a></li>
+  </ul>
+</header>
+
+<section id="rec">
+  <h2>לא היית במיט?</h2>
+  <p class="sub">עברי על הדף מלמעלה למטה, ועשי כל צעד בפאוור BI שלך. אם צעד לא ברור — ההקלטה, בדקה שכתובה ליד.</p>
+  <div class="box">
+    <div class="rec">
+      <!-- להחליף בקישור ההקלטה אחרי השיעור, ולהוריד את class="off" -->
+      <a class="btn off" href="#" aria-disabled="true">ההקלטה תעלה אחרי השיעור</a>
+    </div>
+    <!-- אינדקס ההקלטה: יתווסף כאן אחרי השיעור, מתוך התמלול -->
+  </div>
+</section>
+
+<section id="install">
+  <h2><span class="part">לפני השיעור · כעשר דקות</span>התקנה</h2>
+  <p class="sub">פאוור BI Desktop הוא חינמי ועובד על Windows. לא צריך חשבון.</p>
+  <div class="box">
+    <ol class="do">
+      <li>בקלאסרום יש <b>קישור להורדה</b> מהאתר של מיקרוסופט, ו<b>סרטון קצר</b> שמראה את כל ההתקנה. צופות בסרטון קודם.</li>
+      <li>מורידות מהקישור את קובץ ההתקנה, פותחות אותו, ועוברות על ההתקנה כמו בסרטון. זה לוקח כמה דקות.</li>
+      <li>פותחות את התוכנה. אם קופץ חלון <span class="en">Sign in</span> — <b>סוגרות אותו ב־X</b>. לא צריך להתחבר.</li>
+      <li>מורידות מהקלאסרום את שני הקבצים <code>נתוני משלוחים.xlsx</code> ו־<code>נתוני שיווק ומכירות.xlsx</code>,
+        ושומרות אותם בתיקייה חדשה במחשב: <code>Power BI\שיעור 1</code>.</li>
+    </ol>
+  </div>
+  <div class="why"><b>למה תיקייה אחת?</b> פאוור BI לא מעתיק את הקובץ לתוכו — הוא זוכר איפה הקובץ יושב, וחוזר אליו.
+  אם מזיזות את האקסל אחר כך, הדוח לא ימצא אותו.</div>
+</section>
+
+<section id="a">
+  <h2><span class="part">חלק א · עושות יחד · נתוני משלוחים</span>הטבלה הראשונה והגרף הראשון</h2>
+  <p class="sub">חנות אונליין שולחת 500 משלוחים דרך כמה חברות שילוח. השאלה שלה: <b>עם איזו חברה כדאי להמשיך לעבוד?</b></p>
+
+  <h3>הגדרה חד־פעמית</h3>
+  <div class="box">
+    <ol class="do">
+      <li><span class="path">File › Options and settings › Options</span></li>
+      <li>בצד שמאל, תחת <span class="en">CURRENT FILE</span>, בוחרות <span class="path">Regional Settings</span>.
+        בשדה <span class="en">Locale for import</span> בוחרות <span class="en">Hebrew (Israel)</span> (אם כבר כתוב שם — מצוין). <b>OK</b>.
+        <figure><img src="img/l1-04-regional.png" alt="חלון Options, בחירת Regional Settings תחת CURRENT FILE, והשדה Locale for import על Hebrew (Israel)" width="1502" height="1128" loading="lazy">
+        <figcaption>חשוב: <b>CURRENT FILE</b> (למטה ברשימה), לא GLOBAL.</figcaption></figure></li>
+    </ol>
+    <div class="why"><b>למה?</b> כדי שתאריכים יוצגו כמו בארץ (יום/חודש) והכסף יוצג בשקלים. בלי זה, 3/4 יכול להיות מרץ או אפריל.</div>
+  </div>
+
+  <h3>טוענות את הטבלה</h3>
+  <div class="box">
+    <ol class="do">
+      <li><span class="path">Home › Get data › Excel workbook</span>, ובוחרות את <code>נתוני משלוחים.xlsx</code>.
+        <figure><img src="img/l1-05-getdata.png" alt="התפריט הנפתח של Get data, והאפשרות הראשונה בו Excel workbook" width="995" height="885" loading="lazy"></figure>
+        <div class="trap"><b>קפץ חלון ״Introducing the new Get Data experience״?</b> לוחצות <b>No thanks</b>.
+        <figure><img src="img/l1-06-newgetdata-popup.png" alt="חלון Introducing the new Get Data experience עם הכפתורים Try it out ו־No thanks" width="843" height="838" loading="lazy"></figure></div></li>
+      <li>נפתח חלון <span class="en">Navigator</span>. יש בו שני דברים עם שמות דומים — <b>מסמנות את <code>ShipmentData</code></b>
+        (האייקון של טבלה), לא את הגיליון.
+        <figure><img src="img/l1-07-navigator.png" alt="חלון Navigator: ShipmentData מסומן, ומימין תצוגה מקדימה של הטבלה" width="1324" height="1053" loading="lazy">
+        <figcaption>מסומן <code>ShipmentData</code>, עם אייקון הטבלה. הגיליון <code>נתוני משלוחים</code> שמתחתיו נשאר ריק.</figcaption></figure></li>
+      <li>לוחצות <b>Load</b>.</li>
+      <li>בפס הצר משמאל, שלושת האייקונים הראשונים הם <b>Report</b> (הדוח), <b>Table</b> (הטבלה), <b>Model</b> (הקשרים).
+        (מתחתם יש עוד שניים, DAX ו־TMDL — לא צריך אותם.)
+        עוברות ל־<b>Table</b> ומסתכלות למטה: כמה שורות יש?
+        <figure><img src="img/l1-09-table-view.png" alt="תצוגת Table של ShipmentData, ובשורה התחתונה Table: ShipmentData (500 rows)" width="1920" height="1122" loading="lazy">
+        <figcaption>מספר השורות כתוב בפינה השמאלית התחתונה.</figcaption></figure></li>
+    </ol>
+    <div class="why"><b>למה טבלה ולא גיליון?</b> טבלה יודעת בדיוק איפה הנתונים מתחילים ונגמרים.
+    גיליון מביא הכול — כולל כותרות, הערות ותאים ריקים שמישהי שכחה שם.</div>
+  </div>
+
+  <h3>גרף: מי מאחרת?</h3>
+  <div class="box">
+    <ol class="do">
+      <li>חוזרות ל־<b>Report</b>. לוחצות על <b>שטח ריק</b> בדף הלבן.</li>
+      <li>בחלונית <span class="en">Visualizations</span> בוחרות <span class="en">Clustered column chart</span> (עמודות זו ליד זו).</li>
+      <li>גוררות מחלונית <span class="en">Data</span>:
+        <ul>
+          <li><b>חברת שילוח</b> ← אל <span class="en">X-axis</span></li>
+          <li><b>כשל מסירה</b> ← אל <span class="en">Y-axis</span></li>
+        </ul>
+        <figure><img src="img/l1-11-wells-count.png" alt="חלונית Visualizations: חברת שילוח תחת X-axis, ו־Sum of כשל מסירה תחת Y-axis" width="543" height="829" loading="lazy" style="width:300px">
+        <figcaption>כך זה נראה אחרי הגרירה. פאוור BI כותב לבד <b>Sum of</b> — כלומר סכום.</figcaption></figure>
+      </li>
+      <li>מסתכלות על הגרף. איזו חברה הכי גרועה?</li>
+    </ol>
+    <div class="why"><b>רגע, שאלה של אנליסטית:</b> הגרף סופר כמה כשלים היו לכל חברה.
+    אבל חברה ששלחה יותר משלוחים תצבור יותר כשלים, גם אם היא עובדת טוב. זה לא הוגן להשוות ככה.
+    <br>השאלה הנכונה היא לא <i>כמה</i> כשלים, אלא <b>איזה חלק מהמשלוחים נכשל</b>.
+    <figure><img src="img/l1-14-focus-sum.png" alt="גרף עמודות של סכום כשלי המסירה: שתי חברות עם 12 כשלים כל אחת, ציטה שליחויות עם 6" width="1279" height="744" loading="lazy">
+    <figcaption>בספירה: שתי חברות עם 12 כשלים בדיוק. תיקו.</figcaption></figure></div>
+    <ol class="do" start="5" style="counter-reset: s 4">
+      <li>ב־<span class="en">Y-axis</span>, לוחצות על החץ הקטן ליד <b>כשל מסירה</b> ובוחרות <b>Average</b>.
+        עכשיו כל עמודה היא אחוז הכשלים של החברה. <b>האם התשובה השתנתה?</b> (רמז: בספירה היה תיקו.)
+        <figure><img src="img/l1-12-average-menu.png" alt="התפריט שנפתח מהחץ ליד Sum of כשל מסירה, עם האפשרות Average" width="543" height="553" loading="lazy" style="width:300px"></figure>
+        <details><summary>בדקי את עצמך: כך הגרף אמור להיראות</summary>
+          <figure><img src="img/l1-15-focus-average.png" alt="גרף ממוצע כשלי המסירה: דואר ישראל כ־0.08, שליחויות ולוגיסטיקה HFD כ־0.06, ציטה שליחויות כ־0.04" width="1279" height="799" loading="lazy">
+          <figcaption>0.08 פירושו 8% מהמשלוחים נכשלו. התיקו נשבר.</figcaption></figure></details></li>
+      <li>נותנות לגרף כותרת: בוחרות את הגרף, <span class="path">Format visual › General › Title</span>,
+        וכותבות "שיעור כשלי מסירה לפי חברת שילוח".</li>
+    </ol>
+    <div class="trap"><b>למה זה עובד?</b> בעמודה <b>כשל מסירה</b> יש רק 0 או 1. ממוצע של אפסים ואחדים = החלק שהוא 1.
+    אותו טריק עובד בכל מסד שיש בו עמודה של כן/לא.</div>
+  </div>
+
+  <h3>טבלת סיכום (Matrix), וקליק שמסנן</h3>
+  <div class="box">
+    <ol class="do">
+      <li>לוחצות על <b>שטח ריק</b> בדף, ובוחרות <span class="en">Matrix</span>.</li>
+      <li><b>חברת שילוח</b> ← <span class="en">Rows</span> · <b>סוג שירות</b> ← <span class="en">Columns</span> ·
+        <b>כשל מסירה</b> ← <span class="en">Values</span> (ושוב — Average).
+        <figure><img src="img/l1-18-matrix-wells.png" alt="השדות של ה־Matrix: חברת שילוח תחת Rows, סוג שירות תחת Columns, Average of כשל מסירה תחת Values" width="276" height="285" loading="lazy" style="width:220px"></figure></li>
+      <li>עכשיו הקסם: <b>לוחצות על עמודה אחת בגרף</b>. מה קרה לטבלה? לוחצות שוב על אותה עמודה כדי לבטל.
+        <figure><img src="img/l1-16-crossfilter.png" alt="לחיצה על העמודה של דואר ישראל: שאר העמודות מחווירות, והטבלה מימין מציגה רק את דואר ישראל" width="1161" height="691" loading="lazy">
+        <figcaption>לחצנו על <b>דואר ישראל</b>: שאר העמודות מחווירות, והטבלה מציגה רק אותה.</figcaption></figure></li>
+      <li>שומרות: <span class="path">File › Save as</span>. במסך שנפתח לוחצות <b>Browse this device</b> (למטה, תחת Other) — לא OneDrive.
+        <figure><img src="img/l1-21-save-as.png" alt="מסך Save a copy: למעלה Recent, OneDrive ו־SharePoint, ולמטה תחת Other האפשרות Browse this device" width="1920" height="567" loading="lazy">
+        <figcaption><b>Browse this device</b> נמצא בתחתית הרשימה.</figcaption></figure>
+        בחלון השמירה בוחרות את התיקייה <code>Power BI\שיעור 1</code>, וכותבות בשם הקובץ <code>משלוחים</code>. <b>Save</b>.
+        <figure><img src="img/l1-22-save-dialog.png" alt="חלון Save As: התיקייה Power BI › שיעור 1, בשם הקובץ כתוב משלוחים, והסוג Power BI file (*.pbix)" width="943" height="705" loading="lazy" style="width:520px">
+        <figcaption>למעלה רואים באיזו תיקייה אתן: <code>Power BI › שיעור 1</code>.</figcaption></figure></li>
+    </ol>
+    <div class="why"><b>ועכשיו החלטה:</b> החברה עם הכי מעט כשלים היא גם היקרה ביותר
+    (גוררות את <b>עלות משלוח בש״ח</b> לגרף, עם Average, ורואות). מה הייתן ממליצות לחנות? אין תשובה אחת נכונה —
+    יש תשובה שמנומקת בנתונים. זו העבודה של אנליסטית.</div>
+    <div class="why"><b>זה ההבדל מאקסל.</b> באקסל כל גרף עומד לבד. בפאוור BI כל הדוח מחובר —
+    מי שמסתכלת על הדוח יכולה לשאול שאלות בעצמה, בקליק, בלי לבקש מכן גרף חדש.</div>
+  </div>
+</section>
+
+<section id="b">
+  <h2><span class="part">חלק ב · פותרות יחד · נתוני שיווק ומכירות</span>התרגיל: איפה הכסף שלנו עובד?</h2>
+  <p class="sub">חברה מוכרת בחמישה ערוצים (אתר, אפליקציה, סניפים...) ומשקיעה בשיווק בכל אחד. 300 שורות.</p>
+  <div class="box">
+    <ol class="do">
+      <li>קובץ חדש: <span class="path">File › New</span>. טוענות את <code>נתוני שיווק ומכירות.xlsx</code>, מסמנות את הטבלה <code>MarketingSalesData</code>, <b>Load</b>.</li>
+      <li><span class="en">Clustered column chart</span>: <b>ערוץ מכירה</b> ← X · <b>הכנסות ₪</b> ו־<b>עלות שיווק ₪</b> ← Y.
+        כותרת: "הכנסות מול עלות שיווק לפי ערוץ מכירה".</li>
+      <li><span class="en">Matrix</span>: <b>ערוץ מכירה</b> ← Rows · <b>קטגוריית מוצר</b> ← Columns · <b>הכנסות ₪</b> ← Values.</li>
+      <li>צבע: <span class="path">View › Themes</span>, ובוחרות ערכת צבעים.</li>
+      <li>לוחצות על ערוץ בגרף, ובודקות מה קורה במטריצה.</li>
+      <li>שומרות בשם <code>שיווק ומכירות</code>.</li>
+    </ol>
+  </div>
+  <h3>עונות מתוך הדוח</h3>
+  <div class="box">
+    <ol class="do">
+      <li>איזה ערוץ הכניס הכי הרבה כסף?</li>
+      <li>באיזה ערוץ יש קטגוריה שבולטת במיוחד?</li>
+      <li><b>איזה ערוץ הכי משתלם</b> — כלומר מכניס הכי הרבה על כל שקל של שיווק?</li>
+    </ol>
+    <div class="why"><b>על שאלה 3 קשה לענות מהגרף.</b> רואים שני מספרים, אבל לא את היחס ביניהם.
+    מה שחסר הוא <b>עמודה שעוד לא קיימת</b>: הכנסות חלקי עלות שיווק.
+    לבנות עמודות כאלה נלמד בשיעור 5 — וזה חלק מהטיוב: להכין את הנתונים לשאלה.</div>
+  </div>
+</section>
+
+<section id="c">
+  <h2><span class="part">חלק ג · י״ב בלבד · שיעורי בית, עד 20 דקות</span>הצצה ראשונה במסד שלכן <span class="who">י״ב</span></h2>
+  <p class="sub">מתחילות בסוף המיט, מסיימות בבית.</p>
+  <div class="box">
+    <ol class="do">
+      <li>קובץ חדש, ואז <span class="path">Get data</span>: אם המסד הוא xlsx — <span class="en">Excel workbook</span>. אם CSV — <span class="en">Text/CSV</span>.</li>
+      <li><b>Load</b>, ועוברות ל־<b>Table</b>: כמה שורות? כמה עמודות?</li>
+      <li>בונות גרף אחד, על עמודה שמסקרנת אתכן.</li>
+      <li>מסתכלות עליו בעיניים של אנליסטית: <b>מה נראה מוזר?</b> ערך שלא הגיוני, עמודה שנראית ריקה,
+        קטגוריה שמופיעה פעמיים בכתיב אחר, מספר שנסכם כשהיה צריך ממוצע...</li>
+      <li>שומרות בשם <code>המסד שלנו - שיעור 1</code>.</li>
+    </ol>
+    <div class="why"><b>אם הגרף יוצא מוזר — מצוין.</b> זו בדיוק הנקודה. ברוב המסדים בעולם יש בעיות,
+    ובשבוע הבא נלמד לראות את כולן בבת אחת.</div>
+    <h3>מה מגישות בקלאסרום</h3>
+    <ul>
+      <li>צילום מסך של הגרף.</li>
+      <li>שורה אחת: <b>כמה שורות וכמה עמודות</b> יש במסד.</li>
+      <li>משפט אחד: <b>מה נראה מוזר</b>.</li>
+    </ul>
+    <div class="trap"><b>הקובץ לא נפתח בפאוור BI?</b> לא מתעקשות. כותבות לי בקלאסרום מה קרה (ומה הסיומת של הקובץ), ונסדר את זה יחד.</div>
+  </div>
+</section>
+
+<section id="stuck">
+  <h2>נתקעתי</h2>
+  <p class="sub">כל אלה קרו למורות בקורס המקורי. אתן בחברה טובה.</p>
+  <details><summary>ההתקנה נראית תקועה</summary>
+    <p>מחכות חמש דקות. לפעמים יש חלון שמבקש אישור, והוא מסתתר מאחורי חלונות אחרים — בודקות בשורת המשימות למטה.</p></details>
+  <details><summary>ההתקנה מבקשת סיסמה של מנהל</summary>
+    <p>במחשב משפחתי לפעמים רק להורים יש הרשאה להתקין תוכנות. מבקשות מהם לאשר, או להתקין יחד איתכן לפני השיעור.</p></details>
+  <details><summary>קפץ חלון שמבקש להתחבר (Sign in)</summary>
+    <p>סוגרות ב־X. לא צריך חשבון כדי לעבוד.</p></details>
+  <details><summary>לחצתי Load ואני רואה דף לבן</summary>
+    <p>זה תקין. הנתונים נטענו — הם בחלונית <span class="en">Data</span> מימין, וב־<b>Table</b> בפס השמאלי. דף הדוח לבן כי עוד לא בנינו בו כלום.</p>
+    <figure><img src="img/l1-08-after-load.png" alt="פאוור BI אחרי Load: דף דוח ריק, ובחלונית Data מימין הטבלה ShipmentData" width="1920" height="1122" loading="lazy">
+    <figcaption>ככה זה אמור להיראות: הדף ריק, ו־<code>ShipmentData</code> מחכה בחלונית Data.</figcaption></figure></details>
+  <details><summary>אין לי כפתור Excel</summary>
+    <p>משתמשות תמיד ב־<span class="path">Get data</span> ובוחרות שם <span class="en">Excel workbook</span>. זה אותו דבר.</p></details>
+  <details><summary>בחרתי סוג גרף והגרף הקודם שלי השתנה</summary>
+    <p>כשגרף מסומן, לחיצה על סוג גרף אחר מחליפה אותו. <b>Ctrl+Z</b> מחזיר. בפעם הבאה — קודם קליק על שטח ריק, ורק אז בוחרות סוג.</p></details>
+  <details><summary>כל העמודות בגרף באותו גובה, 100%</summary>
+    <p>נבחר בטעות <span class="en">100% stacked column</span>. מסמנות את הגרף ולוחצות על <span class="en">Clustered column chart</span>.</p></details>
+  <details><summary>חלק מהנתונים נעלמו מהטבלה</summary>
+    <p>כנראה לחצת על עמודה בגרף, והיא מסננת. לוחצות שוב על אותה עמודה, או על שטח ריק בגרף.</p></details>
+  <details><summary>קיבלתי סכום ואני רוצה ממוצע</summary>
+    <p>בחלונית <span class="en">Visualizations</span>, בשדה עצמו (למשל תחת <span class="en">Y-axis</span>) — חץ קטן ליד השם ← <b>Average</b>.</p></details>
+  <details><summary>קופצות הודעות על "new experience" או "semantic model"</summary>
+    <p>מתעלמות וסוגרות. זה לא קשור למה שאנחנו עושות.</p></details>
+  <details><summary>קשה לראות את המיט ואת פאוור BI ביחד</summary>
+    <p>מקטינות את חלון המיט לצד אחד של המסך. אם יש מסך שני או לפטופ נוסף — המיט עליו. <b>מהטלפון זה לא עובד.</b></p></details>
+</section>
+
+<section id="done">
+  <h2>איך אדע שהצלחתי</h2>
+  <div class="box">
+    <ul class="check">
+      <li><label><input type="checkbox"> פאוור BI מותקן ונפתח אצלי</label></li>
+      <li><label><input type="checkbox"> בנתוני המשלוחים ראיתי ב־Table שיש 500 שורות</label></li>
+      <li><label><input type="checkbox"> יש לי גרף עם ממוצע (Average) ולא סכום, ואני יודעת להסביר למה</label></li>
+      <li><label><input type="checkbox"> קליק על עמודה בגרף סינן את ה־Matrix</label></li>
+      <li><label><input type="checkbox"> שמרתי שני קובצי pbix בתיקייה <code>Power BI\שיעור 1</code></label></li>
+      <li><label><input type="checkbox"> ניסיתי לענות על "איזה ערוץ הכי משתלם", והבנתי מה חסר</label></li>
+      <li><label><input type="checkbox"> <b>י״ב:</b> הגשתי צילום, מספר שורות ועמודות, ומשפט על מה מוזר</label></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><a href="index.html">← חזרה למפת הדרך</a></p>
+  <p>מבוסס על קורס Power BI של טל מיכולביץ, בשימוש באישורו.</p>
+</footer>
+
+</div>
+</body>
+</html>
