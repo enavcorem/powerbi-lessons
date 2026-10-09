@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <div class="wrap">
@@ -17,8 +17,8 @@
   <h1>להכיר את פאוור BI</h1>
   <p class="lede">מתקינות, טוענות טבלה, בונות שני גרפים, ורואות איך <strong>קליק אחד מסנן את כל הדוח</strong>.
   בדרך נשאל את השאלה שאנליסטית שואלת תמיד: האם הגרף הזה באמת עונה על מה ששאלנו?
-  היום נוגעות בשלבים 1, 5 ו־6 מתוך <a href="index.html#steps">9 השלבים לבניית דוח</a>.
-  ולמה בכלל פאוור BI ולא אקסל? <a href="index.html#why">ארבעה דברים, ומה זה נותן לכן</a>.</p>
+  היום נוגעות בשלבים 1, 5 ו־6 מתוך <a href="index.html#steps" target="_blank" rel="noopener">9 השלבים לבניית דוח</a>.
+  ולמה בכלל פאוור BI ולא אקסל? <a href="index.html#why" target="_blank" rel="noopener">ארבעה דברים, ומה זה נותן לכן</a>.</p>
   <ul class="cycle" aria-label="מחזור הנתונים: היום מציצות בהצגה, ומשבוע הבא בטיוב">
     <li>שאלה</li><li class="arr" aria-hidden="true">←</li>
     <li>איסוף נתונים</li><li class="arr" aria-hidden="true">←</li>
@@ -62,8 +62,9 @@
       <li>בקלאסרום יש <b>קישור להורדה</b> מהאתר של מיקרוסופט, ו<b>סרטון קצר</b> שמראה את כל ההתקנה. צופות בסרטון קודם.</li>
       <li>מורידות מהקישור את קובץ ההתקנה, פותחות אותו, ועוברות על ההתקנה כמו בסרטון. זה לוקח כמה דקות.</li>
       <li>פותחות את התוכנה. אם קופץ חלון <span class="en">Sign in</span> — <b>סוגרות אותו ב־X</b>. לא צריך להתחבר.</li>
-      <li>מורידות מהקלאסרום את שני הקבצים <code>נתוני משלוחים.xlsx</code> ו־<code>נתוני שיווק ומכירות.xlsx</code>,
-        ושומרות אותם בתיקייה חדשה במחשב: <code>Power BI\שיעור 1</code>.</li>
+      <li>מורידות את שני הקבצים <a class="file" href="files/shipments.xlsx" download="נתוני משלוחים.xlsx">נתוני משלוחים.xlsx</a>
+        ו־<a class="file" href="files/marketing-sales.xlsx" download="נתוני שיווק ומכירות.xlsx">נתוני שיווק ומכירות.xlsx</a>,
+        ומעבירות אותם מ״הורדות״ לתיקייה חדשה במחשב: <code>Power BI\שיעור 1</code>.</li>
     </ol>
   </div>
   <div class="why"><b>למה תיקייה אחת?</b> פאוור BI לא מעתיק את הקובץ לתוכו — הוא זוכר איפה הקובץ יושב, וחוזר אליו.
@@ -113,11 +114,8 @@
     <ol class="do">
       <li>חוזרות ל־<b>Report</b>. לוחצות על <b>שטח ריק</b> בדף הלבן.</li>
       <li>בחלונית <span class="en">Visualizations</span> בוחרות <span class="en">Clustered column chart</span> (עמודות זו ליד זו).</li>
-      <li>גוררות מחלונית <span class="en">Data</span>:
-        <ul>
-          <li><b>חברת שילוח</b> ← אל <span class="en">X-axis</span></li>
-          <li><b>כשל מסירה</b> ← אל <span class="en">Y-axis</span></li>
-        </ul>
+      <li>גוררות מחלונית <span class="en">Data</span> את <b>חברת שילוח</b> אל <span class="en">X-axis</span> (הציר למטה: מה משווים).</li>
+      <li>גוררות את <b>כשל מסירה</b> אל <span class="en">Y-axis</span> (הגובה של העמודות: מה מודדים).
         <figure><img src="img/l1-11-wells-count.png" alt="חלונית Visualizations: חברת שילוח תחת X-axis, ו־Sum of כשל מסירה תחת Y-axis" width="543" height="829" loading="lazy" style="width:300px">
         <figcaption>כך זה נראה אחרי הגרירה. פאוור BI כותב לבד <b>Sum of</b> — כלומר סכום.</figcaption></figure>
       </li>
@@ -128,7 +126,7 @@
     <br>השאלה הנכונה היא לא <i>כמה</i> כשלים, אלא <b>איזה חלק מהמשלוחים נכשל</b>.
     <figure><img src="img/l1-14-focus-sum.png" alt="גרף עמודות של סכום כשלי המסירה: שתי חברות עם 12 כשלים כל אחת, ציטה שליחויות עם 6" width="1279" height="744" loading="lazy">
     <figcaption>בספירה: שתי חברות עם 12 כשלים בדיוק. תיקו.</figcaption></figure></div>
-    <ol class="do" start="5" style="counter-reset: s 4">
+    <ol class="do" start="6" style="counter-reset: s 5">
       <li>ב־<span class="en">Y-axis</span>, לוחצות על החץ הקטן ליד <b>כשל מסירה</b> ובוחרות <b>Average</b>.
         עכשיו כל עמודה היא אחוז הכשלים של החברה. <b>האם התשובה השתנתה?</b> (רמז: בספירה היה תיקו.)
         <figure><img src="img/l1-12-average-menu.png" alt="התפריט שנפתח מהחץ ליד Sum of כשל מסירה, עם האפשרות Average" width="543" height="553" loading="lazy" style="width:300px"></figure>

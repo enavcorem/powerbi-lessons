@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 2 — פאוור קוורי: לגלות ולתקן</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="style.css?v=5">
+<script src="lesson.js?v=2" defer></script>
+</head>
+<body class="v2" data-lesson="lesson2">
+<div class="wrap">
+
+<header class="intro">
+  <p class="eyebrow"><a href="index.html">פאוור BI</a> · שיעור 2 · 12.10</p>
+  <h1>פאוור קוורי: לגלות ולתקן</h1>
+  <p class="lede">בשבוע שעבר לחצנו <b>Load</b> וטענו את הנתונים כמו שהם. היום לוחצות על הכפתור השני, <b>Transform Data</b>,
+  ונכנסות לחדר שבו רואים <strong>בשנייה אחת מה שבור בטבלה של אלפי שורות</strong>. מגלות, מתקנות תיקון ראשון, ורואות בדוח מה השתנה.</p>
+  <ul class="cycle" aria-label="מחזור הנתונים: אנחנו בשלב טיוב והכנה">
+    <li>שאלה</li><li class="arr" aria-hidden="true">←</li>
+    <li>איסוף נתונים</li><li class="arr" aria-hidden="true">←</li>
+    <li class="here">טיוב והכנה</li><li class="arr" aria-hidden="true">←</li>
+    <li>ניתוח</li><li class="arr" aria-hidden="true">←</li>
+    <li>הצגה</li><li class="arr" aria-hidden="true">←</li>
+    <li>החלטה</li>
+  </ul>
+</header>
+
+<nav class="stages" aria-label="שלבי השיעור">
+  <ol>
+    <li class="s0"><a href="#etl"><span class="n">0</span>מה זה ETL</a></li>
+    <li class="s1"><a href="#a"><span class="n">1</span>עושות יחד</a></li>
+    <li class="s2"><a href="#room"><span class="n">2</span>כרטיס החדר</a></li>
+    <li class="s3"><a href="#c"><span class="n">3</span>י״ב: המסד שלכן</a></li>
+    <li><a href="#stuck">נתקעתי</a></li>
+    <li><a href="#done">הצלחתי?</a></li>
+  </ol>
+  <button type="button" class="present-btn" aria-pressed="false">מצב הצגה</button>
+</nav>
+
+<section id="rec">
+  <h2>לא היית במיט?</h2>
+  <p class="sub">עברי על שלבים 0–1 עם ההקלטה, ואחר כך עשי את כרטיס החדר לבד. החדרים עצמם לא מוקלטים, ולכן הכרטיס כתוב כך שאפשר לעבוד איתו לבד.</p>
+  <div class="box">
+    <div class="rec">
+      <!-- להחליף בקישור ההקלטה אחרי השיעור, ולהוריד את class="off" -->
+      <a class="btn off" href="#" aria-disabled="true">ההקלטה תעלה אחרי השיעור</a>
+    </div>
+    <!-- אינדקס ההקלטה: יתווסף כאן אחרי השיעור, מתוך התמלול -->
+  </div>
+</section>
+
+<!-- ===================== שלב 0 ===================== -->
+<section id="etl" class="stage s0">
+  <h2><span class="part">שלב 0 · לפני שנכנסות</span><span class="en">E, T, L</span>: הדרך מהקובץ לדוח</h2>
+  <p class="out">יודעות לומר מה כל אות, ולמה ה־T הוא הלב.</p>
+  <p class="sub">בכל כלי נתונים, מאקסל ועד המערכות של חברות ענק, הנתונים עוברים שלוש תחנות בדרך לדוח. באנגלית קוראים לזה <b>ETL</b>.</p>
+
+  <ul class="etl">
+    <li><span class="l">E</span><b>Extract · מוציאות</b>לוקחות את הנתונים מהמקור. אצלנו: הקובץ שתחנת הדלק שלחה.
+      <span class="tool">בפאוור BI: <span class="en">Get data</span></span></li>
+    <li class="arr" aria-hidden="true">←</li>
+    <li class="t"><span class="l">T</span><b>Transform · מתקנות</b>בודקות מה שבור ומתקנות, לפני שמישהו מחשב משהו.
+      <span class="tool">בפאוור BI: פאוור קוורי (<span class="en">Transform Data</span>)</span></li>
+    <li class="arr" aria-hidden="true">←</li>
+    <li><span class="l">L</span><b>Load · טוענות</b>מעבירות את הנתונים המתוקנים לדוח, ושם בונות גרפים.
+      <span class="tool">בפאוור BI: <span class="en">Close &amp; Apply</span></span></li>
+  </ul>
+
+  <div class="trap"><b>מה עשינו בשבוע שעבר?</b> לחצנו <b>Load</b> ישר מה־Navigator: E ומיד L, בלי T.
+  הנתונים הגיעו לדוח כמו שהם, עם כל מה שבור בהם. אם הגרף על המסד שלכן יצא מוזר, זו הסיבה.</div>
+
+  <div class="why"><b>למה ה־T הוא הלב?</b> בנתוני התדלוק יש 2,905 תדלוקים. באחד מהם כתוב <b>50,000 ליטר</b>, ואף רכב לא מתדלק כמות כזאת.
+  בלי T, הממוצע בדוח הוא <b>57 ליטר</b> לתדלוק. בלי השורה הזו, <b>40</b>. שורה אחת מתוך כמעט 3,000 שינתה את המספר שהתחנה תחליט לפיו.
+  <br><b>י״ב:</b> ה־T הוא פרק הטיוב בעבודה שלכן. <b>י״א:</b> ה־T הוא השלב ״טיוב והכנה״ בפס מחזור הנתונים שבראש הדף.</div>
+
+  <p class="sub" style="margin-top:18px">ב־T יש ארבעה סוגים של פעולות. היום נוגעות בשתיים:</p>
+  <ul class="verbs">
+    <li class="today"><b>לנקות</b>מוחקות כפילויות ושורות ריקות. בתדלוק: ארבעה קודים שמופיעים פעמיים.</li>
+    <li class="today"><b>להמיר</b>משנות סוג נתונים. מחיר הופך ל״כסף״, ותאריך שנשמר כטקסט הופך לתאריך.</li>
+    <li><b>לסנן</b>משאירות רק את מה שהשאלה צריכה: תקופה, סוג, אזור.</li>
+    <li><b>לסדר</b>שמות ברורים לעמודות, עמודות מיותרות החוצה, וסדר הגיוני.</li>
+  </ul>
+
+  <div class="next">✔ זה ה־ETL. עכשיו נכנסות ל־T. <a href="#a">לשלב 1: עושות יחד ←</a></div>
+</section>
+
+<!-- ===================== שלב 1 ===================== -->
+<section id="a" class="stage s1">
+  <h2><span class="part">שלב 1 · עושות יחד · תדלוק רכבים</span>החדר שבין האקסל לדוח</h2>
+  <p class="sub">תחנת דלק רשמה כ־2,900 תדלוקים. לפני שבונות עליהם דוח, בודקות אם אפשר לסמוך עליהם.
+  הצילומים בשלב הזה צולמו על נתוני ההזמנות, ולכן שמות העמודות בהם שונים. החלונות והכפתורים זהים.</p>
+
+  <article class="topic">
+    <h3><span class="t">1.1</span>נכנסות לפאוור קוורי</h3>
+    <p class="out">חלון Power Query Editor פתוח על נתוני התדלוק.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מורידות את הקובץ <a class="file" href="files/fuel.xlsx" download="תדלוק רכבים.xlsx">תדלוק רכבים.xlsx</a>, ומעבירות אותו מ״הורדות״ לתיקייה <code>Power BI\שיעור 2</code>.</li>
+        <li><span class="path">Home › Get data › Excel workbook</span>.</li>
+        <li>בוחרות את <code>תדלוק רכבים.xlsx</code> ולוחצות <b>Open</b>.</li>
+        <li>ב־Navigator מסמנות את הטבלה <code>טבלת_תדלוקים</code>.</li>
+        <li>לוחצות <b>Transform Data</b>. <b>לא Load.</b></li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        חלון חדש, <span class="en">Power Query Editor</span>, ובו ארבעה חלקים:
+        <figure><img src="img/l2-02-pq-window.png" alt="חלון Power Query Editor ובו ארבעה אזורים ממוספרים: 1 רשימת השאילתות משמאל, 2 שורת הנוסחה למעלה, 3 הטבלה באמצע, 4 Applied Steps מימין" width="1920" height="1122" loading="lazy">
+        <figcaption>1 — השאילתות (כל טבלה היא שאילתה). 2 — שורת הנוסחה: מה השלב הנוכחי עושה. 3 — הנתונים. 4 — <b>Applied Steps</b>: יומן של כל מה שעשינו.</figcaption></figure></details>
+    </details>
+    <div class="why"><b>Applied Steps הוא יומן.</b> כל פעולה נרשמת כשלב, ופאוור BI מריץ את כל השלבים מחדש בכל פעם שהנתונים מתעדכנים.
+    לא צריך לזכור מה עשינו. זה כתוב שם, לפי הסדר.</div>
+    <div class="trap"><b>שני חלונות פתוחים.</b> פאוור BI הוא החלון הראשי, ופאוור קוורי נפתח מתוכו.
+    סוגרות את פאוור קוורי רק דרך <b>Close &amp; Apply</b>, כדי שהשינויים יגיעו לדוח.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.2</span>שלוש תיבות שמראות הכול</h3>
+    <p class="out">מעל כל עמודה רואות כמה תקין, כמה שגוי וכמה ריק, על כל השורות ולא רק על 1,000.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>פותחות את הלשונית <span class="path">View</span>.</li>
+        <li>מסמנות שלוש תיבות: <span class="en">Column quality</span>, <span class="en">Column distribution</span>, <span class="en">Column profile</span>.
+          <figure><img src="img/l2-03-view-profile.png" alt="פאוור קוורי אחרי סימון שלוש התיבות בלשונית View: מעל כל עמודה Valid, Error ו־Empty וגרף עמודות קטן, ולמטה חלונות Column statistics ו־Value distribution" width="1920" height="1122" loading="lazy">
+          <figcaption>מעל כל עמודה: כמה תקין (<span class="en">Valid</span>), כמה שגוי (<span class="en">Error</span>), כמה ריק (<span class="en">Empty</span>). למטה: סטטיסטיקה של העמודה המסומנת.</figcaption></figure></li>
+        <li>למטה משמאל לוחצות על המשפט <span class="en">Column profiling based on top 1000 rows</span>.
+          <figure><img src="img/l2-04-entire-menu.png" alt="שורת המצב בתחתית החלון: 17 COLUMNS, 999+ ROWS, ולידו המשפט Column profiling based on top 1000 rows" width="774" height="100" loading="lazy">
+          <figcaption>על המשפט הזה לוחצות.</figcaption></figure></li>
+        <li>בוחרות <span class="en">Column profiling based on entire data set</span>.</li>
+        <li>לוחצות על הכותרת <b>קוד תדלוק</b>, ומסתכלות למטה ב־<span class="en">Column statistics</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <span class="en">Empty</span> ‏2 · <span class="en">Distinct</span> ‏2902 · <span class="en">Unique</span> ‏2897.
+      קוד תדלוק אמור להיות ייחודי, ולכן ההפרש הזה אומר שיש קודים שמופיעים פעמיים.</details>
+    </details>
+    <div class="why"><b>Distinct מול Unique.</b> <span class="en">Distinct</span> סופר כמה ערכים <b>שונים</b> יש. <span class="en">Unique</span> סופר כמה ערכים מופיעים <b>פעם אחת בלבד</b>.
+    בעמודה שאמורה להיות ייחודית, כמו קוד, שניהם צריכים להיות שווים למספר השורות.</div>
+    <div class="why"><b>למה כל הנתונים?</b> ברירת המחדל בודקת רק את 1,000 השורות הראשונות.
+    שגיאה בשורה 1,500 לא תופיע, ונחשוב שהכול תקין. בנתוני ההזמנות שבחדר זה בדיוק מה שקורה.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.3</span>סוגי נתונים</h3>
+    <p class="out">המחיר לליטר מסומן ככסף (<b>$</b>), ולא כמספר רגיל.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מסתכלות על האייקון שליד שם כל עמודה: <b>ABC</b> טקסט, <b>123</b> מספר שלם, <b>1.2</b> מספר עשרוני, <b>$</b> מספר עשרוני קבוע (לכסף), ולוח שנה לתאריך.
+          <figure><img src="img/l2-07-type-menu.png" alt="כותרות של שתי עמודות: מספר פריטים עם האייקון 123, ומחיר לפריט עם האייקון 1.2" width="553" height="463" loading="lazy" style="width:360px"></figure></li>
+        <li>לוחצות על האייקון שליד <b>מחיר לליטר</b>.</li>
+        <li>בוחרות <span class="en">Fixed decimal number</span>.</li>
+        <li>בחלון שנפתח לוחצות <b>Replace current</b>.
+          <figure><img src="img/l2-08-replace-current.png" alt="חלון Change Column Type עם שלושה כפתורים: Replace current, Add new step, Cancel" width="992" height="272" loading="lazy"></figure></li>
+      </ol>
+    </details>
+    <div class="why"><b>למה זה חשוב?</b> מספר ששמור כטקסט אי אפשר לסכם, ותאריך ששמור כטקסט אי אפשר לסנן לפי חודש.
+    פאוור BI מנחש את הסוג לבד (השלב <span class="en">Changed Type</span>), אבל הוא מנחש לפי מדגם, ולכן בודקות.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.4</span>תיקון ראשון: כפילויות</h3>
+    <p class="out">הקודים הכפולים נמחקו, וביומן יש שלב חדש. ואפשר לחזור אחורה ולראות מה היה.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>לוחצות על הכותרת <b>קוד תדלוק</b>. רק היא מסומנת.</li>
+        <li><span class="path">Home › Remove Rows › Remove Duplicates</span>.
+          <figure><img src="img/l3-06-remove-rows-menu.png" alt="התפריט Remove Rows פתוח: Remove Top Rows, Remove Bottom Rows, Remove Alternate Rows, Remove Duplicates, Remove Blank Rows, Remove Errors" width="581" height="318" loading="lazy" style="width:420px"></figure></li>
+        <li>ב־Applied Steps לוחצות על השלב <b>שלפני</b> <span class="en">Removed Duplicates</span>.</li>
+        <li>לוחצות שוב על השלב <b>האחרון</b>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        ביומן שלב חדש, <span class="en">Removed Duplicates</span>.
+      כשלוחצות על השלב שלפניו, הכפילויות חוזרות. כשחוזרות לשלב האחרון, הן נעלמות שוב.</details>
+    </details>
+    <div class="why"><b>כל תיקון הפיך ורשום.</b> באקסל, מחיקה היא מחיקה. כאן התיקון הוא שלב ביומן: אפשר לחזור אחורה, לראות מה היה,
+    ולמחוק את השלב אם טעינו. והקובץ המקורי לא משתנה בכלל.</div>
+    <div class="trap"><b>מסמנות רק את עמודת הקוד.</b> אם מסומנות כל העמודות, נמחקות רק שורות שזהות בכל העמודות, ושורה כפולה שיש בה הבדל קטן תישאר.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.5</span>חוזרות לדוח</h3>
+    <p class="out">הנתונים המתוקנים בדוח. הודעה על שגיאה אחת היא צפויה.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Home › Close &amp; Apply</span> (הכפתור הראשון משמאל).
+          <figure><img src="img/l2-09-close-apply.png" alt="לשונית Home בפאוור קוורי, והכפתור Close &amp; Apply הראשון משמאל" width="636" height="182" loading="lazy" style="width:420px"></figure></li>
+        <li>קופצת הודעה על שגיאה? לוחצות <b>Close</b>.</li>
+      </ol>
+    </details>
+    <div class="why"><b>E, T, L, ונסגר המעגל.</b> השגיאה היא תאריך אחד שכתוב כטקסט. בשגיאות מטפלים בשבוע הבא.
+    צריכות לחזור לפאוור קוורי? <span class="path">Home › Transform data</span>.</div>
+  </article>
+
+  <div class="next">✔ סיימנו את ההדגמה. עכשיו אתן, בזוגות. <a href="#room">לשלב 2: כרטיס החדר ←</a></div>
+</section>
+
+<!-- ===================== שלב 2 ===================== -->
+<section id="room" class="stage s2">
+  <h2><span class="part">שלב 2 · בחדרים · בזוגות · כ־20 דקות · נתוני הזמנות</span>כרטיס החדר: לגלות, לתקן, ולראות את ההבדל</h2>
+  <p class="sub">חנות ציוד משרדי שלחה לנו את ההזמנות של חצי שנה. לפני שנגיד לה כמה מכרה, בודקות אם אפשר לסמוך על הקובץ.</p>
+  <div class="roles">
+    <div><b>נהגת:</b> משתפת מסך ולוחצת. בת הזוג עושה את אותו הדבר במחשב שלה ומשווה.</div>
+    <div><b>נווטת:</b> מקריאה את הצעד ובודקת את ה־✔.</div>
+  </div>
+  <p class="sub"><b>כל אחת בונה על המחשב שלה</b>, מההתחלה ועד הסוף. הקובץ ישמש אתכן בשבוע הבא.</p>
+
+  <article class="topic">
+    <h3><span class="t">2.1</span>פותחות את ההזמנות בפאוור קוורי</h3>
+    <p class="out">פאוור קוורי פתוח על <code>Orders_Raw</code>, עם פרופיל על כל הנתונים.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מורידות את הקובץ <a class="file" href="files/orders.xlsx" download="נתוני הזמנות.xlsx">נתוני הזמנות.xlsx</a>, ומעבירות אותו מ״הורדות״ לתיקייה <code>Power BI\שיעור 2</code>.</li>
+        <li>קובץ חדש בפאוור BI: <span class="path">File › New</span> (או <span class="path">Blank report</span>).</li>
+        <li><span class="path">Get data › Excel workbook</span>, ובוחרות את <code>נתוני הזמנות.xlsx</code>.</li>
+        <li>ב־Navigator מסמנות את <code>Orders_Raw</code>.</li>
+        <li>לוחצות <b>Transform Data</b>.
+          <figure><img src="img/l2-01-navigator.png" alt="חלון Navigator: Orders_Raw מסומן, ולמטה הכפתורים Load, Transform Data ו־Cancel" width="1319" height="1048" loading="lazy">
+          <figcaption>Transform Data, הכפתור האמצעי למטה.</figcaption></figure></li>
+        <li>פותחות את הלשונית <span class="path">View</span>, ומסמנות את שלוש התיבות: <span class="en">Column quality</span>, <span class="en">Column distribution</span>, <span class="en">Column profile</span>.</li>
+        <li>למטה משמאל לוחצות על <span class="en">Column profiling based on top 1000 rows</span>, ובוחרות <span class="en">entire data set</span>.</li>
+      </ol>
+    </details>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.2</span>מוצאות מה שבור</h3>
+    <p class="out">יודעות לומר אילו שלוש בעיות יש בקובץ.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>לוחצות על הכותרת <b>קוד הזמנה</b>, ומסתכלות למטה ב־<span class="en">Column statistics</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <span class="en">Count</span> ‏2003 · <span class="en">Empty</span> ‏3 · <span class="en">Distinct</span> ‏1998 · <span class="en">Unique</span> ‏1994.
+        ובראש <span class="en">Value distribution</span>, שלוש הזמנות שהעמודה שלהן ארוכה פי שניים.
+        <figure><img src="img/l2-06-code-profile.png" alt="פרופיל העמודה קוד הזמנה: Count 2003, Empty 3, Distinct 1998, Unique 1994, ובגרף שלוש הזמנות ORD-100981, ORD-100621 ו־ORD-100151 עם עמודה כפולה" width="1244" height="829" loading="lazy">
+        <figcaption>קוד הזמנה אמור להיות ייחודי. שלוש הזמנות מופיעות פעמיים, ושלוש שורות ריקות.</figcaption></figure>
+        לא יוצא? בדקו שבתחתית כתוב <span class="en">entire data set</span>. עם 1,000 שורות רואים מספרים אחרים.</details>
+      <ol class="do">
+        <li>לוחצות על <b>תאריך הזמנה</b>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בשורת ה־<span class="en">Error</span> שמעל העמודה כתוב <b>פחות מ־1%</b> (<span class="en">&lt; 1%</span>), ולמטה <span class="en">Error</span> ‏1.
+        <figure><img src="img/l2-05-entire-dataset.png" alt="אחרי מעבר ל־entire data set: בעמודה תאריך הזמנה Error פחות מ־1%, ולמטה Count 2003 ו־Error 1" width="1920" height="1122" loading="lazy">
+        <figcaption>עם 1,000 שורות היה כתוב כאן 0%. השגיאה יושבת אחרי השורה ה־1,000.</figcaption></figure></details>
+      <ol class="do">
+        <li>אומרות בקול לבת הזוג: מה שלוש הבעיות שמצאנו?</li>
+      </ol>
+    </details>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.3</span>המספרים ״לפני״</h3>
+    <p class="out">טבלה בדוח עם סך המכירות ומספר ההזמנות, לפני כל תיקון.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Home › Close &amp; Apply</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <span class="en">2,003 rows loaded. 1 error.</span> זו השגיאה בתאריך, וזה צפוי.
+        <figure><img src="img/l2-10-load-error.png" alt="חלון Load: 1 of the loaded queries contained errors, ו־Orders_Raw עם 2,003 rows loaded. 1 error" width="753" height="362" loading="lazy" style="width:460px"></figure></details>
+      <ol class="do">
+        <li>בחלון ההודעה לוחצות <b>Close</b>.</li>
+        <li>בדוח: קליק על שטח ריק, ובחלונית <span class="en">Visualizations</span> בוחרות <span class="en">Table</span> (האייקון של טבלה).</li>
+        <li>מסמנות בחלונית Data את <b>סך הכל מחיר</b>.</li>
+        <li>מסמנות את <b>קוד הזמנה</b>.</li>
+        <li>בחלונית <span class="en">Visualizations</span>, בשדה <span class="en">Columns</span>: לוחצות על החץ ליד <b>קוד הזמנה</b>, ובוחרות <b>Count</b>. (ברירת המחדל מציגה רשימה של כל הקודים, וזה לא מה שרוצות.)
+          <figure><img src="img/l2-12-count-menu.png" alt="התפריט שנפתח מהחץ ליד קוד הזמנה, עם האפשרויות First, Last, Count (Distinct) ו־Count" width="505" height="311" loading="lazy" style="width:340px"></figure></li>
+        <li><b>רושמות בצד</b> את שני המספרים שבטבלה, על דף או בטלפון. עוד מעט הם ישתנו.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <b>‎₪ 11,377,566.3</b> ו־<b>2000</b>. זה מה שרשמתן?
+        <figure><img src="img/l2-13-before.png" alt="טבלה בדוח: Sum of סך הכל מחיר 11,377,566.3 שקלים, Count of קוד הזמנה 2000" width="456" height="111" loading="lazy" style="width:340px"></figure></details>
+    </details>
+    <div class="trap"><b>למה טבלה ולא Card?</b> ה־Card מעגל לבד: 2,000 הופך ל־2K, וגם 1,997 יוצא 2K.
+    רוצות לראות בדיוק כמה השתנה, ולכן טבלה.</div>
+  </article>
+
+  <div class="swap">🔄 מתחלפות: הנהגת מפסיקה לשתף, והשנייה משתפת את המסך שלה.</div>
+
+  <article class="topic">
+    <h3><span class="t">2.4</span>מתקנות: שורות ריקות וכפילויות</h3>
+    <p class="out">ביומן שני שלבים חדשים: <span class="en">Removed Blank Rows</span> ו־<span class="en">Removed Duplicates</span>.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>חוזרות לפאוור קוורי: <span class="path">Home › Transform data</span>.</li>
+        <li>לוחצות <span class="path">Home › Remove Rows › Remove Blank Rows</span>.
+          <figure><img src="img/l3-06-remove-rows-menu.png" alt="התפריט Remove Rows פתוח: Remove Top Rows, Remove Bottom Rows, Remove Alternate Rows, Remove Duplicates, Remove Blank Rows, Remove Errors" width="581" height="318" loading="lazy" style="width:420px"></figure></li>
+        <li>לוחצות על הכותרת <b>קוד הזמנה</b>. רק היא מסומנת.</li>
+        <li>לוחצות <span class="path">Home › Remove Rows › Remove Duplicates</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        ב־Applied Steps: <span class="en">Removed Blank Rows</span>, ומתחתיו <span class="en">Removed Duplicates</span>.</details>
+    </details>
+    <div class="why"><b>Remove Blank Rows</b> מוחק רק שורות שריקות <b>לגמרי</b>, בכל העמודות. שורה שחסר בה ערך אחד נשארת. בה נטפל בשבוע הבא.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.5</span>המספרים ״אחרי״</h3>
+    <p class="out">אותה טבלה בדוח, עם מספרים חדשים.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Home › Close &amp; Apply</span>.</li>
+        <li>הודעת השגיאה תופיע שוב, כי התאריך עוד לא תוקן. לוחצות <b>Close</b>.</li>
+        <li>מסתכלות על הטבלה בדוח.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <b>‎₪ 11,365,128.91</b> ו־<b>1997</b>.
+        <figure><img src="img/l3-07-after.png" alt="הטבלה בדוח אחרי הטיוב: Sum of סך הכל מחיר 11,365,128.91 שקלים, Count of קוד הזמנה 1997" width="456" height="111" loading="lazy" style="width:340px"></figure>
+        <b>שאלה לחזרה מהחדר:</b> 2,003 ← 2,000 ← 1,997. מה קרה בכל חץ?</details>
+      <ol class="do">
+        <li>שומרות: <span class="path">File › Save as › Browse this device</span>, בתיקייה <code>Power BI\שיעור 2</code>, בשם <code>הזמנות</code>.</li>
+      </ol>
+    </details>
+    <div class="why"><b>בשביל זה מטייבים.</b> בלי התיקון, החנות הייתה חושבת שמכרה ב־‎12,437 ₪ יותר, ושהיו לה שלוש הזמנות שלא קרו.
+    שלוש שורות כפולות, ובדוח כבר יש מספר לא נכון.</div>
+  </article>
+
+  <article class="topic">
+    <h3>סוגי נתונים למחירים <span class="opt">אם נשאר זמן</span></h3>
+    <p class="out">שתי עמודות המחיר מסומנות ככסף (<b>$</b>).</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>חוזרות לפאוור קוורי: <span class="path">Home › Transform data</span>.</li>
+        <li>לוחצות על האייקון 1.2 ליד <b>מחיר לפריט</b> ← <span class="en">Fixed decimal number</span> ← <b>Replace current</b>.</li>
+        <li>אותו דבר ב־<b>סך הכל מחיר</b>.</li>
+        <li><span class="path">Home › Close &amp; Apply</span>.</li>
+        <li>שומרות שוב: <span class="path">File › Save</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        אייקון $ ליד שתי העמודות. המספרים בטבלה לא משתנים.</details>
+    </details>
+    <div class="why"><b>לא הספקתן?</b> זה בסדר. בשבוע הבא כרטיס החדר מתחיל בזה.</div>
+  </article>
+
+  <div class="next">✔ סיימתן את החדר: גיליתן, תיקנתן, טענתן, וראיתן את ההבדל. חוזרות למיט.</div>
+</section>
+
+<!-- ===================== שלב 3 ===================== -->
+<section id="c" class="stage s3">
+  <h2><span class="part">שלב 3 · י״ב בלבד · עד השיעור הבא</span>בדיקה של כל המשתנים במסד שלכן <span class="who">י״ב</span></h2>
+  <p class="out">כל עמודה במסד שלכן בסוג הנכון, ושלושה דברים שמצאתן.</p>
+
+  <article class="topic">
+    <h3>בודקות עמודה אחרי עמודה</h3>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>פותחות את <code>המסד שלנו - שיעור 1</code> (מהשבוע שעבר), ו־<span class="path">Home › Transform data</span>.
+          אם לא שמרתן, טוענות מחדש, הפעם עם <b>Transform Data</b>.</li>
+        <li>פותחות את הלשונית <span class="path">View</span>, ומסמנות את שלוש התיבות.</li>
+        <li>למטה משמאל לוחצות על <span class="en">Column profiling based on top 1000 rows</span>, ובוחרות <span class="en">entire data set</span>.</li>
+        <li>עוברות עמודה אחרי עמודה, וכל עמודה בודקות בארבע השאלות שבטבלה למטה.</li>
+        <li>לכל עמודה שהסוג שלה לא נכון: האייקון ליד השם ← הסוג הנכון ← <b>Replace current</b>.</li>
+        <li><span class="path">Home › Close &amp; Apply</span>.</li>
+        <li>שומרות: <span class="path">File › Save</span>.</li>
+      </ol>
+    </details>
+
+    <div class="box scroll" style="margin-top:14px">
+      <table>
+        <thead><tr><th>מה בודקות</th><th>איפה רואים</th><th>מה מחפשות</th></tr></thead>
+        <tbody>
+          <tr><td><b>סוג</b></td><td>האייקון שליד שם העמודה</td><td>מספר שמופיע כ־ABC. תאריך שהוא טקסט. קוד (מיקוד, ת״ז) שהפך למספר, ואיבד את האפסים שבהתחלה. <b>את זה מתקנות.</b></td></tr>
+          <tr><td><b>פיזור</b></td><td>הגרף שמעל העמודה, ו־<span class="en">Value distribution</span></td><td>ערך אחד שקופץ מעל כל השאר. קטגוריה שכתובה בשתי צורות. מספר שלא הגיוני (גיל 200, מחיר שלילי).</td></tr>
+          <tr><td><b>שגיאות וריקים</b></td><td><span class="en">Valid · Error · Empty</span></td><td>איפה יש <span class="en">Error</span>, איפה <span class="en">Empty</span>, ובכמה שורות.</td></tr>
+          <tr><td><b>ייחודיות</b></td><td><span class="en">Count · Distinct · Unique</span></td><td>עמודה שאמורה להיות ייחודית (מזהה) ו־Distinct שלה קטן מ־Count. ועמודה שכמעט כולה ערך אחד.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+  <article class="topic">
+    <h3>מה מגישות בקלאסרום</h3>
+    <ul>
+      <li>צילום מסך של פאוור קוורי, עם הפרופיל פתוח ועם שלבי ה־<span class="en">Changed Type</span> ביומן.</li>
+      <li><b>שלושה דברים שמצאתן,</b> משפט לכל אחד. בשבוע הבא הם יהיו השורות הראשונות בטבלת התיעוד.</li>
+    </ul>
+    <div class="why"><b>לא מצאתן אף בעיה?</b> זה קורה במסדים ממשלתיים מסודרים. אז מחפשות בעיות עדינות יותר:
+    עמודה שכמעט כולה ריקה, קטגוריה שכתובה בשתי צורות, מספר שלא נראה הגיוני. ואם עדיין אין, כותבות את זה, עם הצילום שמוכיח.</div>
+    <details><summary>המסד שלכן מגיע בכמה קבצים, אחד לכל שנה?</summary>
+      <p><b>לא מתחילות לתקן.</b> קודם מאחדות את כל השנים לטבלה אחת, ורק אחר כך בודקות ומטייבות, פעם אחת לכל השנים.
+      את האיחוד עושות איתי, בזמן הפתוח אחרי השיעור או בפגישה האישית. עד אז בודקות שכל הקבצים נפתחים, ושבכולם אותן עמודות.</p></details>
+  </article>
+</section>
+
+<section id="stuck">
+  <h2>נתקעתי</h2>
+  <p class="sub">כל אלה קרו למורות בקורס המקורי, או לנו כשהכנו את השיעור.</p>
+  <details><summary>לחצתי Load במקום Transform Data</summary>
+    <p>לא נורא. <span class="path">Home › Transform data</span> פותח את פאוור קוורי על אותם נתונים.</p></details>
+  <details><summary>אין לי את Column profile</summary>
+    <p>הוא בלשונית <span class="path">View</span>, לא ב־Home. מסמנות את שלוש התיבות.</p></details>
+  <details><summary>המספרים שלי שונים מה־✔</summary>
+    <p>כמעט תמיד: בתחתית כתוב עדיין <span class="en">top 1000 rows</span>. לוחצות ועוברות ל־<span class="en">entire data set</span>.
+    <b>שימו לב:</b> בכל פעם שפותחים את פאוור קוורי מחדש, זה חוזר ל־1,000. בודקות שוב.</p></details>
+  <details><summary>אחרי התיקון הספירה לא 1997</summary>
+    <p>שלושה דברים לבדוק: ב־Remove Duplicates סומנה <b>רק</b> העמודה קוד הזמנה. ביומן יש גם <span class="en">Removed Blank Rows</span>.
+    ובטבלה בדוח כתוב <b>Count</b>, ולא <span class="en">Count (Distinct)</span>.</p></details>
+  <details><summary>אין כפתור לשינוי סוג, או שהוא נראה אחרת</summary>
+    <p>במסך קטן הכפתורים מתכווצים לאייקון עם חץ קטן. הדרך הבטוחה: האייקון שליד שם העמודה עצמה.</p></details>
+  <details><summary>קפצה הודעה על שגיאות אחרי Close &amp; Apply</summary>
+    <p>זה צפוי היום. השגיאה בתאריך עוד לא תוקנה. לוחצות <b>Close</b>. בשבוע הבא היא תיעלם.</p></details>
+  <details><summary>סגרתי את פאוור קוורי ב־X, ועכשיו יש פס צהוב</summary>
+    <p>השינויים לא נשמרו בדוח. לוחצות על <span class="en">Apply changes</span> בפס הצהוב.</p></details>
+  <details><summary>בטבלה בדוח מופיעה רשימה ארוכה של קודים</summary>
+    <p>פאוור BI לא סוכם טקסט לבד. בחלונית Visualizations, החץ ליד <b>קוד הזמנה</b> ← <b>Count</b>.
+    <figure><img src="img/l2-11-card-first.png" alt="השדה בחלונית Visualizations מציג First קוד הזמנה" width="263" height="83" loading="lazy" style="width:220px">
+    <figcaption>אם כתוב <b>First</b>, גם זה לא נכון. מחליפות ל־Count.</figcaption></figure></p></details>
+  <details><summary>לחצתי על שלב באמצע היומן, ועכשיו הכול נראה אחרת</summary>
+    <p>הטבלה מציגה את הנתונים כפי שהיו <b>באותו שלב</b>. לוחצות על השלב <b>האחרון</b> ברשימה. פעולה חדשה, כשמסומן שלב באמצע, תיכנס לאמצע היומן.</p></details>
+  <details><summary>Ctrl+C / Ctrl+V לא עובדים</summary>
+    <p>נכון. פאוור קוורי הוא לא אקסל: לא מקלידים בתאים ולא מדביקים. כל שינוי נעשה בפעולה מהתפריט, וכך הוא נרשם ביומן.</p></details>
+</section>
+
+<section id="done">
+  <h2>איך אדע שהצלחתי</h2>
+  <div class="box">
+    <ul class="check">
+      <li><label><input type="checkbox"> אני יודעת להסביר מה זה ETL, ובאיזו אות עובדים בפאוור קוורי</label></li>
+      <li><label><input type="checkbox"> אני יודעת למה לוחצים Transform Data ולא Load</label></li>
+      <li><label><input type="checkbox"> הפעלתי את שלוש התיבות ב־View, ועברתי ל־entire data set</label></li>
+      <li><label><input type="checkbox"> מצאתי בהזמנות שלוש בעיות: ריקות, כפילויות ושגיאה בתאריך</label></li>
+      <li><label><input type="checkbox"> רשמתי את המספרים ״לפני״: ‎₪ 11,377,566.3 ו־2000</label></li>
+      <li><label><input type="checkbox"> מחקתי ריקות וכפילויות, וראיתי את המספרים משתנים: ‎₪ 11,365,128.91 ו־1997</label></li>
+      <li><label><input type="checkbox"> שמרתי את <code>הזמנות.pbix</code> בתיקייה <code>Power BI\שיעור 2</code></label></li>
+      <li><label><input type="checkbox"> <b>י״ב:</b> הגשתי צילום של הפרופיל ושלושה דברים שמצאתי במסד שלנו</label></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <!-- הקישור לשיעור 3 יחזור כשהוא ישוחרר -->
+  <p><a href="index.html">← חזרה למפת הדרך</a> · <a href="lesson1.html">שיעור 1</a></p>
+  <p>מבוסס על קורס Power BI של טל מיכולביץ, בשימוש באישורו.</p>
+</footer>
+
+</div>
+</body>
+</html>
