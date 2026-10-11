@@ -92,7 +92,8 @@
     <div class="trap"><b>זה חוזר ל־1,000 בכל פתיחה.</b> כל פעם שנכנסות לפאוור קוורי, הדבר הראשון: <span class="en">entire data set</span>.</div>
     <details><summary>לא שמרתי את קובץ התדלוק</summary>
       <p>מורידות שוב את <a class="file" href="files/fuel.xlsx" download="תדלוק רכבים.xlsx">תדלוק רכבים.xlsx</a>, טוענות עם <b>Transform Data</b> (לא Load),
-      ומדליקות את שלוש התיבות בלשונית <span class="path">View</span>. את הכפילויות תמחקו אחר כך, בזמן הפתוח: קוד תדלוק ← <span class="path">Remove Rows › Remove Duplicates</span>.</p></details>
+      ומדליקות את שלוש התיבות בלשונית <span class="path">View</span>. את הכפילויות תמחקו אחר כך, בזמן הפתוח: קוד תדלוק ← <span class="path">Remove Rows › Remove Duplicates</span>.
+      בינתיים יהיו לכן ב־1.3 ‏8 <span class="en">Empty</span> ולא 7, כי יש שתי שורות ריקות. <span class="en">Remove Blank Rows</span> מוחק את שתיהן.</p></details>
   </article>
 
   <article class="topic">
@@ -100,6 +101,9 @@
     <p class="out">יודעות מה כתוב בתא השגוי, ובמקום השגיאה יש תאריך תקין.</p>
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
+        <li>מסתכלות על האייקון שליד <b>תאריך</b>: <span class="en">ABC123</span>, כלומר ״כל דבר״. לכן עוד אין שם שגיאה.</li>
+        <li>לוחצות על האייקון הזה.</li>
+        <li>בוחרות <b>Date</b>. מעל העמודה מופיע <span class="en">Error</span> אחד.</li>
         <li>לוחצות על הכותרת <b>תאריך</b>.</li>
         <li><span class="path">Home › Keep Rows › Keep Errors</span>. נשארות רק השורות עם שגיאה.
           <figure><img src="img/l3-01-keep-errors-menu.png" alt="התפריט Keep Rows פתוח, ובתחתיתו Keep Errors" width="733" height="290" loading="lazy" style="width:520px"></figure></li>
@@ -111,8 +115,9 @@
         <li>כותבות <code>01/01/2026</code> ולוחצות <b>OK</b>.</li>
       </ol>
       <details class="ok"><summary>מה אמור להופיע?</summary>
-        ביומן שלב חדש, <span class="en">Replaced Errors</span>, ושלבי הבדיקה כבר לא שם. מעל עמודת התאריך: <span class="en">Error</span> ‏0%.</details>
+        ביומן שלב חדש, <span class="en">Changed Type1</span> ואחריו <span class="en">Replaced Errors</span>, ושלבי הבדיקה כבר לא שם. מעל עמודת התאריך: <span class="en">Error</span> ‏0%.</details>
     </details>
+    <div class="why"><b>השגיאה חיכתה לנו.</b> כל עוד העמודה הייתה ״כל דבר״, ״1 בינואר״ ישב בה כטקסט ואף אחד לא התלונן. רק כשביקשנו תאריך, הוא נהיה שגיאה.</div>
     <div class="why"><b>פילטר בדיקה = למחוק.</b> באקסל סינון רק מסתיר שורות. בפאוור קוורי הוא <b>מוחק אותן באמת</b>, והמחיקה נשמרת ביומן.
     שכחתן את שלב הבדיקה? בדוח תופיע רק השורה השגויה.</div>
     <div class="why"><b>למה להציל ולא למחוק?</b> כל שאר השורה הוא תדלוק אמיתי: רכב, כמות, מחיר. רק התאריך נכתב במילים.
@@ -125,14 +130,16 @@
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
         <li>לוחצות על הכותרת <b>מחיר לליטר</b>, ומסתכלות ב־<span class="en">Column statistics</span>: כמה <span class="en">Empty</span>?</li>
-        <li>החץ שליד <b>מחיר לליטר</b> ← מסמנות רק <span class="en">(null)</span> ← <b>OK</b>. מסתכלות: איזה דלק, ובאיזה חודש?</li>
+        <li>החץ שליד <b>מחיר לליטר</b> ← מסמנות רק <span class="en">(null)</span> ← <b>OK</b>. מסתכלות: איזה דלק, ובאיזה חודש? ויש גם שורה אחת שריקה כולה.</li>
         <li>מוחקות את שלב הסינון ביומן (ה־X שלידו). פילטר בדיקה.</li>
+        <li>את השורה הריקה מוחקות: <span class="path">Home › Remove Rows › Remove Blank Rows</span>. עכשיו <span class="en">Empty</span> ‏6.</li>
         <li>לוחצות שוב על <b>מחיר לליטר</b>. <span class="path">Transform › Replace Values</span>.</li>
         <li>ב־<span class="en">Value To Find</span> כותבות <code>null</code>, וב־<span class="en">Replace With</span> כותבות <code>7.40</code>. <b>OK</b>.</li>
       </ol>
       <details class="ok"><summary>מה אמור להופיע?</summary>
-        מעל מחיר לליטר: <span class="en">Empty</span> ‏0%. וביומן שלב <span class="en">Replaced Value</span>.</details>
+        מעל מחיר לליטר: <span class="en">Empty</span> ‏0%. וביומן שני שלבים, <span class="en">Removed Blank Rows</span> ו־<span class="en">Replaced Value</span>.</details>
     </details>
+    <div class="why"><b>שורה ריקה כולה ← מוחקות.</b> אין בה שום מידע. ואם לא מוחקות, היא מקבלת מחיר 7.40, כאילו היה בה תדלוק.</div>
     <div class="why"><b>הדיון של השיעור.</b> שישה תדלוקים, כולם בנזין 95, כולם בינואר. ובינואר כל תדלוק של בנזין 95 עלה 7.40 בדיוק.
     אז מצילות, וכותבות למה. אילו המחירים בינואר היו קופצים מ־7 ל־8, אולי היינו מוחקות, וגם את זה כותבות.</div>
   </article>
@@ -382,7 +389,7 @@
       <tbody>
         <tr><td><b>עמודה</b></td><td>באיזו עמודה הבעיה</td><td>תאריך</td></tr>
         <tr><td><b>הבעיה</b></td><td>מה לא בסדר, במילים פשוטות</td><td>שגיאה בשורה אחת</td></tr>
-        <tr><td><b>איך גיליתי</b></td><td>איפה ראיתן את זה, ואיזה מספר</td><td>מעל העמודה כתוב <span class="en">Error</span> ‏1 (אחרי <span class="en">entire data set</span>)</td></tr>
+        <tr><td><b>איך גיליתי</b></td><td>איפה ראיתן את זה, ואיזה מספר</td><td>אחרי המרה ל־<span class="en">Date</span>, מעל העמודה כתוב <span class="en">Error</span> ‏1 (ב־<span class="en">entire data set</span>)</td></tr>
         <tr><td><b>מה עשיתי</b></td><td>הפעולה, ומה הכנסתן</td><td><span class="en">Replace Errors</span> ← 01/01/2026</td></tr>
         <tr><td><b>למה</b> (ולמה לא הדרך האחרת)</td><td>הנימוק, וגם למה לא מחקתן או למה לא הצלתן</td><td>הערך היה טקסט ולא תאריך. כל שאר השורה תקין, ולכן החלפתי ולא מחקתי</td></tr>
         <tr><td><b>שם השלב ביומן</b></td><td>בדיוק כמו ב־<span class="en">Applied Steps</span></td><td>תיקון תאריך שגוי</td></tr>
