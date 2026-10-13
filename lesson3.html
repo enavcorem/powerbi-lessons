@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
 <script src="lesson.js?v=2" defer></script>
 </head>
 <body class="v2" data-lesson="lesson3">
@@ -16,8 +16,8 @@
 <header class="intro">
   <p class="eyebrow"><a href="index.html">פאוור BI</a> · שיעור 3 · 19.10</p>
   <h1>שגיאות: למחוק או להציל?</h1>
-  <p class="lede">בשבוע שעבר מחקנו שורות שלמות: ריקות וכפולות. היום הבעיה יושבת <b>בתוך שורה טובה</b>: תאריך שגוי, מחיר חסר.
-  מחליטות אם למחוק או להציל, מורידות עמודות שאין בהן מידע, ומתחילות <strong>לתעד כל תיקון</strong>. בסוף רואות בגרף לפי חודש מה השתנה.</p>
+  <p class="lede">בשבוע שעבר ראינו את כל הבעיות בתדלוק, ותיקנו רק את הגסות: עמודות, שורות ריקות וכפילויות. היום הבעיה יושבת <b>בתוך שורה טובה</b>: תאריך שגוי, מחיר חסר.
+  מחליטות אם למחוק או להציל, ומתחילות <strong>לתעד כל תיקון</strong>. ובחדרים עושות את כל הדרך לבד, על נתוני ההזמנות: מתחברות, בודקות, מתקנות, ורואות בדוח מה השתנה.</p>
   <ul class="cycle" aria-label="מחזור הנתונים: אנחנו בשלב טיוב והכנה">
     <li>שאלה</li><li class="arr" aria-hidden="true">←</li>
     <li>איסוף נתונים</li><li class="arr" aria-hidden="true">←</li>
@@ -32,8 +32,8 @@
   <ol>
     <li class="s0"><a href="#decide"><span class="n">0</span>למחוק או להציל?</a></li>
     <li class="s1"><a href="#a"><span class="n">1</span>עושות יחד</a></li>
-    <li class="s2"><a href="#room"><span class="n">2</span>כרטיס החדר</a></li>
     <li><a href="#table">טבלת התיעוד</a></li>
+    <li class="s2"><a href="#room"><span class="n">2</span>כרטיס החדר</a></li>
     <li class="s3"><a href="#c"><span class="n">3</span>י״ב: המסד שלכן</a></li>
     <li><a href="#stuck">נתקעתי</a></li>
     <li><a href="#done">הצלחתי?</a></li>
@@ -43,7 +43,7 @@
 
 <section id="rec">
   <h2>לא היית במיט?</h2>
-  <p class="sub">עברי על שלבים 0–1 עם ההקלטה, ואחר כך עשי את כרטיס החדר לבד. החדרים עצמם לא מוקלטים, ולכן הכרטיס כתוב כך שאפשר לעבוד איתו לבד.</p>
+  <p class="sub">עברי על שלבים 0–1 ועל טבלת התיעוד עם ההקלטה, ואחר כך עשי את כרטיס החדר לבד. החדרים עצמם לא מוקלטים, ולכן הכרטיס כתוב כך שאפשר לעבוד איתו לבד.</p>
   <div class="box">
     <div class="rec">
       <!-- להחליף בקישור ההקלטה אחרי השיעור, ולהוריד את class="off" -->
@@ -62,8 +62,11 @@
   <ul class="verbs">
     <li><b>שורה שכולה בעיה ← מוחקות שורה</b>שורה ריקה לגמרי, או הזמנה שנרשמה פעמיים. אין בה שום מידע חדש. את זה עשינו בשבוע שעבר.</li>
     <li class="today"><b>תא אחד בשורה טובה ← מצילות</b>תאריך שגוי, מחיר חסר. כל שאר השורה אמיתי, ואם מוחקות אותה מאבדות תדלוק או הזמנה שקרו באמת.</li>
-    <li class="today"><b>עמודה בלי מידע ← מורידות עמודה</b>עמודה ריקה כולה, או עם ערך אחד בכל השורות. היא לא עונה על אף שאלה.</li>
+    <li><b>עמודה בלי מידע ← מורידות עמודה</b>עמודה ריקה כולה, או עם ערך אחד בכל השורות. היא לא עונה על אף שאלה. גם את זה עשינו בשבוע שעבר.</li>
   </ul>
+
+  <div class="why"><b>Home גס, Transform עדין.</b> בשבוע שעבר עבדנו בלשונית <span class="path">Home</span>: <span class="en">Remove Columns</span>, <span class="en">Remove Rows</span>. שם מטפלים בשורות ובעמודות שלמות.
+  היום עוברות ללשונית <span class="path">Transform</span>: <span class="en">Replace Values</span>, <span class="en">Replace Errors</span>. שם מטפלים בערך אחד, בתוך תא.</div>
 
   <div class="why"><b>להציל, אבל במה?</b> ערך שמחליפות בו צריך סיבה. ״בינואר כל תדלוק של בנזין 95 עלה 7.40״ היא סיבה. ״נראה לי״ היא לא.
   ולפעמים התשובה הנכונה היא כן למחוק. <b>אין תשובה אחת נכונה. יש תשובה מנומקת ורשומה.</b></div>
@@ -77,7 +80,7 @@
 <!-- ===================== שלב 1 ===================== -->
 <section id="a" class="stage s1">
   <h2><span class="part">שלב 1 · עושות יחד · תדלוק רכבים</span>מצילות, מורידות, ורושמות</h2>
-  <p class="sub">ממשיכות מקובץ התדלוק של שבוע שעבר. בו כבר מחקנו את הקודים הכפולים.</p>
+  <p class="sub">ממשיכות מקובץ התדלוק של שבוע שעבר. את הבעיות כבר ראינו, ועכשיו מחליטות ומתקנות.</p>
 
   <article class="topic">
     <h3><span class="t">1.1</span>חוזרות לפאוור קוורי</h3>
@@ -90,38 +93,33 @@
       </ol>
     </details>
     <div class="trap"><b>זה חוזר ל־1,000 בכל פתיחה.</b> כל פעם שנכנסות לפאוור קוורי, הדבר הראשון: <span class="en">entire data set</span>.</div>
+    <details><summary>בשבוע שעבר לא הספקנו את 1.8 (עמודות, ריקות, כפילויות)</summary>
+      <p>עושות אותו עכשיו, <b>לפני</b> כל השאר. לוחצות על השלב האחרון ביומן, ועושות את הצעדים של <a href="lesson2.html#a" target="_blank" rel="noopener">1.8 בשיעור 2</a>:
+      הסרת <b>שם המתדלק</b> ו<b>שם התחנה</b>, <span class="path">Remove Rows › Remove Blank Rows</span>, ו־<span class="path">Remove Duplicates</span> על <b>קוד תדלוק</b> בלבד.</p>
+      <p><b>למה לפני?</b> אם מחליפות קודם את המחיר החסר ב־7.40 (1.3), גם השורה הריקה מקבלת מחיר, והיא כבר לא ״ריקה״. <span class="en">Remove Blank Rows</span> לא ימחק אותה.</p></details>
     <details><summary>לא שמרתי את קובץ התדלוק</summary>
       <p>מורידות שוב את <a class="file" href="files/fuel.xlsx" download="תדלוק רכבים.xlsx">תדלוק רכבים.xlsx</a>, טוענות עם <b>Transform Data</b> (לא Load),
-      ומדליקות את שלוש התיבות בלשונית <span class="path">View</span>. את הכפילויות תמחקו אחר כך, בזמן הפתוח: קוד תדלוק ← <span class="path">Remove Rows › Remove Duplicates</span>.
-      בינתיים יהיו לכן ב־1.3 ‏8 <span class="en">Empty</span> ולא 7, כי יש שתי שורות ריקות. <span class="en">Remove Blank Rows</span> מוחק את שתיהן.</p></details>
+      ומדליקות את שלוש התיבות בלשונית <span class="path">View</span>. מתקנות את הסוג של <b>תאריך</b> ל־<span class="en">Date</span> ושל <b>מחיר לליטר</b> ל־<span class="en">Fixed decimal number</span>,
+      ועושות את התיקונים של 1.8 בשיעור 2, כמו בסעיף שמעל.</p></details>
   </article>
 
   <article class="topic">
-    <h3><span class="t">1.2</span>שגיאה: קודם מסתכלות, אחר כך מתקנות</h3>
-    <p class="out">יודעות מה כתוב בתא השגוי, ובמקום השגיאה יש תאריך תקין.</p>
+    <h3><span class="t">1.2</span>השגיאה: מצילות את התדלוק</h3>
+    <p class="out">במקום השגיאה יש תאריך תקין, ואתן יודעות לנמק למה דווקא הוא.</p>
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
-        <li>מסתכלות על האייקון שליד <b>תאריך</b>: <span class="en">ABC123</span>, כלומר ״כל דבר״. לכן עוד אין שם שגיאה.</li>
-        <li>לוחצות על האייקון הזה.</li>
-        <li>בוחרות <b>Date</b>. מעל העמודה מופיע <span class="en">Error</span> אחד.</li>
+        <li>מסתכלות מעל <b>תאריך</b>: <span class="en">Error</span> ‏1. בשבוע שעבר ראינו מה כתוב שם: <b>״1 בינואר״</b>, במילים.</li>
         <li>לוחצות על הכותרת <b>תאריך</b>.</li>
-        <li><span class="path">Home › Keep Rows › Keep Errors</span>. נשארות רק השורות עם שגיאה.
-          <figure><img src="img/l3-01-keep-errors-menu.png" alt="התפריט Keep Rows פתוח, ובתחתיתו Keep Errors" width="733" height="290" loading="lazy" style="width:520px"></figure></li>
-        <li>לוחצות על המילה <b>Error</b> בתא, ומסתכלות למטה: מה היה כתוב שם?</li>
-        <li>מוחקות את <b>שני</b> השלבים שנוספו ביומן: ה־X שליד השלב, מהאחרון לראשון.</li>
-        <li>לוחצות שוב על הכותרת <b>תאריך</b>.</li>
         <li><span class="path">Transform › Replace Values ▾ › Replace Errors</span>.
           <figure><img src="img/l3-04-replace-errors-menu.png" alt="החץ שליד Replace Values פתוח, ובו שתי אפשרויות: Replace Values ו־Replace Errors" width="581" height="207" loading="lazy" style="width:420px"></figure></li>
         <li>כותבות <code>01/01/2026</code> ולוחצות <b>OK</b>.</li>
       </ol>
       <details class="ok"><summary>מה אמור להופיע?</summary>
-        ביומן שלב חדש, <span class="en">Changed Type1</span> ואחריו <span class="en">Replaced Errors</span>, ושלבי הבדיקה כבר לא שם. מעל עמודת התאריך: <span class="en">Error</span> ‏0%.</details>
+        ביומן שלב חדש, <span class="en">Replaced Errors</span>. מעל עמודת התאריך: <span class="en">Error</span> ‏0%.</details>
     </details>
-    <div class="why"><b>השגיאה חיכתה לנו.</b> כל עוד העמודה הייתה ״כל דבר״, ״1 בינואר״ ישב בה כטקסט ואף אחד לא התלונן. רק כשביקשנו תאריך, הוא נהיה שגיאה.</div>
-    <div class="why"><b>פילטר בדיקה = למחוק.</b> באקסל סינון רק מסתיר שורות. בפאוור קוורי הוא <b>מוחק אותן באמת</b>, והמחיקה נשמרת ביומן.
-    שכחתן את שלב הבדיקה? בדוח תופיע רק השורה השגויה.</div>
-    <div class="why"><b>למה להציל ולא למחוק?</b> כל שאר השורה הוא תדלוק אמיתי: רכב, כמות, מחיר. רק התאריך נכתב במילים.
-    <span class="en">Replace Errors</span> מתאים כשיש בעמודה שגיאה מסוג אחד, ואנחנו יודעות מה הערך הנכון.</div>
+    <div class="why"><b>למה להציל ולא למחוק?</b> כל שאר השורה הוא תדלוק אמיתי: רכב, כמות, מחיר. רק התאריך נכתב במילים, ואנחנו יודעות מה הוא אמור להיות.</div>
+    <div class="trap"><b><span class="en">Replace Errors</span> מחליף את כל השגיאות בעמודה באותו ערך.</b> כאן יש שגיאה אחת, ולכן זה בסדר.
+    אילו היו חמש שגיאות, מחמישה חודשים שונים, כולן היו הופכות ל־1 בינואר. לכן קודם מסתכלות (<span class="en">Keep Errors</span>, כמו בשבוע שעבר), ורק אחר כך מחליפות.</div>
   </article>
 
   <article class="topic">
@@ -130,39 +128,22 @@
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
         <li>לוחצות על הכותרת <b>מחיר לליטר</b>, ומסתכלות ב־<span class="en">Column statistics</span>: כמה <span class="en">Empty</span>?</li>
-        <li>החץ שליד <b>מחיר לליטר</b> ← מסמנות רק <span class="en">(null)</span> ← <b>OK</b>. מסתכלות: איזה דלק, ובאיזה חודש? ויש גם שורה אחת שריקה כולה.</li>
+        <li>החץ שליד <b>מחיר לליטר</b> ← מסמנות רק <span class="en">(null)</span> ← <b>OK</b>. מסתכלות: איזה דלק, ובאיזה חודש?</li>
         <li>מוחקות את שלב הסינון ביומן (ה־X שלידו). פילטר בדיקה.</li>
-        <li>את השורה הריקה מוחקות: <span class="path">Home › Remove Rows › Remove Blank Rows</span>. עכשיו <span class="en">Empty</span> ‏6.</li>
         <li>לוחצות שוב על <b>מחיר לליטר</b>. <span class="path">Transform › Replace Values</span>.</li>
         <li>ב־<span class="en">Value To Find</span> כותבות <code>null</code>, וב־<span class="en">Replace With</span> כותבות <code>7.40</code>. <b>OK</b>.</li>
       </ol>
       <details class="ok"><summary>מה אמור להופיע?</summary>
-        מעל מחיר לליטר: <span class="en">Empty</span> ‏0%. וביומן שני שלבים, <span class="en">Removed Blank Rows</span> ו־<span class="en">Replaced Value</span>.</details>
+        לפני ההחלפה: <span class="en">Empty</span> ‏6, וכל השישה בנזין 95 בינואר. אחרי: מעל מחיר לליטר <span class="en">Empty</span> ‏0%, וביומן שלב חדש, <span class="en">Replaced Value</span>.</details>
     </details>
-    <div class="why"><b>שורה ריקה כולה ← מוחקות.</b> אין בה שום מידע. ואם לא מוחקות, היא מקבלת מחיר 7.40, כאילו היה בה תדלוק.</div>
+    <div class="why"><b>פילטר בדיקה = למחוק.</b> באקסל סינון רק מסתיר שורות. בפאוור קוורי הוא <b>מוחק אותן באמת</b>, והמחיקה נשמרת ביומן.
+    שכחתן את שלב הסינון? בדוח יופיעו רק שישה תדלוקים.</div>
     <div class="why"><b>הדיון של השיעור.</b> שישה תדלוקים, כולם בנזין 95, כולם בינואר. ובינואר כל תדלוק של בנזין 95 עלה 7.40 בדיוק.
     אז מצילות, וכותבות למה. אילו המחירים בינואר היו קופצים מ־7 ל־8, אולי היינו מוחקות, וגם את זה כותבות.</div>
   </article>
 
   <article class="topic">
-    <h3><span class="t">1.4</span>עמודות בלי מידע</h3>
-    <p class="out">שתי עמודות פחות, ושלב אחד חדש ביומן.</p>
-    <details class="how" open><summary>איך עושים</summary>
-      <ol class="do">
-        <li>מסתכלות על <b>שם המתדלק</b> ועל <b>שם התחנה</b>: מה כתוב מעליהן, ומה ב־<span class="en">Distinct</span>?</li>
-        <li>לוחצות על הכותרת <b>שם המתדלק</b>.</li>
-        <li>עם <b>Ctrl</b> לוחצות גם על <b>שם התחנה</b>.</li>
-        <li><span class="path">Home › Remove Columns</span>.</li>
-      </ol>
-      <details class="ok"><summary>מה אמור להופיע?</summary>
-        ביומן <span class="en">Removed Columns</span>, ושתי העמודות נעלמו.</details>
-    </details>
-    <div class="why"><b>עמודה ריקה כולה</b> לא עונה על שום שאלה. <b>עמודה עם ערך אחד</b> (כל התדלוקים באותה תחנה) גם לא: אין מה להשוות.
-    והקובץ המקורי לא משתנה. אם יתברר שצריך אותן, מוחקות את השלב והן חוזרות.</div>
-  </article>
-
-  <article class="topic">
-    <h3><span class="t">1.5</span>שמות בעברית לשלבים</h3>
+    <h3><span class="t">1.4</span>שמות בעברית לשלבים</h3>
     <p class="out">כל שלב ביומן אומר בעברית מה הוא עשה.</p>
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
@@ -176,180 +157,250 @@
     </details>
   </article>
 
+  <div class="next">✔ תיקנו, ונתנו שמות. עכשיו רושמות. <a href="#table">לטבלת התיעוד ←</a></div>
+</section>
+
+<!-- ===================== טבלת התיעוד ===================== -->
+<section id="table">
+  <h2>טבלת התיעוד: היומן זוכר בשבילכן</h2>
+  <p class="out">טבלת התיעוד פתוחה, ובה שורה לכל שלב תיקון ביומן של התדלוק.</p>
+  <p class="sub">שורה אחת לכל תיקון. מהיום היא מתמלאת בכל פעם שמתקנות, ובשיעור 6 היא הופכת לפרק הטיוב.</p>
+  <div class="box">
+    <div class="rec">
+      <a class="btn" href="files/cleaning-log.xlsx" download="טבלת תיעוד טיוב.xlsx">⬇ הורדת טבלת התיעוד</a>
+      <span>קובץ אקסל, שני גיליונות: <b>תיעוד הטיוב</b> ו<b>לפני ואחרי</b>.</span>
+    </div>
+  </div>
+
   <article class="topic">
-    <h3><span class="t">1.6</span>היומן זוכר בשבילכן</h3>
-    <p class="out">טבלת התיעוד פתוחה, ובה שורה לכל שלב ביומן.</p>
+    <h3>ממלאות יחד, מתוך היומן</h3>
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
-        <li>מורידות את <a class="file" href="files/cleaning-log.xlsx" download="טבלת תיעוד טיוב.xlsx">טבלת תיעוד טיוב.xlsx</a>, ומעבירות אותה מ״הורדות״ לתיקייה <code>Power BI</code>.</li>
-        <li>עוברות על היומן מלמעלה למטה, ולכל שלב של תיקון כותבות שורה בטבלה.</li>
+        <li>מורידות את הטבלה (הכפתור למעלה), ומעבירות אותה מ״הורדות״ לתיקייה <code>Power BI</code>.</li>
+        <li>בפאוור קוורי, ביומן, לוחצות על השלב הראשון שאחרי <span class="en">Changed Type</span>.</li>
+        <li>כותבות עליו שורה בטבלה, לפי <a href="#cols">מה כותבים בכל עמודה</a>.</li>
+        <li>עוברות לשלב הבא ביומן, וכותבות שורה. וכך עד השלב האחרון.</li>
       </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        חמש שורות, באותו סדר כמו ביומן. השמות בעמודה האחרונה יכולים להיות אחרים אצלכן. מה שחשוב: <b>בדיוק</b> כמו ביומן.
+        <div class="box scroll" style="margin-top:10px">
+          <table>
+            <thead><tr><th>עמודה</th><th>הבעיה</th><th>איך גיליתי</th><th>מה עשיתי</th><th>למה</th><th>שם השלב</th></tr></thead>
+            <tbody>
+              <tr><td>שם המתדלק, שם התחנה</td><td>אין בהן מידע</td><td>שם המתדלק: <span class="en">Empty</span> ‏100%. שם התחנה: <span class="en">Distinct</span> ‏1</td><td><span class="en">Remove Columns</span></td><td>עמודה ריקה, או עם ערך אחד, לא עונה על שום שאלה. הבעיה בעמודה כולה, ולכן לא נגעתי בשורות</td><td>מחיקת עמודות בלי מידע</td></tr>
+              <tr><td>כל העמודות</td><td>שתי שורות ריקות כולן</td><td>קוד תדלוק: <span class="en">Empty</span> ‏2, ובשורות האלה כל העמודות ריקות</td><td><span class="en">Remove Blank Rows</span></td><td>אין בהן שום מידע, אז אין מה להציל</td><td>מחיקת שורות ריקות</td></tr>
+              <tr><td>קוד תדלוק</td><td>ארבעה קודים מופיעים פעמיים</td><td><span class="en">Count</span> ‏2907, <span class="en">Distinct</span> ‏2902, <span class="en">Unique</span> ‏2897. <span class="en">Keep Duplicates</span> הראה אותם</td><td><span class="en">Remove Duplicates</span> על קוד תדלוק</td><td>קוד הוא מזהה: כל תדלוק צריך להופיע פעם אחת. עותק נוסף נספר פעמיים בכל סכום</td><td>מחיקת תדלוקים כפולים</td></tr>
+              <tr><td>תאריך</td><td>שגיאה בשורה אחת</td><td>אחרי המרה ל־<span class="en">Date</span>: <span class="en">Error</span> ‏1 (ב־<span class="en">entire data set</span>)</td><td><span class="en">Replace Errors</span> ← 01/01/2026</td><td>היה כתוב ״1 בינואר״ במילים. כל שאר השורה תקין, ולכן החלפתי ולא מחקתי</td><td>תיקון תאריך שגוי</td></tr>
+              <tr><td>מחיר לליטר</td><td>שישה תדלוקים בלי מחיר</td><td><span class="en">Empty</span> ‏6. סינון על <span class="en">null</span>: כולם בנזין 95, כולם בינואר</td><td><span class="en">Replace Values</span>: <span class="en">null</span> ← 7.40</td><td>בינואר כל תדלוק של בנזין 95 עלה 7.40 בדיוק. שאר השורה תקין, ולכן הצלתי ולא מחקתי</td><td>השלמת מחיר חסר</td></tr>
+            </tbody>
+          </table>
+        </div></details>
     </details>
-    <div class="why"><b>בדיעבד, בלי לזכור.</b> את התיקונים של שבוע שעבר לא צריך לזכור: הם כתובים ביומן, לפי הסדר.
-    מה כותבים בכל עמודה, ודוגמה מלאה: <a href="#table">טבלת התיעוד</a>.</div>
+    <div class="why"><b>בדיעבד, בלי לזכור.</b> את התיקונים של שבוע שעבר לא צריך לזכור: הם כתובים ביומן, לפי הסדר. לכן נתנו להם שמות.</div>
   </article>
 
+  <div class="box scroll" id="cols" style="margin-top:14px">
+    <table>
+      <thead><tr><th>עמודה</th><th>מה כותבים</th><th>דוגמה מהתדלוק</th></tr></thead>
+      <tbody>
+        <tr><td><b>עמודה</b></td><td>באיזו עמודה הבעיה</td><td>תאריך</td></tr>
+        <tr><td><b>הבעיה</b></td><td>מה לא בסדר, במילים פשוטות</td><td>שגיאה בשורה אחת</td></tr>
+        <tr><td><b>איך גיליתי</b></td><td>איפה ראיתן את זה, ואיזה מספר</td><td>אחרי המרה ל־<span class="en">Date</span>, מעל העמודה כתוב <span class="en">Error</span> ‏1 (ב־<span class="en">entire data set</span>)</td></tr>
+        <tr><td><b>מה עשיתי</b></td><td>הפעולה, ומה הכנסתן</td><td><span class="en">Replace Errors</span> ← 01/01/2026</td></tr>
+        <tr><td><b>למה</b> (ולמה לא הדרך האחרת)</td><td>הנימוק, וגם למה לא מחקתן או למה לא הצלתן</td><td>הערך היה טקסט ולא תאריך. כל שאר השורה תקין, ולכן החלפתי ולא מחקתי</td></tr>
+        <tr><td><b>שם השלב ביומן</b></td><td>בדיוק כמו ב־<span class="en">Applied Steps</span></td><td>תיקון תאריך שגוי</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="trap"><b>״כי זה היה שגוי״ זה לא ״למה״.</b> ״למה״ עונה על השאלה שבשלב 0: למה מחקתן ולא הצלתן, או להפך.
+  ואם הצלתן, מאיפה הערך שהכנסתן.</div>
   <div class="why"><b>י״א — הגשר לבגרות.</b> בבגרות עושים את אותו הדבר באקסל: מוצאות את הבעיה, <b>מסמנות אותה בצהוב</b>, ומסבירות מה עשיתן.
   פאוור קוורי עושה את הסימון לבד: כל שלב ביומן הוא ״סימון בצהוב״ עם שם.</div>
+  <div class="why"><b>י״ב:</b> הטבלה הזו היא פרק הטיוב בעבודה. שלושת הדברים שמצאתן במסד שלכן בשבוע שעבר הם השורות הראשונות.</div>
 
-  <div class="next">✔ סיימנו את ההדגמה. עכשיו אתן, בזוגות. <a href="#room">לשלב 2: כרטיס החדר ←</a></div>
+  <div class="next">✔ הבנו מה כותבים ולמה. עכשיו אתן, בזוגות, מההתחלה. <a href="#room">לשלב 2: כרטיס החדר ←</a></div>
 </section>
 
 <!-- ===================== שלב 2 ===================== -->
 <section id="room" class="stage s2">
-  <h2><span class="part">שלב 2 · בחדרים · בזוגות · כ־20 דקות · נתוני הזמנות</span>כרטיס החדר: להציל הזמנה, ולראות אותה בגרף</h2>
-  <p class="sub">ממשיכות מקובץ ההזמנות של שבוע שעבר. נשארה בו בעיה אחת, תאריך שגוי, והיום רואות אותה בדוח לפני שמתקנות.</p>
-  <div class="trap"><b>לא היית בשיעור 2?</b> עשי קודם את 2.1 ו־2.4 ב<a href="lesson2.html#room" target="_blank" rel="noopener">כרטיס החדר של שיעור 2</a>, ושמרי בשם <code>הזמנות</code>. עשר דקות.
-  אי אפשר לקבל את הקובץ מחברה: קובץ pbix זוכר איפה האקסל יושב <b>במחשב שלה</b>.</div>
+  <h2><span class="part">שלב 2 · בחדרים · בזוגות · כ־25 דקות · נתוני הזמנות</span>כרטיס החדר: כל הדרך, מהקובץ ועד הדוח</h2>
+  <p class="sub">הפעם מתחילות מאפס, בקובץ חדש. הכרטיס בנוי כמו המטלה של טל: מתחברות, בודקות, מתקנות סוגים, רואות את הדוח <b>לפני</b>, מנקות, ורואות <b>אחרי</b>.
+  ובדרך, כל בעיה נרשמת בטבלת התיעוד.</p>
+  <div class="trap"><b>לא היית בשיעור 2?</b> כל כלי בכרטיס הוסבר שם, על התדלוק. בחדר עבדי יחד עם בת הזוג, ואחרי השיעור עברי על <a href="lesson2.html#a" target="_blank" rel="noopener">שלב 1 בשיעור 2</a>.</div>
   <div class="roles">
     <div><b>נהגת:</b> משתפת מסך ולוחצת. בת הזוג עושה את אותו הדבר במחשב שלה ומשווה.</div>
     <div><b>נווטת:</b> מקריאה את הצעד ובודקת את ה־✔.</div>
   </div>
 
   <article class="topic">
-    <h3><span class="t">2.1</span>פתיחה: סוגים</h3>
-    <p class="out">התאריך מסומן כתאריך, ושני המחירים ככסף (<b>$</b>).</p>
+    <h3><span class="t">2.1</span>חיבור</h3>
+    <p class="out">פאוור קוורי פתוח על נתוני ההזמנות, עם פרופיל על כל הנתונים.</p>
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
-        <li>פותחות את <code>Power BI\שיעור 2\הזמנות.pbix</code>.</li>
-        <li><span class="path">Home › Transform data</span>, ובתחתית <span class="en">entire data set</span>.</li>
-        <li>מסתכלות על האייקון שליד <b>תאריך הזמנה</b>. אמור להיות לוח שנה.</li>
-        <li>ליד <b>מחיר לפריט</b> כתוב 1.2? לוחצות עליו ← <span class="en">Fixed decimal number</span> ← <b>Replace current</b>.</li>
-        <li>אותו דבר ב־<b>סך הכל מחיר</b>.</li>
+        <li>מורידות את <a class="file" href="files/orders.xlsx" download="נתוני הזמנות.xlsx">נתוני הזמנות.xlsx</a>, ומעבירות אותו מ״הורדות״ לתיקייה <code>Power BI\שיעור 3</code>.</li>
+        <li>פותחות דוח חדש בפאוור BI. אם התדלוק פתוח: <span class="path">File › New</span>.</li>
+        <li><span class="path">Home › Get data › Excel workbook</span>, בוחרות את <code>נתוני הזמנות.xlsx</code> ולוחצות <b>Open</b>.</li>
+        <li>ב־Navigator מסמנות את הטבלה <code>Orders_Raw</code>, ולוחצות <b>Transform Data</b>. <b>לא Load.</b></li>
+        <li>בלשונית <span class="path">View</span> מסמנות את שלוש התיבות: <span class="en">Column quality</span>, <span class="en">Column distribution</span>, <span class="en">Column profile</span>.</li>
+        <li>למטה משמאל: <span class="en">entire data set</span>.</li>
       </ol>
       <details class="ok"><summary>מה אמור להופיע?</summary>
-        לוח שנה ליד תאריך הזמנה, ו־$ ליד שני המחירים. מי שעשתה את זה בשבוע שעבר, לא משנה כלום.
-        <figure><img src="img/l2-08-replace-current.png" alt="חלון Change Column Type עם שלושה כפתורים: Replace current, Add new step, Cancel" width="992" height="272" loading="lazy"></figure></details>
+        למטה משמאל: <b>17 COLUMNS</b>. מעל כל עמודה שלוש שורות: <span class="en">Valid</span>, <span class="en">Error</span>, <span class="en">Empty</span>.</details>
     </details>
-    <div class="why"><b>למה דווקא עכשיו?</b> היום בונות גרף לפי חודש. פאוור BI יודע לפרק לחודשים רק עמודה מסוג תאריך.</div>
   </article>
 
   <article class="topic">
-    <h3><span class="t">2.2</span>הגרף ״לפני״</h3>
-    <p class="out">גרף עמודות של מספר ההזמנות בכל חודש, לפני התיקון.</p>
+    <h3><span class="t">2.2</span>בדיקת איכות, ורושמות</h3>
+    <p class="out">בטבלת התיעוד שורה לכל בעיה שמצאתן: עמודה, הבעיה, איך גיליתי. <b>עוד בלי לתקן.</b></p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מורידות שוב את <a class="file" href="files/cleaning-log.xlsx" download="טבלת תיעוד טיוב.xlsx">טבלת התיעוד</a>, ושומרות אותה בתיקייה <code>Power BI\שיעור 3</code> בשם <code>תיעוד - הזמנות</code>.</li>
+        <li>עוברות על העמודות אחת אחת. מעל כל עמודה: יש <span class="en">Error</span>? יש <span class="en">Empty</span>?</li>
+        <li>לוחצות על כותרת של עמודה, ומסתכלות למטה ב־<span class="en">Column statistics</span>: <span class="en">Count</span>, <span class="en">Distinct</span>, <span class="en">Unique</span>.</li>
+        <li>כל דבר חשוד: שורה בטבלה. ממלאות רק את <b>עמודה</b>, <b>הבעיה</b> ו<b>איך גיליתי</b>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע? (לפתוח רק אחרי שחיפשתן)</summary>
+        <ul>
+          <li><b>בכל העמודות</b> <span class="en">Empty</span> ‏3. אלה שלוש שורות ריקות כולן.</li>
+          <li><b>קוד הזמנה:</b> <span class="en">Count</span> ‏2003, <span class="en">Distinct</span> ‏1998, <span class="en">Unique</span> ‏1994. מזהה שאמור להיות ייחודי, ויש בו כפולים.</li>
+          <li><b>תאריך הזמנה:</b> <span class="en">Error</span> ‏1.</li>
+          <li><b>מקור ייבוא:</b> <span class="en">Distinct</span> ‏1. בכל השורות כתוב <span class="en">ERP-Orders</span>.</li>
+          <li><b>קוד סניף:</b> <span class="en">Distinct</span> ‏6. השוו ל<b>אזור בארץ</b>. מה גיליתן?</li>
+        </ul></details>
+    </details>
+    <div class="trap"><b><span class="en">Error</span> ‏0% בתאריך?</b> ההזמנה השגויה יושבת אחרי השורה ה־1,000. בלי <span class="en">entire data set</span> לא רואים אותה.</div>
+    <div class="why"><b>רק רושמות, עוד לא מתקנות.</b> זה שלב 2 במטלה של טל: רשימה של כל מה שמצאתן. אחר כך מתקנות לפי הרשימה, ולא לפי מה שקופץ לעין.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.3</span>סוגים</h3>
+    <p class="out">לכל עמודה הסוג הנכון. שני המחירים מסומנים ככסף (<b>$</b>).</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>עוברות על האייקון שליד שם כל עמודה, ומשוות לטבלה למטה.</li>
+        <li>לוחצות על האייקון שליד <b>מחיר לפריט</b> ← <span class="en">Fixed decimal number</span>. נפתח חלון? <b>Replace current</b>.</li>
+        <li>אותו דבר ב־<b>סך הכל מחיר</b>.</li>
+        <li>ליד <b>תאריך הזמנה</b> אמור להיות לוח שנה. כתוב <span class="en">ABC123</span>? לוחצות עליו ← <span class="en">Date</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        $ ליד שני המחירים, ולוח שנה ליד תאריך הזמנה. את כל השאר פאוור BI ניחש נכון.</details>
+    </details>
+    <div class="box scroll" style="margin-top:14px">
+      <table>
+        <thead><tr><th>עמודה</th><th>הסוג הנכון</th><th>למה</th></tr></thead>
+        <tbody>
+          <tr><td>קוד הזמנה · קוד לקוח · קוד סניף</td><td><span dir="ltr"><span class="en">Text</span> · ABC</span></td><td>קוד הוא שם, לא כמות.</td></tr>
+          <tr><td>כל עמודות השמות והקטגוריות</td><td><span dir="ltr"><span class="en">Text</span> · ABC</span></td><td>מילים.</td></tr>
+          <tr><td>תאריך הזמנה</td><td><span dir="ltr"><span class="en">Date</span> · לוח שנה</span></td><td>אין בקובץ שעות. ובלי סוג תאריך, אין גרף לפי חודש.</td></tr>
+          <tr><td>מספר פריטים</td><td><span dir="ltr"><span class="en">Whole number</span> · 123</span></td><td>סופרים פריטים שלמים. אין חצי כיסא.</td></tr>
+          <tr><td>מחיר לפריט · סך הכל מחיר</td><td><span dir="ltr"><span class="en">Fixed decimal</span> · $</span></td><td>כסף.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.4</span>הדוח ״לפני״</h3>
+    <p class="out">בדוח טבלה וגרף לפי חודש, לפני כל תיקון, והמספרים רשומים.</p>
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
         <li><span class="path">Home › Close &amp; Apply</span>. קופצת הודעה על שגיאה אחת? לוחצות <b>Close</b>.</li>
-        <li>בדוח: קליק על שטח ריק, ובחלונית <span class="en">Visualizations</span> בוחרות <span class="en">Clustered column chart</span>.</li>
-        <li>גוררות את <b>תאריך הזמנה</b> אל <span class="en">X-axis</span>.</li>
-        <li>גוררות את <b>קוד הזמנה</b> אל <span class="en">Y-axis</span>.</li>
-        <li>ב־<span class="en">X-axis</span>, מתחת לתאריך הזמנה, לוחצות על ה־X שליד <span class="en">Year</span>.</li>
-        <li>ה־X שליד <span class="en">Quarter</span>.</li>
-        <li>ה־X שליד <span class="en">Day</span>. נשאר רק <span class="en">Month</span>.</li>
-        <li>בחלונית <span class="en">Visualizations</span>, בלשונית העיצוב (המברשת), מדליקות <span class="en">Data labels</span>.</li>
+        <li><span class="path">File › Save as</span>, לתיקייה <code>Power BI\שיעור 3</code>, בשם <code>הזמנות</code>.</li>
+        <li>קליק על שטח ריק בדף, ובחלונית <span class="en">Visualizations</span> בוחרות <span class="en">Table</span>.</li>
+        <li>גוררות לטבלה את <b>סך הכל מחיר</b>, ואחריו את <b>קוד הזמנה</b>. ליד קוד הזמנה לא כתוב <span class="en">Count</span>? החץ שלידו ← <b>Count</b>.</li>
       </ol>
       <details class="ok"><summary>מה אמור להופיע?</summary>
-        ב־<span class="en">Y-axis</span> כתוב <span class="en">Count of</span> קוד הזמנה. בגרף חמש עמודות, <span class="en">January</span> עד <span class="en">May</span>, ובפברואר <b>384</b>.
-        ולפניהן, ראשונה משמאל, עמודה שישית בשם <span class="en">(Blank)</span>, עם <b>1</b>. כמעט לא רואים אותה, ולכן הדלקנו את המספרים.
-        <figure><img src="img/l3-09-chart-before.png" alt="גרף עמודות לפי חודש: (Blank) 1, January 415, February 384, March 403, April 379, May 415" width="1272" height="746" loading="lazy" style="width:640px">
-        <figcaption>העמודה הראשונה משמאל היא ה־(Blank). בלי המספר 1 מעליה, היה קשה לראות אותה.</figcaption></figure></details>
+        סך הכל מחיר <b>&lrm;₪ 11,377,566.3</b>, ו־<span class="en">Count of</span> קוד הזמנה <b>2,000</b>.
+        <b>שאלה לבת הזוג:</b> בפאוור קוורי היו 2,003 שורות. לאן נעלמו שלוש?</details>
       <ol class="do">
-        <li>אומרות בקול לבת הזוג: מאיפה הגיעה ה־<span class="en">(Blank)</span>?</li>
+        <li>קליק על שטח ריק בדף, <b>לא</b> על הטבלה. בוחרות <span class="en">Clustered column chart</span>.</li>
+        <li>גוררות את <b>תאריך הזמנה</b> אל <span class="en">X-axis</span>, ואת <b>קוד הזמנה</b> אל <span class="en">Y-axis</span>.</li>
+        <li>ב־<span class="en">X-axis</span>, מתחת לתאריך הזמנה, לוחצות על ה־X שליד <span class="en">Year</span>, <span class="en">Quarter</span> ו־<span class="en">Day</span>. נשאר רק <span class="en">Month</span>.</li>
+        <li>בלשונית העיצוב (המברשת) מדליקות <span class="en">Data labels</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        שש עמודות. ראשונה משמאל <span class="en">(Blank)</span> עם <b>1</b>, ואחריה
+        <span class="en">January</span> 415 · <span class="en">February</span> 385 · <span class="en">March</span> 403 · <span class="en">April</span> 380 · <span class="en">May</span> 416.
+        את ה־<span class="en">(Blank)</span> כמעט לא רואים, ולכן הדלקנו את המספרים.</details>
+      <ol class="do">
+        <li>פותחות את <code>תיעוד - הזמנות</code>, ובגיליון <b>לפני ואחרי</b> רושמות בעמודה <b>לפני</b> את סך המכירות, את מספר ההזמנות, ואת המספר שמעל ה־<span class="en">(Blank)</span>.</li>
       </ol>
     </details>
-    <div class="why"><b>הזמנה בלי חודש.</b> כשטוענות לדוח, תא עם שגיאה נטען ריק. ההזמנה נספרת, אבל הגרף לא יודע לאיזה חודש לשייך אותה.
-    שורה אחת מתוך 1,997, ובדוח כבר יש עמודה שאף אחד לא יודע להסביר.</div>
-  </article>
-
-  <article class="topic">
-    <h3><span class="t">2.3</span>מוצאות את השגיאה</h3>
-    <p class="out">יודעות באיזו הזמנה השגיאה, ומה כתוב שם.</p>
-    <details class="how" open><summary>איך עושים</summary>
-      <ol class="do">
-        <li><span class="path">Home › Transform data</span>, ובתחתית <span class="en">entire data set</span>.</li>
-        <li>לוחצות על הכותרת <b>תאריך הזמנה</b>.</li>
-        <li><span class="path">Home › Keep Rows › Keep Errors</span>.</li>
-      </ol>
-      <details class="ok"><summary>מה אמור להופיע?</summary>
-        שורה אחת: <b>ORD-101234</b>, ובתאריך כתוב <b>Error</b>.
-        <figure><img src="img/l3-02-kept-errors.png" alt="אחרי Keep Errors נשארה שורה אחת: ORD-101234, ובעמודת תאריך הזמנה Error" width="1920" height="346" loading="lazy"></figure></details>
-      <ol class="do">
-        <li>לוחצות על המילה <b>Error</b>, ומסתכלות למטה על השורה <span class="en">Details</span>.</li>
-      </ol>
-      <details class="ok"><summary>מה אמור להופיע?</summary>
-        <figure><img src="img/l3-03-error-detail.png" alt="DataFormat.Error: We couldn't parse the input provided as a Date value. Details: 31/02/2026. ביומן נוסף שלב חדש בשם תאריך הזמנה" width="1920" height="401" loading="lazy">
-        <figcaption>31 בפברואר. תאריך שלא קיים.</figcaption></figure></details>
-      <ol class="do">
-        <li>מוחקות את שני השלבים שנוספו ביומן: קודם את האחרון (<b>תאריך הזמנה</b>), ואז את <span class="en">Kept Errors</span>.</li>
-      </ol>
-      <details class="ok"><summary>מה אמור להופיע?</summary>
-        שוב 1,997 שורות, והשלב האחרון ביומן הוא שוב מה שעשיתן בשבוע שעבר (<span class="en">Removed Duplicates</span>, או <span class="en">Changed Type</span> אם שיניתן סוגים היום).</details>
-    </details>
-  </article>
-
-  <article class="topic">
-    <h3><span class="t">2.4</span>מחליטות, ומצילות</h3>
-    <p class="out">במקום השגיאה יש תאריך, ואתן יודעות לנמק למה דווקא הוא.</p>
-    <details class="how" open><summary>איך עושים</summary>
-      <ol class="do">
-        <li>מחליטות יחד: למחוק את ההזמנה, או להציל אותה? ובאיזה תאריך?</li>
-        <li>לוחצות על הכותרת <b>תאריך הזמנה</b>.</li>
-        <li><span class="path">Transform › Replace Values ▾ › Replace Errors</span>.</li>
-        <li>כותבות <code>28/02/2026</code> ולוחצות <b>OK</b>.
-          <figure><img src="img/l3-05-replace-errors-dialog.png" alt="חלון Replace Errors, ובשדה Value כתוב 28/02/2026" width="1046" height="339" loading="lazy" style="width:560px"></figure></li>
-      </ol>
-      <details class="ok"><summary>מה אמור להופיע?</summary>
-        ביומן <span class="en">Replaced Errors</span>, ומעל תאריך הזמנה <span class="en">Error</span> ‏0%.</details>
-    </details>
-    <div class="why"><b>למה להציל?</b> זו הזמנה אמיתית: לקוח, שלושה כיסאות, ‎1,621 ₪. מחיקה הייתה מעלימה כסף מהדוח.
-    <b>ולמה 28?</b> החודש כנראה נכון והיום לא. 28 הוא היום האחרון של פברואר 2026, הכי קרוב למה שנכתב. זו הנחה, ולכן כותבות אותה בטבלה.</div>
+    <div class="why"><b>למה ״לפני״?</b> כדי לדעת מה הטיוב שינה, צריך מספר להשוות אליו. בלי ״לפני״, אי אפשר להראות שהתיקון עשה משהו.</div>
+    <div class="why"><b>הזמנה בלי חודש.</b> כשטוענות לדוח, תא עם שגיאה נטען ריק. ההזמנה נספרת, אבל הגרף לא יודע לאיזה חודש לשייך אותה. לכן <span class="en">(Blank)</span>.</div>
   </article>
 
   <div class="swap">🔄 מתחלפות: הנהגת מפסיקה לשתף, והשנייה משתפת את המסך שלה.</div>
 
   <article class="topic">
-    <h3><span class="t">2.5</span>עמודות מיותרות, ושמות בעברית</h3>
-    <p class="out">15 עמודות, ולכל שלב ביומן יש שם בעברית.</p>
+    <h3><span class="t">2.5</span>ניקוי</h3>
+    <p class="out">בלי שגיאות, בלי שורות ריקות ובלי הזמנות כפולות. 15 עמודות, ולכל שלב ביומן שם בעברית.</p>
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
-        <li>לוחצות על הכותרת <b>קוד סניף</b>.</li>
-        <li>עם <b>Ctrl</b> לוחצות גם על <b>מקור ייבוא</b>.</li>
-        <li><span class="path">Home › Remove Columns</span>.</li>
+        <li><span class="path">Home › Transform data</span>, ובתחתית <span class="en">entire data set</span>.</li>
+        <li>לוחצות על הכותרת <b>תאריך הזמנה</b>. <span class="path">Home › Keep Rows › Keep Errors</span>.</li>
+        <li>לוחצות על התא שכתוב בו <span class="en">Error</span>, ליד המילה. למטה: מה היה כתוב?</li>
       </ol>
       <details class="ok"><summary>מה אמור להופיע?</summary>
-        למטה משמאל: <b>15 COLUMNS</b>.</details>
+        שורה אחת: <b>ORD-101234</b>, ולמטה <b>31/02/2026</b>. 31 בפברואר, תאריך שלא קיים.
+        <figure><img src="img/l3-03-error-detail.png" alt="DataFormat.Error: We couldn't parse the input provided as a Date value. Details: 31/02/2026. ביומן נוסף שלב חדש בשם תאריך הזמנה" width="1920" height="401" loading="lazy">
+        <figcaption>בצילום נוסף ביומן שלב בשם <b>תאריך הזמנה</b>. זה מה שקורה כשלוחצות על המילה עצמה.</figcaption></figure></details>
       <ol class="do">
-        <li>נותנות שם בעברית לכל שלב של תיקון: קליק על השלב, <b>F2</b>, כותבות, Enter. גם לשלבים משבוע שעבר.</li>
+        <li>מוחקות את שלב הבדיקה, <span class="en">Kept Errors</span> (וגם את השלב שאחריו, אם נוסף).</li>
+        <li>מחליטות יחד: למחוק את ההזמנה, או להציל? ובאיזה תאריך?</li>
+        <li>לוחצות על <b>תאריך הזמנה</b>. <span class="path">Transform › Replace Values ▾ › Replace Errors</span>, כותבות <code>28/02/2026</code>, <b>OK</b>.
+          <figure><img src="img/l3-05-replace-errors-dialog.png" alt="חלון Replace Errors, ובשדה Value כתוב 28/02/2026" width="1046" height="339" loading="lazy" style="width:560px"></figure></li>
+        <li><span class="path">Home › Remove Rows › Remove Blank Rows</span>.</li>
+        <li>לוחצות על הכותרת <b>קוד הזמנה</b>, ורק היא מסומנת. <span class="path">Home › Remove Rows › Remove Duplicates</span>.</li>
+        <li>לוחצות על <b>קוד סניף</b>, ועם <b>Ctrl</b> גם על <b>מקור ייבוא</b>. <span class="path">Home › Remove Columns</span>.</li>
+        <li>נותנות שם בעברית לכל שלב תיקון: קליק על השלב, <b>F2</b>, כותבות, Enter.</li>
       </ol>
       <details class="ok"><summary>מה אמור להופיע?</summary>
+        למטה משמאל <b>15 COLUMNS</b>. בקוד הזמנה <span class="en">Count = Distinct = Unique</span> ‏1997. וביומן ארבעה שלבים חדשים:
         <figure><img src="img/l3-08-steps-hebrew.png" alt="Applied Steps עם ארבעה שלבים בעברית: תיקון תאריך שגוי, מחיקת שורות ריקות, מחיקת הזמנות כפולות, מחיקת עמודות שלא צריך" width="373" height="249" loading="lazy" style="width:300px">
-        <figcaption>ארבעה שלבי תיקון, בשמות שלכן. F2 לא מגיב? קליק נוסף על השלב, ושוב F2.</figcaption></figure></details>
+        <figcaption>F2 לא מגיב? קליק נוסף על השלב, ושוב F2.</figcaption></figure></details>
     </details>
-    <div class="why"><b>למה דווקא שתי אלה?</b> בכל השורות אותו סניף ואותה מערכת. הן לא עונות על אף שאלה של החנות.</div>
+    <div class="why"><b>למה להציל?</b> זו הזמנה אמיתית: לקוח, שלושה כיסאות, ‎1,621 ₪. מחיקה הייתה מעלימה כסף מהדוח.
+    <b>ולמה 28?</b> החודש כנראה נכון והיום לא. 28 הוא היום האחרון של פברואר 2026, הכי קרוב למה שנכתב. זו הנחה, ולכן כותבות אותה בטבלה.</div>
+    <div class="why"><b>ולמה דווקא שתי העמודות האלה?</b> במקור ייבוא כתוב אותו דבר בכל השורות. ובקוד סניף, לכל אזור יש סניף אחד: <span class="en">BR-04</span> הוא תמיד תל אביב.
+    העמודה חוזרת על מידע שכבר יש, בצורה פחות ברורה.</div>
   </article>
 
   <article class="topic">
-    <h3><span class="t">2.6</span>הגרף ״אחרי״</h3>
-    <p class="out">אותו גרף, ומשהו בו השתנה.</p>
+    <h3><span class="t">2.6</span>הדוח ״אחרי״</h3>
+    <p class="out">אותה טבלה ואותו גרף, ואתן יודעות להסביר מה השתנה.</p>
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
         <li><span class="path">Home › Close &amp; Apply</span>. הפעם בלי הודעת שגיאה.</li>
-        <li>מסתכלות על הגרף.</li>
+        <li>מסתכלות על הטבלה ועל הגרף.</li>
       </ol>
       <details class="ok"><summary>מה אמור להופיע?</summary>
-        עמודת ה־<span class="en">(Blank)</span> נעלמה, ובפברואר <b>385</b> במקום 384.
-        <figure><img src="img/l3-10-chart-after.png" alt="גרף עמודות לפי חודש, בלי (Blank): January 415, February 385, March 403, April 379, May 415" width="1272" height="746" loading="lazy" style="width:640px"></figure>
-        <b>שאלה לחזרה מהחדר:</b> לאן הלכה ה־<span class="en">(Blank)</span>?</details>
+        בטבלה: <b>&lrm;₪ 11,365,128.91</b> ו־<b>1,997</b>. בגרף ה־<span class="en">(Blank)</span> נעלמה:
+        <figure><img src="img/l3-10-chart-after.png" alt="גרף עמודות לפי חודש, בלי (Blank): January 415, February 385, March 403, April 379, May 415" width="1272" height="746" loading="lazy" style="width:640px"></figure></details>
       <ol class="do">
+        <li>משוות ל״לפני״, חודש אחרי חודש. אומרות בקול: מה זז, ובכמה?</li>
+        <li>בגיליון <b>לפני ואחרי</b> רושמות את המספרים בעמודה <b>אחרי</b>, ובעמודה האחרונה: מה השתנה, ולמה.</li>
         <li>שומרות (<b>Ctrl+S</b>).</li>
       </ol>
+      <details><summary>פברואר לא זז. איך? (אחרי שניסיתן)</summary>
+        <p>ההזמנה שהצלנו הלכה לפברואר: ‎+1. אבל גם אחת ההזמנות הכפולות הייתה מפברואר: ‎−1. שני התיקונים קיזזו זה את זה.
+        באפריל ובמאי היו שתי הכפולות האחרות, ולכן שם ירד אחד. <b>מספר שלא זז לא אומר שלא קרה כלום.</b></p></details>
     </details>
-    <div class="why"><b>בשביל זה מטייבים.</b> ההזמנה לא נעלמה: היא עברה למקום הנכון. בלי התיקון, מי שקוראת את הדוח הייתה שואלת ״מה זה (Blank)?״, ואף אחד לא היה יודע לענות.</div>
+    <div class="why"><b>בשביל זה מטייבים.</b> ההזמנה השגויה לא נעלמה: היא עברה למקום הנכון. בלי התיקון, מי שקוראת את הדוח הייתה שואלת ״מה זה (Blank)?״, ואף אחד לא היה יודע לענות.</div>
   </article>
 
   <article class="topic">
-    <h3><span class="t">2.7</span>ממלאות את טבלת התיעוד, בדיעבד</h3>
-    <p class="out">שורה בטבלה לכל שלב תיקון ביומן, משבוע שעבר ומהיום.</p>
+    <h3><span class="t">2.7</span>משלימות את טבלת התיעוד</h3>
+    <p class="out">לכל בעיה שרשמתן ב־2.2 יש עכשיו מה עשיתי, למה, ושם השלב.</p>
     <details class="how" open><summary>איך עושים</summary>
       <ol class="do">
-        <li>מורידות את <a class="file" href="files/cleaning-log.xlsx" download="טבלת תיעוד טיוב.xlsx">טבלת תיעוד טיוב.xlsx</a> (אם עוד לא), ופותחות אותה.</li>
-        <li>בפאוור קוורי, ביומן, לוחצות על השלב הראשון שאחרי <span class="en">Changed Type</span>.</li>
-        <li>כותבות בטבלה שורה עליו, לפי <a href="#table">מה כותבים בכל עמודה</a>.</li>
-        <li>עוברות לשלב הבא ביומן, וכותבות שורה. וכך עד השלב האחרון.</li>
-        <li>בגיליון <b>לפני ואחרי</b> רושמות את המספרים מהדוח: הטבלה משבוע שעבר, והגרף מהיום.</li>
+        <li>פותחות את <code>תיעוד - הזמנות</code>.</li>
+        <li>לכל שורה ממלאות <b>מה עשיתי</b> ו<b>למה</b>, לפי <a href="#cols">מה כותבים בכל עמודה</a>.</li>
+        <li>את <b>שם השלב</b> מעתיקות מהיומן, בדיוק כמו שהוא כתוב שם.</li>
       </ol>
       <details class="ok"><summary>מה אמור להופיע?</summary>
-        ארבע שורות: ריקות, כפילויות, השגיאה בתאריך, והעמודות. ובכל שורה, <b>שם השלב</b> זהה למה שכתוב ביומן.</details>
+        ארבע שורות או חמש: השגיאה בתאריך, השורות הריקות, ההזמנות הכפולות, והעמודות (בשורה אחת או בשתיים). ובכל שורה, שם השלב זהה ליומן.</details>
     </details>
   </article>
 
@@ -369,37 +420,7 @@
     לכן בעותק, ולכן לא נכנס לטבלת התיעוד.</div>
   </article>
 
-  <div class="next">✔ סיימתן את החדר: מצאתן, החלטתן, הצלתן, וראיתן את זה בגרף. חוזרות למיט.</div>
-</section>
-
-<!-- ===================== טבלת התיעוד ===================== -->
-<section id="table">
-  <h2>טבלת התיעוד</h2>
-  <p class="sub">שורה אחת לכל תיקון. מהיום היא מתמלאת בסוף כל חדר, ובשיעור 6 היא הופכת לפרק הטיוב.</p>
-  <div class="box">
-    <div class="rec">
-      <a class="btn" href="files/cleaning-log.xlsx" download="טבלת תיעוד טיוב.xlsx">⬇ הורדת טבלת התיעוד</a>
-      <span>קובץ אקסל, שני גיליונות: <b>תיעוד הטיוב</b> ו<b>לפני ואחרי</b>.</span>
-    </div>
-  </div>
-
-  <div class="box scroll" style="margin-top:14px">
-    <table>
-      <thead><tr><th>עמודה</th><th>מה כותבים</th><th>דוגמה מהתדלוק</th></tr></thead>
-      <tbody>
-        <tr><td><b>עמודה</b></td><td>באיזו עמודה הבעיה</td><td>תאריך</td></tr>
-        <tr><td><b>הבעיה</b></td><td>מה לא בסדר, במילים פשוטות</td><td>שגיאה בשורה אחת</td></tr>
-        <tr><td><b>איך גיליתי</b></td><td>איפה ראיתן את זה, ואיזה מספר</td><td>אחרי המרה ל־<span class="en">Date</span>, מעל העמודה כתוב <span class="en">Error</span> ‏1 (ב־<span class="en">entire data set</span>)</td></tr>
-        <tr><td><b>מה עשיתי</b></td><td>הפעולה, ומה הכנסתן</td><td><span class="en">Replace Errors</span> ← 01/01/2026</td></tr>
-        <tr><td><b>למה</b> (ולמה לא הדרך האחרת)</td><td>הנימוק, וגם למה לא מחקתן או למה לא הצלתן</td><td>הערך היה טקסט ולא תאריך. כל שאר השורה תקין, ולכן החלפתי ולא מחקתי</td></tr>
-        <tr><td><b>שם השלב ביומן</b></td><td>בדיוק כמו ב־<span class="en">Applied Steps</span></td><td>תיקון תאריך שגוי</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="trap"><b>״כי זה היה שגוי״ זה לא ״למה״.</b> ״למה״ עונה על השאלה שבשלב 0: למה מחקתן ולא הצלתן, או להפך.
-  ואם הצלתן, מאיפה הערך שהכנסתן.</div>
-  <div class="why"><b>י״ב:</b> שלושת הדברים שמצאתן במסד שלכן בשבוע שעבר הם השורות הראשונות. <b>י״א:</b> ממלאות על נתוני ההזמנות.</div>
+  <div class="next">✔ סיימתן את כל הדרך: חיבור, בדיקה, סוגים, לפני, ניקוי, אחרי, ותיעוד. חוזרות למיט.</div>
 </section>
 
 <!-- ===================== שלב 3 ===================== -->
@@ -438,13 +459,17 @@
     <p>שכחתן למחוק את שלב הבדיקה. ביומן: קליק על <span class="en">Kept Errors</span> ← Delete. זה בדיוק הכלל ״פילטר בדיקה = למחוק״.</p></details>
   <details><summary>לחצתי על Error ונוסף שלב עם שם של עמודה</summary>
     <p>הקליק ״נכנס״ לתא כדי להראות את השגיאה, ונרשם כשלב. מוחקות אותו, יחד עם <span class="en">Kept Errors</span>.</p></details>
+  <details><summary>ב־Navigator יש שני פריטים, ואני לא יודעת מה לסמן</summary>
+    <p>אחד הוא הגיליון, והשני הוא הטבלה, <code>Orders_Raw</code>, עם אייקון של טבלה. מסמנות את הטבלה: היא מתחילה בדיוק בכותרות, בלי שורות מיותרות מעל.</p></details>
+  <details><summary>בטבלה בדוח מופיעה רשימה ארוכה של קודים, ולא 2,000</summary>
+    <p>קוד הזמנה הוא טקסט, ולכן פאוור BI מציג כל קוד בשורה במקום לספור. החץ שליד <b>קוד הזמנה</b> בחלונית <span class="en">Visualizations</span> ← <b>Count</b>.</p></details>
   <details><summary>Replace Errors לא מופיע</summary>
     <p>הוא מתחבא בחץ הקטן שליד <span class="en">Replace Values</span>, בלשונית <span class="path">Transform</span>. ובודקות שהעמודה מסומנת.</p></details>
   <details><summary>בגרף יש עמודה אחת, 2026</summary>
     <p>נשארה ההיררכיה: <span class="en">Year</span> עדיין ב־<span class="en">X-axis</span>. מוחקות את <span class="en">Year</span>, <span class="en">Quarter</span> ו־<span class="en">Day</span>, ונשאר <span class="en">Month</span>.</p></details>
   <details><summary>ב־Y-axis כתוב First, או שמופיעה רשימה של קודים</summary>
     <p>החץ שליד <b>קוד הזמנה</b> ב־<span class="en">Y-axis</span> ← <b>Count</b>.</p></details>
-  <details><summary>הטבלה משבוע שעבר הפכה לגרף</summary>
+  <details><summary>הטבלה הפכה לגרף</summary>
     <p>הקליק ״על שטח ריק״ נפל על הטבלה, והגרף החליף אותה. <b>Ctrl+Z</b>, ואז קליק על מקום שבאמת ריק בדף. אם אין מקום, גוררות קודם את הטבלה הצידה.</p></details>
   <details><summary>אין לי (Blank) בגרף</summary>
     <p>היא הראשונה משמאל, לא בסוף. מדליקות <span class="en">Data labels</span>: עמודה של 1 ליד 400 כמעט לא נראית. ואם עדיין אין, אולי השגיאה כבר תוקנה. מסתכלות ביומן אם יש <span class="en">Replaced Errors</span>.</p></details>
@@ -463,10 +488,12 @@
   <div class="box">
     <ul class="check">
       <li><label><input type="checkbox"> אני יודעת להסביר מתי מוחקות שורה, מתי מצילות תא, ומתי מורידות עמודה</label></li>
+      <li><label><input type="checkbox"> בדקתי את ההזמנות עמודה אחרי עמודה, ורשמתי כל בעיה בטבלת התיעוד לפני שתיקנתי</label></li>
+      <li><label><input type="checkbox"> בניתי טבלה וגרף ״לפני״, ורשמתי את המספרים</label></li>
       <li><label><input type="checkbox"> מצאתי את השגיאה (31/02/2026) עם Keep Errors, ומחקתי את שלבי הבדיקה</label></li>
       <li><label><input type="checkbox"> הצלתי את ההזמנה עם Replace Errors, ואני יודעת לנמק למה 28/02/2026</label></li>
-      <li><label><input type="checkbox"> ראיתי את ה־(Blank) נעלמת מהגרף לפי חודש</label></li>
-      <li><label><input type="checkbox"> הורדתי שתי עמודות, ולכל שלב ביומן יש שם בעברית</label></li>
+      <li><label><input type="checkbox"> ראיתי את ה־(Blank) נעלמת מהגרף, ואני יודעת להסביר למה פברואר לא זז</label></li>
+      <li><label><input type="checkbox"> מחקתי שורות ריקות, הזמנות כפולות ושתי עמודות, ולכל שלב ביומן יש שם בעברית</label></li>
       <li><label><input type="checkbox"> מילאתי בטבלת התיעוד שורה לכל שלב תיקון</label></li>
       <li><label><input type="checkbox"> <b>י״ב:</b> הגשתי טבלת תיעוד מלאה וצילום של היומן</label></li>
     </ul>

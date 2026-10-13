@@ -178,6 +178,24 @@ figcaption { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
 :root[data-theme="dark"] .btn { color: #0f1513; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn { color: #0f1513; } }
 .btn.off { background: var(--line); color: var(--muted); pointer-events: none; }
+/* תגית זמן בהקלטה: <a class="at" href="…/view?t=SECONDS" dir="ltr">▶ 23:44</a>. דרייב קופץ לשנייה הזו */
+.at {
+  display: inline-block; font-size: 13px; font-weight: 700; text-decoration: none; white-space: nowrap;
+  font-family: var(--body); font-variant-numeric: tabular-nums; vertical-align: 2px;
+  color: var(--accent-ink); background: var(--accent-soft); border-radius: 3px;
+  padding: 1px 8px; margin-inline-start: 6px;
+}
+.at:hover, .at:focus-visible { background: var(--accent); color: #fff; }
+:root[data-theme="dark"] .at:hover, :root[data-theme="dark"] .at:focus-visible { color: #0f1513; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .at:hover, :root:not([data-theme="light"]) .at:focus-visible { color: #0f1513; } }
+.at.none { background: var(--line); color: var(--muted); font-weight: 400; }
+/* מפת ההקלטה: לפי סדר הזמן. li.skip = אפשר לדלג */
+.chapters { list-style: none; padding: 0; margin: 14px 0 0; font-size: 15px; }
+.chapters li { display: grid; grid-template-columns: 76px 1fr auto; gap: 8px; align-items: baseline; padding: 4px 0; border-top: 1px solid var(--line); }
+.chapters li .at { margin: 0; justify-self: start; }
+.chapters .step { color: var(--muted); font-size: 13.5px; white-space: nowrap; }
+.chapters li.skip { color: var(--muted); }
+.chapters li.skip .at { background: transparent; border: 1px solid var(--line); color: var(--muted); }
 /* קובץ להורדה מתוך הטקסט: <a class="file" href="files/x.xlsx" download="שם בעברית.xlsx"> */
 .file {
   display: inline-block; font-weight: 700; text-decoration: none; white-space: nowrap;
@@ -190,7 +208,7 @@ figcaption { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
 /* קישורים: ניווט (כותרת, תחתית, מפת הדרך) — באותה לשונית.
    הפניה מתוך משימה לדף אחר, וכל קישור חיצוני — לשונית חדשה, עם target="_blank" rel="noopener",
    כדי שהתלמידה לא תאבד את המקום שלה בצעדים. הסימן ↗ מודיע מראש שתיפתח לשונית. */
-a[target="_blank"]:not(.btn)::after { content: "\00a0↗"; font-size: .85em; text-decoration: none; display: inline-block; }
+a[target="_blank"]:not(.btn):not(.at)::after { content: "\00a0↗"; font-size: .85em; text-decoration: none; display: inline-block; }
 
 table { border-collapse: collapse; width: 100%; font-size: 15px; }
 th, td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
@@ -248,7 +266,7 @@ a:focus-visible, summary:focus-visible, input:focus-visible { outline: 2px solid
 }
 @media print {
   body { background: #fff; }
-  .toc, .rec { display: none; }
+  .toc, .rec, .at, .chapters { display: none; }
   details { border: 0; }
 }
 
