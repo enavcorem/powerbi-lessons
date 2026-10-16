@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>נספח — איחוד שנים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="style.css?v=6">
+<script src="lesson.js?v=2" defer></script>
+</head>
+<body class="v2" data-lesson="append">
+<div class="wrap">
+
+<header class="intro">
+  <p class="eyebrow"><a href="index.html">פאוור BI</a> · נספח · לא נלמד בשיעור</p>
+  <h1>איחוד שנים: קובץ לכל שנה, טבלה אחת</h1>
+  <p class="lede">הורדתן מאתר רשמי קובץ לכל שנה. בכל אחד קצת אחרת: עמודה שנוספה, שם שהשתנה, רשות שאוחדה. הנספח הזה מראה איך מאחדות את כולם לטבלה אחת, <strong>ומה מחליטות כשהשנים לא בדקו בדיוק אותו דבר.</strong></p>
+  <ul class="cycle" aria-label="מחזור הנתונים: אנחנו בשלב טיוב והכנה">
+    <li>שאלה</li><li class="arr" aria-hidden="true">←</li>
+    <li>איסוף נתונים</li><li class="arr" aria-hidden="true">←</li>
+    <li class="here">טיוב והכנה</li><li class="arr" aria-hidden="true">←</li>
+    <li>ניתוח</li><li class="arr" aria-hidden="true">←</li>
+    <li>הצגה</li><li class="arr" aria-hidden="true">←</li>
+    <li>החלטה</li>
+  </ul>
+</header>
+
+<nav class="stages" aria-label="שלבי הנספח">
+  <ol>
+    <li class="s0"><a href="#a"><span class="n">1</span>מאחדות</a></li>
+    <li class="s1"><a href="#broke"><span class="n">2</span>מה השתבש</a></li>
+    <li class="s2"><a href="#after"><span class="n">3</span>ערכים ושורות</a></li>
+    <li class="s3"><a href="#c"><span class="n">4</span>המסד שלכן</a></li>
+    <li><a href="#stuck">נתקעתי</a></li>
+    <li><a href="#done">הצלחתי?</a></li>
+  </ol>
+  <button type="button" class="present-btn" aria-pressed="false">מצב הצגה</button>
+</nav>
+
+<section id="before">
+  <h2>לפני שמאחדות: שלוש שאלות</h2>
+  <div class="box">
+    <ol>
+      <li><b>אולי כבר יש קובץ אחד עם עמודת שנה?</b> אתרים רבים מפרסמים, לצד הקבצים השנתיים, גם קובץ ״כל השנים״. אם יש, לוקחות אותו ומסננות לשנים שצריך. הנספח הזה לא בשבילכן.</li>
+      <li><b>השאלה שלכן צריכה עוד שורות, או עוד עמודות?</b>
+        <ul>
+          <li><b>עוד שורות:</b> אותן עמודות, עוד שנים. כל שורה היא ״רשות בשנה מסוימת״. זה <span class="en">Append</span>, והוא הנספח הזה.</li>
+          <li><b>עוד עמודות:</b> אותה רשות או אותו שיר, ושתי השנים זו ליד זו, כדי לחשב כמה השתנה. זה <span class="en">Merge</span>, ונלמד בשיעור המודל.</li>
+        </ul></li>
+      <li><b>כמה קבצים?</b> שניים עד שישה: <span class="en">Append</span>, כמו כאן. עשרות קבצים במבנה זהה לגמרי: יש דרך אחרת, בסוף הדף.</li>
+    </ol>
+  </div>
+  <div class="box scroll">
+    <table>
+      <thead><tr><th>הדרך</th><th>מתי</th><th>כאן?</th></tr></thead>
+      <tbody>
+        <tr><td>קובץ ״כל השנים״ מהמקור</td><td>המקור כבר מציע אותו</td><td>שאלה 1. אין מה לאחד</td></tr>
+        <tr><td><b><span class="en">Append Queries as New</span></b></td><td>2–6 קבצים, וכל שנה קצת אחרת</td><td><b>הדרך הראשית</b></td></tr>
+        <tr><td><span class="en">Folder › Combine</span></td><td>הרבה קבצים, <b>זהים</b> במבנה</td><td>בסוף הדף, ולמה היא מסוכנת כשהמבנה שונה</td></tr>
+        <tr><td>העתק־הדבק באקסל</td><td>אף פעם</td><td>מדביק לפי <b>מיקום</b> העמודה, לא לפי השם, ולא נשאר ממנו תיעוד</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="why"><b>הדרך: קודם מאחדות, ואז מסתכלות מה השתבש.</b> פאוור BI יראה לכן בפרופיל כל עמודה שלא מתאימה בין השנים. לא צריך לגלות את זה לבד מראש.
+  ואז מתקנות במקום הנכון: בעיות <b>מבנה</b> (שם של עמודה, עמודת שנה) מתקנות בשאילתה של אותה שנה. בעיות <b>ערכים</b> (סוגים, ריקות, איות) מתקנות פעם אחת, בטבלה המאוחדת.</div>
+</section>
+
+<!-- ===================== שלב 1 ===================== -->
+<section id="a" class="stage s0">
+  <h2><span class="part">שלב 1 · על קובצי התרגול</span>מאחדות שלוש שנים</h2>
+  <p class="sub">קובץ פאוור BI חדש. כל קובץ שנתי נכנס כשאילתה משלו, ומאחדות מיד.</p>
+
+  <article class="topic">
+    <h3><span class="t">1.1</span>שלוש שאילתות, אחת לכל שנה</h3>
+    <p class="out">בחלונית <span class="en">Queries</span> שלוש שאילתות: 2022, 2023, 2024. בכולן הכותרות נכונות.</p>
+    <p>שלוש שנים של ״רשויות מקומיות״. <b>הנתונים מומצאים</b>, אבל כל הבדל בהם לקוח ממסדים אמיתיים.</p>
+    <ul>
+      <li><a class="file" href="files/towns-2022.xlsx" download="רשויות 2022 - לתרגול.xlsx">רשויות 2022 - לתרגול.xlsx</a></li>
+      <li><a class="file" href="files/towns-2023.xlsx" download="רשויות 2023 - לתרגול.xlsx">רשויות 2023 - לתרגול.xlsx</a></li>
+      <li><a class="file" href="files/towns-2024.xlsx" download="רשויות 2024 - לתרגול.xlsx">רשויות 2024 - לתרגול.xlsx</a></li>
+    </ul>
+    <p>מעבירות את שלושתם לתיקייה אחת, למשל <code>Power BI\איחוד שנים</code>.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Home › Excel workbook</span> ← <code>רשויות 2022</code> ← מסמנות את הגיליון ← <span class="en">Transform Data</span>.</li>
+        <li>בפאוור קוורי: <span class="path">Home › New Source › Excel Workbook</span> ← <code>רשויות 2023</code> ← הגיליון ← <span class="en">OK</span>.</li>
+        <li>אותו דבר עם <code>רשויות 2024</code>. כאן הכותרות לא נכונות:
+          <figure><img src="img/ap-01-2024-raw.png" alt="שאילתת 2024: כותרת העמודה הראשונה היא שם הקובץ, השאר Column2 עד Column7. שורה 1 ריקה, בשורה 2 שמות העמודות, ובשורה 13 סה״כ" width="1920" height="710" loading="lazy">
+          <figcaption>הכותרת האמיתית בשורה 2, ושורה 1 ריקה.</figcaption></figure></li>
+        <li>ב־2024: <span class="path">Home › Remove Rows › Remove Top Rows</span> ← <code>1</code> ← <span class="en">OK</span>. ואז <span class="path">Home › Use First Row as Headers</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        2022: 10 שורות. 2023: 9 שורות. 2024: <b>11 שורות</b>, עם שם הרשות, סמל רשות, אוכלוסייה וכן הלאה בכותרות.
+        <figure><img src="img/ap-02-2024-headers-total.png" alt="שאילתת 2024 אחרי קידום הכותרות: שם הרשות, סמל רשות, אוכלוסייה, תלמידים, שטח ירוק לתושב. בשורה 11 סה״כ, בלי סמל, ובאוכלוסייה 226487" width="1920" height="654" loading="lazy">
+        <figcaption>הכותרות נכונות. משאירות את הקובץ כמו שהוא, ועוברות לאיחוד.</figcaption></figure></details>
+    </details>
+    <div class="why"><b>למה רק את זה מתקנות עכשיו?</b> בלי כותרות אי אפשר לקרוא את הקובץ, וגם האיחוד לא יבין אותו. את כל השאר נגלה אחרי האיחוד.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.2</span>מאחדות</h3>
+    <p class="out">שאילתה חדשה, <code>Append1</code>, ובה השורות של שלוש השנים.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Home › Append Queries</span> ← <b>החץ הקטן</b> ← <span class="en">Append Queries as New</span>.
+          <figure><img src="img/ap-03-append-menu.png" alt="התפריט של Append Queries פתוח: Append Queries ו־Append Queries as New" width="263" height="100" loading="lazy" style="width:220px">
+          <figcaption><b>as New</b>: נוצרת שאילתה חדשה, והשנתיות לא נוגעות.</figcaption></figure></li>
+        <li><span class="en">Three or more tables</span>. מוסיפות את 2022, 2023, 2024 (<span class="en">Add &gt;&gt;</span>), ומסדרות בחצים לפי הסדר.
+          <figure><img src="img/ap-04-append-three.png" alt="חלון Append במצב Three or more tables. ברשימה Tables to append: 2022, 2023, 2024" width="1047" height="650" loading="lazy" style="width:520px"></figure></li>
+        <li><span class="en">OK</span>. נוספה שאילתה <code>Append1</code>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        למטה: <b>10 COLUMNS, 30 ROWS</b>. ‏10 + 9 + 11 = 30, כל השורות נכנסו.
+        <figure><img src="img/ap-05-first-append.png" alt="Append1: 10 עמודות, 30 שורות. בסמל רשות Empty 3%. בשם רשות Valid 33% ו־Empty 67%, ומשורה 11 ומטה כתוב null" width="1920" height="902" loading="lazy">
+        </figure></details>
+    </details>
+    <div class="why"><b>זה עבד? כמעט.</b> בכל קובץ 7 עמודות. באיחוד 10. מאיפה הגיעו שלוש עמודות נוספות? זה השלב הבא.</div>
+  </article>
+</section>
+
+<!-- ===================== שלב 2 ===================== -->
+<section id="broke" class="stage s1">
+  <h2><span class="part">שלב 2 · קוראות את הפרופיל</span>מה השתבש, ולמה</h2>
+  <p class="sub">כל נושא כאן בנוי אותו דבר: <b>מה רואות</b> בפרופיל, <b>למה</b> זה קרה, <b>איפה</b> מתקנות. ואחרי כל תיקון: שורה בטבלת הטיוב שלכן.</p>
+
+  <article class="topic">
+    <h3><span class="t">2.1</span>איך קוראים את האיחוד</h3>
+    <p class="out">יודעות לזהות בפרופיל עמודה שהגיעה רק מחלק מהקבצים.</p>
+    <p>מוודאות ש־<span class="en">Column quality</span> ו־<span class="en">Column profile</span> דלוקים (<span class="en">View</span>, כמו בשיעור 2) ושלמטה כתוב <span class="en">entire data set</span>. גוללות ימינה עד הסוף.</p>
+    <figure><img src="img/ap-06-staircase.png" alt="הצד הימני של Append1: מתנ״סים והוצאה לתושב מלאות ב־33%. שם הרשות מלאה ב־67%. הוצאה לתושב (₪) ושטח ירוק לתושב מלאות ב־63%" width="1920" height="902" loading="lazy">
+    <figcaption>״מדרגות״: עמודות שמלאות רק בחלק מהשורות. ‏33% = 10 שורות מתוך 30 = שנה אחת.</figcaption></figure>
+    <div class="box scroll">
+      <table>
+        <thead><tr><th>בפרופיל</th><th>מה זה אומר</th></tr></thead>
+        <tbody>
+          <tr><td><b>מלאה ב־100%</b></td><td>העמודה הגיעה מכל הקבצים, באותו שם בדיוק.</td></tr>
+          <tr><td><b>מלאה ב־33% בערך</b></td><td>רק מ־2022 (10 שורות מתוך 30).</td></tr>
+          <tr><td><b>מלאה ב־67% בערך</b></td><td>רק מ־2023 ו־2024 (20 שורות מתוך 30).</td></tr>
+          <tr><td><b>עמודה שאמורה להיות מלאה תמיד, וחסרה בה שורה</b></td><td>שורה אחת שהיא לא כמו האחרות.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="why"><b>למה יש מדרגות?</b> <span class="en">Append</span> מחבר עמודות <b>לפי השם המדויק</b>, לא לפי המיקום. שם שונה, אפילו ברווח אחד, הוא עמודה אחרת. בשורות של השנים שאין בהן את השם הזה, העמודה מקבלת <code>null</code>.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.2</span>שורה שאינה רשות</h3>
+    <p class="out">ב־<code>Append1</code> אין שורת סה״כ: 29 שורות, וסמל רשות מלא ב־100%.</p>
+    <p><b>מה רואות:</b> ב<b>סמל רשות</b> <span class="en">Empty</span> ‏3%. לכל רשות יש סמל, אז שורה בלי סמל היא לא רשות. גוללות למטה:</p>
+    <figure><img src="img/ap-07-total-row.png" alt="Append1 גלול למטה. בשורה 30: סמל רשות null, שם רשות null, מחוז null, ואוכלוסייה 226487" width="1534" height="878" loading="lazy">
+    <figcaption>שורה 30: בלי סמל, בלי מחוז, ואוכלוסייה של 226,487. גוללות ימינה: בשם הרשות כתוב ״סה״כ״. זו שורת הסיכום של 2024.</figcaption></figure>
+    <details class="how" open><summary>איך מתקנות</summary>
+      <ol class="do">
+        <li>ב־<code>Append1</code>: החץ בכותרת <b>סמל רשות</b> ← <span class="en">Remove Empty</span>.
+          <figure><img src="img/ap-08-remove-empty.png" alt="תפריט הסינון של סמל רשות: Remove Empty, וברשימה (null) ו־101 עד 121" width="560" height="858" loading="lazy" style="width:260px">
+          <figcaption>גם ברשימה רואות <code>(null)</code>. זו השורה.</figcaption></figure></li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <b>29 שורות.</b> ביומן: <span class="en">Filtered Rows</span>. עכשיו המדרגות נקיות: 34% ו־66%. לפני כן חלק מהן היו 63%, כי גם בשורת הסה״כ חסרו ערכים.</details>
+    </details>
+    <div class="trap"><b>שורת סה״כ שנשארת מכפילה כל סכום.</b> היא נראית כמו עוד ״רשות״. בקבצים אמיתיים יש לפעמים כמה כאלה, גם באמצע (סה״כ מחוז). הסינון על עמודת המפתח מנקה את כולן בבת אחת, בכל השנים.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.3</span>עמודה אחת, חצויה לשתיים</h3>
+    <p class="out">ב־<code>Append1</code> 8 עמודות, ו<b>שם הרשות</b> מלאה ב־100%. ולא נגעתן ב־<code>Append1</code>.</p>
+    <p><b>מה רואות:</b> שם רשות 34%, ושם הרשות 66%. ביחד 100%. <b>שתי עמודות שמשלימות זו את זו ל־100% חשודות כאותה עמודה בשני שמות.</b> מחפשות עוד זוג כזה: הוצאה לתושב 34%, והוצאה לתושב (₪) 66%.</p>
+    <p>חשודה זה לא אשמה: גם מתנ״סים (34%) ושטח ירוק (66%) משלימות ל־100%, אבל הן לא אותו דבר. <b>רק המשמעות מחליטה.</b> ומה איתן? בנושא הבא.</p>
+    <details class="how" open><summary>איך מתקנות</summary>
+      <ol class="do">
+        <li>קליק על <b>2022</b> בחלונית <span class="en">Queries</span>. מתקנות בשאילתה של השנה, לא באיחוד.</li>
+        <li>מסמנות את <b>שם רשות</b>, <b>F2</b>, ומקלידות <code>שם הרשות</code>.</li>
+        <li>מסמנות את <b>הוצאה לתושב</b>, <b>F2</b>, ומקלידות <code>הוצאה לתושב (₪)</code>. כולל הרווח והסוגריים.</li>
+        <li>קליק על <code>Append1</code>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        ב־<code>Append1</code>: <b>8 עמודות</b>, ו<b>שם הרשות</b> מלאה ב־100%. מתנ״סים ושטח ירוק עדיין במדרגות.</details>
+    </details>
+    <div class="why"><b>התיקון היה בשאילתה של 2022, והאיחוד התעדכן לבד.</b> <code>Append1</code> לא מחזיק עותק של הנתונים. הוא שואל את שלוש השאילתות בכל פעם מחדש, כמו <span class="en">Reference</span> משיעור 5.
+    <b>איזה שם בוחרות?</b> בדרך כלל של השנה האחרונה, ומשנות אליו בשאר השנים.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.4</span>עמודה שקיימת רק בחלק מהשנים</h3>
+    <p class="out">החלטתן מה עושים עם מתנ״סים ועם שטח ירוק, וכתבתן למה.</p>
+    <p><b>מה רואות:</b> מתנ״סים מלאה רק ב־2022. שטח ירוק רק ב־2023 ו־2024. אין להן בת זוג: פשוט לא נמדדו בכל השנים.</p>
+    <p><b>שלוש אפשרויות, לפי השאלה:</b></p>
+    <ul>
+      <li><b>רק המשותפות:</b> מסירות כל עמודה שלא קיימת בכל השנים. טבלה נקייה, אבל מאבדות מידע.</li>
+      <li><b>הכול:</b> משאירות. בשנים שבהן העמודה לא נמדדה יופיע <code>null</code>, וכותבות ש־null כאן הוא ״לא נמדד״ ולא ״ריק״.</li>
+      <li><b>בררני, וזו ההמלצה:</b> המשותפות, ועוד מה שהשאלה צריכה. ניתוח על עמודה כזו נעשה רק על השנים שבהן היא קיימת, וכותבות את זה.</li>
+    </ul>
+    <p>בקובצי התרגול: משאירות את שתיהן.</p>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.5</span>מאיזו שנה השורה הזו?</h3>
+    <p class="out">בכל שאילתה שנתית עמודה <b>שנה</b>, מסוג מספר שלם. ב־<code>Append1</code>: 9 עמודות, 29 שורות.</p>
+    <p><b>מה רואות:</b> שורה 11 ב־<code>Append1</code> היא גבעת אלון. של איזו שנה? אין דרך לדעת.</p>
+    <details class="how" open><summary>איך מתקנות</summary>
+      <ol class="do">
+        <li>קליק על <b>2022</b>. <span class="path">Add Column › Custom Column</span>.</li>
+        <li>ב־<span class="en">New column name</span>: <code>שנה</code>. בנוסחה, אחרי ה־<code>=</code> שכבר שם: <code>2022</code>. ‏<span class="en">OK</span>.
+          <figure><img src="img/ap-09-custom-year.png" alt="חלון Custom Column: שם העמודה שנה, והנוסחה = 2022. למטה: No syntax errors have been detected" width="1047" height="653" loading="lazy" style="width:520px">
+          <figcaption>מספר בלי מרכאות. <code>"2022"</code> עם מרכאות יהיה טקסט.</figcaption></figure></li>
+        <li>האייקון בכותרת <b>שנה</b> הוא ABC/123. קליק עליו ← <span class="en">Whole Number</span>.</li>
+        <li>אותו דבר ב־<b>2023</b> (עם <code>2023</code>) וב־<b>2024</b> (עם <code>2024</code>).</li>
+        <li>קליק על <code>Append1</code>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <b>9 עמודות, 29 שורות.</b> סמל רשות ושם הרשות מלאות ב־100%.
+        <figure><img src="img/ap-10-append-fixed.png" alt="Append1 אחרי כל התיקונים: 9 עמודות, 29 שורות. סמל רשות ושם הרשות Valid 100%. ביומן Source ו־Filtered Rows" width="1920" height="902" loading="lazy">
+        </figure>
+        <figure><img src="img/ap-11-only-some-years.png" alt="הצד הימני של Append1: מתנ״סים מלאה ב־34%, הוצאה לתושב (₪) ב־100%, שנה עם 3 ערכים שונים, שטח ירוק לתושב מלאה ב־66%" width="1920" height="902" loading="lazy">
+        <figcaption>מה שנשאר במדרגות הוא רק מה שהחלטתן להשאיר: מתנ״סים ושטח ירוק.</figcaption></figure></details>
+    </details>
+    <div class="trap"><b>למה לא להוסיף את השנה אחרי האיחוד?</b> אחרי האיחוד כבר אי אפשר לדעת איזו שורה הגיעה מאיזה קובץ. השנה נכנסת <b>לפני</b>, בכל שאילתה לחוד.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.6</span>מה שהפרופיל לא יראה</h3>
+    <p class="out">בדקתן במקור שכל עמודה ״תקינה״ מודדת אותו דבר בכל השנים.</p>
+    <p>עמודה עם אותו שם בכל השנים תהיה מלאה ב־100%, וזה לא אומר שהיא אותו דבר. שנה אחת ממוצע של שלוש שנים, ושנה אחרת נתון שנתי. שנה אחת בשקלים, ושנה אחרת באלפי שקלים.</p>
+    <div class="trap"><b>פאוור BI לא יתריע על זה.</b> השם זהה, אז האיחוד ״מצליח״. רק קריאה של ההסבר במקור (מילון המשתנים, ההערות לטבלה) תגלה את זה. בקובצי התרגול בדקנו: ההוצאה לתושב בשקלים בכל השנים.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.7</span>השאילתות השנתיות לא נטענות לדוח</h3>
+    <p class="out">בדוח, בחלונית <span class="en">Data</span>, יש טבלה אחת בלבד.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>קליק ימני על <b>2022</b> בחלונית <span class="en">Queries</span> ← מורידות את הסימון מ־<span class="en">Enable load</span>.
+          <figure><img src="img/ap-12-enable-load.png" alt="קליק ימני על השאילתה 2022: תפריט ובו Enable load מסומן" width="359" height="561" loading="lazy" style="width:220px"></figure></li>
+        <li>אותו דבר ב־2023 וב־2024. השמות שלהן נטויים עכשיו.</li>
+        <li>קליק על <code>Append1</code>. מימין, ב־<span class="en">Name</span>: <code>רשויות - כל השנים</code>, ו־Enter.
+          <figure><img src="img/ap-13-queries-pane.png" alt="חלונית Queries: 2022, 2023, 2024 בכתב נטוי, ורשויות - כל השנים בכתב רגיל" width="271" height="194" loading="lazy" style="width:200px"></figure></li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        אחרי <span class="en">Close &amp; Apply</span>, בחלונית <span class="en">Data</span> בדוח: טבלה אחת, ״רשויות - כל השנים״.
+        <figure><img src="img/ap-14-data-pane-one-table.png" alt="חלונית Data בדוח: טבלה אחת בשם רשויות - כל השנים, ובה העמודות, כולל שנה" width="272" height="468" loading="lazy" style="width:200px"></figure></details>
+    </details>
+    <div class="why"><b>למה?</b> בלי זה נטענות לדוח ארבע טבלאות, ואותם נתונים מופיעים פעמיים. השאילתות השנתיות ממשיכות לעבוד בשביל האיחוד. הן רק לא נטענות.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.8</span>מה נכנס לטבלת הטיוב</h3>
+    <p class="out">לכל דבר שמצאתן ותיקנתן יש שורה בטבלת הטיוב שלכן.</p>
+    <p>זה לא עוד מסמך. זו אותה טבלת טיוב שאתן כבר ממלאות, והיא נכנסת לפרק הטיוב בעבודה הכתובה. ככה היא נראית לקובצי התרגול:</p>
+    <details class="ok"><summary>טבלת הטיוב לדוגמה</summary>
+      <div class="box scroll">
+        <table>
+          <thead><tr><th>איפה</th><th>מה ראיתי</th><th>מה עשיתי</th><th>למה</th></tr></thead>
+          <tbody>
+            <tr><td>2024</td><td>שורת כותרת ושורה ריקה מעל שמות העמודות</td><td><span class="en">Remove Top Rows</span>, <span class="en">Use First Row as Headers</span></td><td>בלי זה אי אפשר לקרוא את הקובץ</td></tr>
+            <tr><td>איחוד</td><td>סמל רשות ריק ב־3%: שורת סה״כ של 2024</td><td><span class="en">Remove Empty</span> בסמל רשות</td><td>שורת סיכום מכפילה כל סכום</td></tr>
+            <tr><td>2022</td><td>״שם רשות״ 34% ו״שם הרשות״ 66%</td><td>שינוי שם ל״שם הרשות״</td><td>אותה עמודה, שם אחר</td></tr>
+            <tr><td>2022</td><td>״הוצאה לתושב״ 34% ו״הוצאה לתושב (₪)״ 66%</td><td>שינוי שם ל״הוצאה לתושב (₪)״</td><td>אותה עמודה. בדקנו במקור: שקלים בכל השנים</td></tr>
+            <tr><td>איחוד</td><td>מתנ״סים רק ב־2022, שטח ירוק רק ב־2023–2024</td><td>נשארות</td><td>השאלה צריכה אותן. <code>null</code> בהן = לא נמדד</td></tr>
+            <tr><td>כל שנה</td><td>אין עמודת שנה</td><td><span class="en">Custom Column</span> ״שנה״ בכל שאילתה</td><td>אחרי האיחוד אי אפשר לדעת מאיזו שנה השורה</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>ועוד שורות משלב 3, אחרי שתעברו עליו.</p>
+    </details>
+    <p><b>במסד שלכן, לפי מה שרואות:</b></p>
+    <div class="box scroll">
+      <table>
+        <thead><tr><th>בפרופיל של האיחוד</th><th>כנראה</th><th>איפה מתקנות</th></tr></thead>
+        <tbody>
+          <tr><td>עמודה שאמורה להיות מלאה תמיד (מפתח, שם) ריקה בכמה אחוזים</td><td>שורת סיכום או כותרת שנכנסה כשורה</td><td>סינון על עמודת המפתח, באיחוד</td></tr>
+          <tr><td>שתי עמודות שמשלימות ל־100%, ומשמעותן זהה</td><td>אותה עמודה בשני שמות</td><td>שינוי שם בשאילתה השנתית</td></tr>
+          <tr><td>עמודה במדרגות, בלי בת זוג</td><td>נמדדה רק בחלק מהשנים</td><td>מחליטות לפי השאלה, וכותבות</td></tr>
+          <tr><td>הכול 100% ונראה תקין</td><td>אולי בכל זאת משמעות אחרת</td><td>רק קריאה במקור</td></tr>
+          <tr><td>עמודה שלא קשורה לשאלה</td><td>עוד עמודה להתאים, בלי סיבה</td><td><span class="en">Remove Columns</span> בכל שאילתה שנתית, לפני האיחוד</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+</section>
+
+<!-- ===================== שלב 3 ===================== -->
+<section id="after" class="stage s2">
+  <h2><span class="part">שלב 3 · בטבלה המאוחדת, פעם אחת</span>ערכים ושורות</h2>
+  <p class="sub">מכאן עובדות רק ב״רשויות - כל השנים״. כל שלב כאן חל על שלוש השנים יחד.</p>
+
+  <article class="topic">
+    <h3><span class="t">3.1</span>סוגים מחדש, ו־<code>..</code> במקום מספר</h3>
+    <p class="out">כל העמודות במספרים בסוג מספר, ובלי שגיאות.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>עוברות על האייקונים בכותרות. <b>תלמידים</b> ו<b>שטח ירוק לתושב</b> הם ABC/123.</li>
+        <li><b>תלמידים</b> ← <span class="en">Whole Number</span>. <b>שטח ירוק לתושב</b> ← <span class="en">Decimal Number</span>.
+          <figure><img src="img/ap-15-dots-errors.png" alt="אחרי שינוי הסוג: בתלמידים Error 3%, בשטח ירוק לתושב Error 6%, ובשורה 15 כתוב Error" width="1920" height="840" loading="lazy">
+          <figcaption>שלוש שגיאות: כל <code>..</code> ו־<code>-</code> שהיו בקבצים.</figcaption></figure></li>
+        <li>כמו בשיעור 3: מסמנות את שתי העמודות ← <span class="path">Transform › Replace Values › Replace Errors</span> ← <code>null</code> ← <span class="en">OK</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        Error 0% בכל העמודות. בתלמידים 28 ערכים ו־null אחד (נאות חרוב, 2024).</details>
+    </details>
+    <div class="why"><b>למה הסוג ״התקלקל״?</b> ב־2022 תלמידים היא מספר. ב־2024 יש בה גם <code>..</code>, אז היא טקסט. אחרי האיחוד פאוור BI לא יודע להחליט, ונותן ABC/123. לכן קובעות סוגים <b>שוב</b> אחרי כל איחוד.</div>
+    <div class="trap"><b><code>..</code> ו־<code>-</code> הם לא אפס.</b> בלמ״ס ובאתרים ממשלתיים הם מסמנים ״אין נתון״, ״לא נמדד״ או ״מספר קטן מדי לפרסום״. מחפשות את ההסבר בהערות לטבלה, הופכות ל־<code>null</code>, וכותבות בטבלת הטיוב מה כל סימן אמר.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">3.2</span>אותה רשות, שני איותים</h3>
+    <p class="out">בפרופיל של שם הרשות 12 ערכים שונים, ולא 13.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מסמנות את <b>שם הרשות</b> ← <span class="path">Transform › Replace Values</span>.</li>
+        <li><span class="en">Value To Find</span>: <code>קרית שקד</code>. ‏<span class="en">Replace With</span>: <code>קריית שקד</code>. ‏<span class="en">OK</span>.</li>
+      </ol>
+    </details>
+    <div class="why"><b>איך יודעות שיש בכלל בעיה?</b> משווים <span class="en">distinct</span> של השם ל־<span class="en">distinct</span> של הסמל. סמל 103 הופיע עם שני שמות. <b>לכן מזהים רשות לפי הסמל, לא לפי השם.</b></div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">3.3</span>שורות שלא קיימות בכל השנים</h3>
+    <p class="out">יודעות כמה שנים יש לכל רשות, ומחליטות מה עושים עם מי שחסרה.</p>
+    <details class="how" open><summary>איך בודקות</summary>
+      <ol class="do">
+        <li><span class="en">Close &amp; Apply</span>.</li>
+        <li>בדוח: <span class="en">Matrix</span>. מסמנות את <b>שם הרשות</b>, ואחר כך את <b>שנה</b>.</li>
+        <li>ב־<span class="en">Values</span> מופיע <span class="en">Sum of שנה</span>. החץ שלידו ← <span class="en">Count</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        שמונה רשויות עם 3, עמק ורדים עם 2, ועין ורד, מצפה ורד ונאות חרוב עם 1. בסך הכול 29.
+        <figure><img src="img/ap-16-years-per-town.png" alt="מטריצה: שם הרשות וספירת שנה. רוב הרשויות 3, עמק ורדים 2, מצפה ורד, נאות חרוב ועין ורד 1. Total 29" width="249" height="348" loading="lazy" style="width:220px"></figure></details>
+    </details>
+    <p><b>ומה מחליטות? לפי השאלה:</b></p>
+    <ul>
+      <li><b>השאלה על כל שנה בנפרד</b> (״איך נראו הרשויות ב־2024?״): משאירות הכול. כל שנה היא תמונה של עצמה.</li>
+      <li><b>השאלה על שינוי לאורך זמן</b> (״באילו רשויות האוכלוסייה גדלה?״): רק רשויות שיש להן <b>כל</b> השנים. אחרת ״ממוצע 2022״ ו״ממוצע 2023״ מחושבים על רשויות שונות, וההשוואה מטעה.</li>
+      <li><b>רשות שאוחדה</b> (עין ורד + מצפה ורד ← עמק ורדים): ברוב העבודות פשוט לא נכנסת להשוואה, וכותבות למה. אפשר גם לחבר את השתיים הישנות לרשות אחת, אבל זו עבודה נוספת, ושווה לעשות אותה רק אם השאלה צריכה אותן.</li>
+    </ul>
+    <details><summary>איך משאירות רק מי שיש לה את כל השנים? (<span class="en">Group By</span>)</summary>
+      <ol class="do">
+        <li>בפאוור קוורי: קליק ימני על <b>רשויות - כל השנים</b> ← <span class="en">Reference</span>. ‏<span class="en">Name</span>: <code>רשויות בכל השנים</code>. כמו בשיעור 5, הסינון נעשה בעותק.</li>
+        <li><span class="path">Home › Group By</span> ← <span class="en">Advanced</span>. מקבצות לפי <b>סמל רשות</b>.</li>
+        <li>שורה ראשונה: <code>מספר שנים</code>, ‏<span class="en">Count Rows</span>. ‏<span class="en">Add aggregation</span>. שורה שנייה: <code>נתונים</code>, ‏<span class="en">All Rows</span>.
+          <figure><img src="img/ap-17-group-by.png" alt="חלון Group By במצב Advanced: מקבצים לפי סמל רשות. מספר שנים עם Count Rows, ונתונים עם All Rows" width="1043" height="728" loading="lazy" style="width:520px"></figure></li>
+        <li><span class="en">OK</span>. 12 שורות, אחת לכל סמל, וליד כל אחת מספר השנים שלה.
+          <figure><img src="img/ap-18-grouped-years.png" alt="אחרי Group By: 12 שורות. סמל רשות, מספר שנים (3 לרוב, 1 ל־104, 105, 121, ו־2 ל־120), ועמודת נתונים שבכל תא בה Table" width="780" height="678" loading="lazy" style="width:420px"></figure></li>
+        <li>החץ הכפול בכותרת <b>נתונים</b>. מורידות את הסימון מ<b>סמל רשות</b> (כבר יש) ומ־<span class="en">Use original column name as prefix</span>. ‏<span class="en">OK</span>.
+          <figure><img src="img/ap-19-expand.png" alt="תפריט הרחבה של העמודה נתונים: כל העמודות מסומנות חוץ מסמל רשות, ו־Use original column name as prefix לא מסומן" width="470" height="503" loading="lazy" style="width:260px"></figure></li>
+        <li>החץ בכותרת <b>מספר שנים</b> ← משאירות רק את <code>3</code>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <b>24 שורות</b>: 8 רשויות × 3 שנים.
+        <figure><img src="img/ap-20-all-years-only.png" alt="אחרי הסינון: 24 שורות, ובכל אחת מספר שנים 3. ביומן Grouped Rows, Expanded נתונים, Filtered Rows" width="1920" height="902" loading="lazy"></figure></details>
+    </details>
+  </article>
+</section>
+
+<!-- ===================== שלב 4 ===================== -->
+<section id="c" class="stage s3">
+  <h2><span class="part">שלב 4 · י״ב · על המסד שלכן</span>מה שונה אצלכן <span class="who">י״ב</span></h2>
+  <p class="out">המסד שלכן מאוחד לטבלה אחת, עם עמודת שנה, ולכל תיקון יש שורה בטבלת הטיוב.</p>
+  <p>אותם שלבים, 1 עד 3. מה שמשתנה הוא <b>איפה הקושי</b>. בחרו את הכרטיס שדומה למסד שלכן.</p>
+
+  <article class="topic">
+    <h3>קובץ רחב, הרבה עמודות שמשתנות בין השנים</h3>
+    <p>למשל קובץ נתוני רשויות: מאות עמודות על כל תחום, וכל שנה נוסף או יורד משהו.</p>
+    <ol class="do">
+      <li><b>קודם מצמצמות, אחר כך מאחדות.</b> מחליטות על <b>גושי</b> עמודות שהשאלה צריכה (אוכלוסייה, חינוך, תקציב), ובכל שאילתה שנתית: <span class="path">Home › Choose Columns</span> ומשאירות רק אותם. בלי זה, בפרופיל של האיחוד יהיו מאות עמודות, ואי אפשר למצוא בהן את המדרגות.</li>
+      <li><b>המפתח הוא הסמל.</b> שם הרשות משתנה באיות. הסמל נשאר. בודקות ש־<span class="en">distinct</span> של הסמל שווה לזה של השם.</li>
+      <li><b>שורות כותרת</b> (1.1) בכל קובץ. בקבצים כאלה יש לפעמים כמה. <b>שורות סה״כ</b>, גם ״סה״כ מחוז״ באמצע, מסננות באיחוד לפי עמודת הסמל (2.2): שורה בלי סמל היא לא רשות.</li>
+      <li><b>סימני חוסר:</b> <code>..</code>, <code>-</code>, <code>x</code>. קוראות מה כל אחד אומר בהערות לקובץ (3.1).</li>
+      <li><b>רשויות שאוחדו, פוצלו או נוספו:</b> 3.3. כותבות בתיעוד כמה רשויות הוצאו מההשוואה, ולמה.</li>
+    </ol>
+  </article>
+
+  <article class="topic">
+    <h3>אותו מדד, ושמות העמודות מתחלפים כל שנה</h3>
+    <p>למשל דוח בינלאומי שנתי: אותן מדינות ואותם מדדים, אבל כל שנה המדד נקרא קצת אחרת.</p>
+    <ol class="do">
+      <li><b>הזוגות הם כל העבודה.</b> אחרי האיחוד יהיו הרבה עמודות במדרגות. מחפשות זוגות שמשלימים ל־100% (2.3), ובודקות בהגדרות של הדוח שזה אותו מדד. עמודה ״חדשה״ היא לפעמים ישנה בשם חדש.</li>
+      <li><b>קוראות את ההגדרה, לא רק את השם.</b> ממוצע של שלוש שנים מול נתון שנתי, או סולם אחר: הפרופיל לא יראה את זה (2.6).</li>
+      <li><b>שמות המדינות:</b> מדינות משנות שם (Turkey ← Turkiye) או מקבלות סימן (<code>*</code> בסוף השם). אחרי האיחוד בודקות במטריצה (3.3), ומאחדות ב־<span class="en">Replace Values</span>.</li>
+      <li><b>מספר המדינות שונה בכל שנה.</b> בשאלה על שינוי: רק מדינות שיש להן את כל השנים (3.3).</li>
+      <li><b>איזו שנה?</b> בדוחות רבים ״דוח 2024״ מבוסס על סקרים מ־2023. מחליטות מה עמודת השנה אומרת, וכותבות.</li>
+      <li><b>שורות זבל:</b> שורה בלי שם מדינה, או שורת הסבר בסוף. מסננות.</li>
+    </ol>
+  </article>
+
+  <article class="topic">
+    <h3>שתי שנים שחולקות רק מעט עמודות</h3>
+    <p>למשל שני קבצי ״להיטים של השנה״ מאותו אתר, שכל אחד בנוי אחרת.</p>
+    <ol class="do">
+      <li><b>רק המשותפות</b> (2.4, אפשרות ראשונה), אלא אם השאלה צריכה עמודה של שנה אחת.</li>
+      <li><b>שמות שונים לאותו דבר</b> (2.3), גם כשהשם באנגלית שונה לגמרי. שתי עמודות של ״השמעות״ בשמות אחרים הן אותה עמודה.</li>
+      <li><b>אותו שם, משמעות אחרת:</b> השמעות ״מאז שהשיר יצא״ הן <b>מצטברות</b>. שיר מ־2023 צבר עוד שנה של השמעות עד 2024. הפרופיל לא יראה את זה (2.6): כותבות.</li>
+      <li><b>אותו שיר בשתי השנים?</b> עם <span class="en">Append</span> הוא יופיע פעמיים, פעם בכל שנה, וזה נכון לשאלה ״מה מאפיין את הלהיטים של כל שנה״. לשאלה ״מה קרה לשיר מ־2023 ל־2024״ צריך <span class="en">Merge</span>, ומדברות איתי.</li>
+      <li><b>מספרים כטקסט עם פסיקים</b> (<code>390,470,936</code>) ותווים משובשים בשמות: בודקות אחרי האיחוד, כמו ב־3.1.</li>
+    </ol>
+  </article>
+
+  <article class="topic">
+    <h3>מה מגישות</h3>
+    <ul>
+      <li><b>טבלת הטיוב</b>, עם שורה לכל דבר שמצאתן בפרופיל ולכל החלטה (2.8).</li>
+      <li><b>מספרים:</b> שורות בכל קובץ, כמה שורות סיננתן ולמה, ושורות בטבלה המאוחדת. החשבון חייב להסתדר (בקובצי התרגול: 10 + 9 + 11 − 1 = 29).</li>
+      <li><b>שורות:</b> כמה ישויות יש בכל השנים, כמה רק בחלק, ומה החלטתן.</li>
+          </ul>
+  </article>
+</section>
+
+<section id="folder">
+  <h2>חלופה: כל הקבצים מתיקייה</h2>
+  <details><summary><span class="en">Get Data › Folder › Combine</span>, ולמה לא כאן</summary>
+    <p>כשיש עשרות קבצים <b>במבנה זהה לגמרי</b>, למשל קובץ לכל חודש מאותה מערכת, אפשר לאחד את כולם בפעולה אחת:
+    <span class="path">Get Data › Folder</span> ← בוחרות תיקייה ← <span class="en">Combine &amp; Transform Data</span>.
+    פאוור BI בונה ״קובץ דוגמה״, מפעיל את אותם שלבים על כל קובץ, ומוסיף עמודה <span class="en">Source.Name</span> עם שם הקובץ, ומשם אפשר לחלץ את השנה.</p>
+    <div class="trap"><b>למה לא כשהשנים שונות?</b> רשימת העמודות נלקחת <b>מקובץ הדוגמה בלבד</b>, בדרך כלל הראשון. עמודה שקיימת רק בקבצים אחרים <b>נעלמת בשקט</b>, בלי הודעה.
+    בקובצי התרגול, ״שטח ירוק לתושב״ (2023–2024) הייתה נעלמת, כי 2022 הוא הראשון. ושם שהשתנה היה הופך ל־null.</div>
+  </details>
+</section>
+
+<section id="stuck">
+  <h2>נתקעתי</h2>
+  <details><summary>אחרי Append יש עמודה כפולה, חצי ריקה</summary>
+    <p>שם שלא שונה. בודקות בדיוק: רווח, סוגריים, אות גדולה באנגלית (<code>Year</code> ו־<code>year</code> הן שתי עמודות). מתקנות <b>בשאילתה השנתית</b>, והאיחוד מתעדכן לבד (2.3).</p></details>
+  <details><summary>הכותרות הן Column1, Column2…</summary>
+    <p>הכותרת האמיתית לא בשורה הראשונה. <span class="en">Remove Top Rows</span> עד שהיא ראשונה, ואז <span class="en">Use First Row as Headers</span> (1.1).</p></details>
+  <details><summary>הסכום בדוח גדול פי שניים ממה שציפיתי</summary>
+    <p>שתי אפשרויות. שורת סה״כ שנשארה באחד הקבצים (2.2), או שהשאילתות השנתיות נטענות לדוח, ובניתן את הגרף מאחת מהן (2.7).</p></details>
+  <details><summary>בדוח כתוב Sum of שנה, ומספר כמו 58,667</summary>
+    <p>פאוור BI סוכם כל מספר. שנה היא תווית, לא כמות. בחץ שליד השדה: <span class="en">Count</span> לספירה, או <span class="en">Don't summarize</span> כשהיא בציר.</p></details>
+  <details><summary>האייקון של עמודה ABC/123 אחרי האיחוד</summary>
+    <p>בכל שנה הסוג היה אחר. קובעות סוג ב״כל השנים״ (3.1).</p></details>
+  <details><summary>נוספה לי שנה חדשה</summary>
+    <p>שאילתה חדשה לשנה, עם אותם תיקוני מבנה, שמות ועמודת שנה. ב״כל השנים״: גלגל השיניים שליד <span class="en">Source</span> ביומן ← מוסיפות אותה לרשימה.</p></details>
+  <details><summary>יש לי שלב ״Reordered Columns״ שלא עשיתי</summary>
+    <p>קליק על כותרת נרשם כגרירה. מוחקות את השלב ב־X.</p></details>
+  <details><summary>בניווט (Navigator) מופיע גם Suggested Tables</summary>
+    <p>פאוור BI מנחש איפה הטבלה בגיליון. לפעמים הוא צודק ולפעמים לא. כאן בוחרות את הגיליון עצמו, כדי לראות ולתקן את המבנה בעצמכן ולתעד את זה.</p></details>
+</section>
+
+<section id="done">
+  <h2>איך אדע שהצלחתי</h2>
+  <div class="box">
+    <ul class="check">
+      <li><label><input type="checkbox"> בטבלת הטיוב שלי יש שורה לכל דבר שמצאתי בפרופיל, ולכל החלטה</label></li>
+      <li><label><input type="checkbox"> ראיתי את המדרגות של 34% ו־66%, ויודעת להסביר מה הן אומרות</label></li>
+      <li><label><input type="checkbox"> בקובצי התרגול: 9 עמודות ו־29 שורות, ושם הרשות מלאה ב־100%</label></li>
+      <li><label><input type="checkbox"> בכל שאילתה שנתית יש עמודת שנה מסוג מספר שלם, והן לא נטענות לדוח</label></li>
+      <li><label><input type="checkbox"> אחרי האיחוד אין שגיאות, ו־<code>..</code> הפך ל־null</label></li>
+      <li><label><input type="checkbox"> יודעת כמה רשויות יש בכל השנים (8), ומה החלטתי על השאר</label></li>
+      <li><label><input type="checkbox"> <b>י״ב:</b> המסד שלי מאוחד, ומספר השורות בו שווה לסכום של הקבצים, פחות מה שסיננתי וכתבתי למה</label></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><a href="index.html">← חזרה למפת הדרך</a> · <a href="lesson5.html">שיעור 5</a></p>
+  <p>הנספח הזה לא מבוסס על הקורס של טל. נבנה למגמה, על נתונים מומצאים.</p>
+</footer>
+
+</div>
+</body>
+</html>
