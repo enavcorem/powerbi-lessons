@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פרק הטיוב</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="style.css?v=6">
+<script src="lesson.js?v=2" defer></script>
+</head>
+<body class="v2" data-lesson="tiyuv">
+<div class="wrap">
+
+<header class="intro">
+  <p class="eyebrow"><a href="index.html">פאוור BI</a> · י״ב · פרק 3 בעבודה הכתובה</p>
+  <h1>פרק הטיוב: מה בדקנו, מה מצאנו, ומה עשינו</h1>
+  <p class="lede">בפרק 3 בעבודה מראות שהנתונים נבדקו לפני שניתחתן אותם. לא רק מה תיקנתן, <strong>אלא גם מה בדקתן ולא מצאתן.</strong> ״הכול היה תקין״ זה לא תיעוד. ״בדקתי כך, ומצאתי 0״ זה תיעוד.</p>
+  <ul class="cycle" aria-label="מחזור הנתונים: אנחנו בשלב טיוב והכנה">
+    <li>שאלה</li><li class="arr" aria-hidden="true">←</li>
+    <li>איסוף נתונים</li><li class="arr" aria-hidden="true">←</li>
+    <li class="here">טיוב והכנה</li><li class="arr" aria-hidden="true">←</li>
+    <li>ניתוח</li><li class="arr" aria-hidden="true">←</li>
+    <li>הצגה</li><li class="arr" aria-hidden="true">←</li>
+    <li>החלטה</li>
+  </ul>
+</header>
+
+<nav class="stages" aria-label="חלקי הדף">
+  <ol>
+    <li class="s0"><a href="#what"><span class="n">1</span>מה מטייבים</a></li>
+    <li class="s1"><a href="#how"><span class="n">2</span>איך בודקים</a></li>
+    <li class="s2"><a href="#table"><span class="n">3</span>הטבלה</a></li>
+    <li class="s2"><a href="#example"><span class="n">4</span>דוגמה: התדלוק</a></li>
+    <li class="s3"><a href="#c"><span class="n">5</span>המסד שלכן</a></li>
+    <li><a href="#done">הצלחתי?</a></li>
+  </ol>
+  <button type="button" class="present-btn" aria-pressed="false">מצב הצגה</button>
+</nav>
+
+<!-- ===================== מה מטייבים ===================== -->
+<section id="what" class="stage s0">
+  <h2><span class="part">1 · מה מטייבים</span>ארבע בעיות בתוך העמודה, ושתיים בטבלה כולה</h2>
+  <p class="out">יודעות לומר, על כל ערך מוזר, לאיזה מארבעת הסוגים הוא שייך.</p>
+
+  <ul class="verbs">
+    <li><b>חסר</b>התא ריק, או <span class="en">null</span>. בתדלוק: שישה תדלוקים בלי מחיר לליטר.</li>
+    <li><b>שגוי</b>הערך כתוב בצורה שהתוכנה לא יודעת לקרוא. בתדלוק: ״1 בינואר״ במילים, בעמודת תאריך. אחרי המרה ל־<span class="en">Date</span> הוא הופך ל־<span class="en">Error</span>.</li>
+    <li><b>חריג</b>הערך כתוב נכון, אבל לא הגיוני. בתדלוק: 50,000 ליטר. זה מספר תקין לגמרי, אבל מכל של רכב מחזיק בערך 50.</li>
+    <li><b>כפול</b>אותה רשומה מופיעה פעמיים, ונספרת פעמיים בכל סכום. בתדלוק: ארבעה קודי תדלוק מופיעים פעמיים, בשורות זהות.</li>
+  </ul>
+
+  <div class="why"><b>שגוי מול חריג: תאריך אחד, שתי בעיות.</b> ״1 בינואר״ הוא <b>שגוי</b>: התאריך נכון, אבל הוא כתוב במילים, והתוכנה לא מבינה אותו.
+  ‏15/05/2062 הוא <b>חריג</b>: התוכנה קוראת אותו בלי בעיה, אבל תדלוק לא קרה עוד 36 שנה.
+  את השגוי מוצאות כשמשנות סוג. את החריג מוצאות רק כששואלות ״זה אפשרי?״.</div>
+
+  <p>ויש שתי בעיות שלא יושבות בעמודה אחת, אלא בטבלה כולה:</p>
+  <ul>
+    <li><b>שורה ריקה לגמרי.</b> בתדלוק יש שתיים. מוחקות, כי אין בהן כלום.</li>
+    <li><b>עמודה בלי מידע.</b> ריקה כולה, או עם ערך אחד בכל השורות. בתדלוק: שם המתדלק ושם התחנה. מורידות, כי היא לא עונה על שום שאלה.</li>
+  </ul>
+
+  <div class="trap"><b>כפילות נבדקת על המפתח, לא על כל עמודה.</b> ״בנזין 95״ מופיע 2,173 פעמים, וזו לא כפילות. ככה נראה סוג דלק.
+  כפילות היא <b>אותה רשומה</b> פעמיים. לכן קודם מחליטות מה מזהה רשומה, ורק עליו בודקות. זה <b>המפתח</b>:
+  <ul>
+    <li>יש עמודת מזהה, כמו קוד תדלוק או מספר הזמנה? היא המפתח.</li>
+    <li>אין מזהה? המפתח הוא צירוף של כמה עמודות. למשל תאריך + לוחית רישוי + כמות: אותו רכב, באותו יום, באותה כמות.</li>
+  </ul>
+  ובפרק כותבות מה המפתח, ולמה בחרתן בו. גם אם לא נמצאה אף כפילות.</div>
+</section>
+
+<!-- ===================== איך בודקים ===================== -->
+<section id="how" class="stage s1">
+  <h2><span class="part">2 · איך בודקים</span>בפאוור קוורי, או באקסל</h2>
+  <p class="out">לכל אחד מארבעת הסוגים יש לכן דרך לבדוק, ואתן יודעות לכתוב אותה במשפט.</p>
+  <p class="sub">אפשר לטייב בפאוור קוורי ואפשר באקסל. מה שחשוב: לכתוב איך בדקתן. בלי זה, האפס בטבלה לא אומר כלום.</p>
+
+  <div class="box scroll">
+    <table>
+      <thead><tr><th>הבעיה</th><th>בפאוור קוורי</th><th>באקסל</th></tr></thead>
+      <tbody>
+        <tr><td><b>חסר</b></td><td><span class="en">Column quality</span>: האחוז ב־<span class="en">Empty</span>. ואז סינון על <span class="en">null</span>, כדי לראות מי הן</td><td><code>=COUNTBLANK(…)</code>, או סינון על ״(ריקים)״</td></tr>
+        <tr><td><b>שגוי</b></td><td>משנות לסוג הנכון (<span class="en">Date</span>, מספר). מה שלא מצליח הופך ל־<span class="en">Error</span>. <span class="en">Keep Errors</span> מראה אותו</td><td>בעמודה של מספרים או תאריכים: ערך שמיושר לשמאל הוא טקסט. <code>=ISNUMBER(…)</code> מחזיר FALSE</td></tr>
+        <tr><td><b>חריג</b></td><td><span class="en">Column profile</span>: <span class="en">Min</span> ו־<span class="en">Max</span>. ואז <span class="en">Number filters</span>, כדי לראות את השורה</td><td><code>=MIN(…)</code> ו־<code>=MAX(…)</code>, או גרף <b>Box Plot</b> (בהמשך)</td></tr>
+        <tr><td><b>כפול</b></td><td>על המפתח: <span class="en">Distinct</span> מול <span class="en">Count</span> בפרופיל, ואז <span class="en">Keep Duplicates</span></td><td>על המפתח: <code>=COUNTIF(…)</code> שגדול מ־1, או <span class="path">Home › Conditional Formatting › Duplicate Values</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="trap"><b>בפאוור קוורי: <span class="en">entire data set</span> לפני כל בדיקה.</b> בלי זה הפרופיל מחושב על 1,000 השורות הראשונות, ומה שאחריהן לא נראה.
+  זה חוזר ל־1,000 בכל פתיחה.</div>
+
+  <article class="topic">
+    <h3>חריגים באקסל: גרף Box Plot</h3>
+    <p>גרף שמראה איפה נמצאים רוב הערכים בעמודה, ומסמן בנקודה כל ערך שרחוק מהם.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מסמנות עמודה אחת של מספרים, כולל הכותרת.</li>
+        <li><span class="path">Insert › Insert Statistic Chart › Box and Whisker</span>.</li>
+        <li>הקופסה היא החצי האמצעי של הערכים. הקווים יוצאים ממנה עד הערכים הרגילים.</li>
+        <li><b>נקודה מחוץ לקווים היא מועמדת להיות חריג.</b> מוצאות אותה בטבלה (סינון, או מיון מהגדול לקטן), ושואלות: ״זה אפשרי?״</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע? (בתדלוק, עמודת הליטרים)</summary>
+        הקופסה צמודה לאפס, ונקודה אחת למעלה, ב־50,000. הגרף ״נמעך״, כי ערך אחד גדול פי אלף מכל השאר. גם זה סימן.</details>
+    </details>
+    <div class="why"><b>חריג זה לא תמיד טעות.</b> משאית יכולה לתדלק 400 ליטר. אז יש שלוש החלטות אפשריות:
+    <ul>
+      <li><b>לתקן,</b> כשברור מה היה צריך להיות. 50,000 הוא כנראה 50 עם אפסים מיותרים.</li>
+      <li><b>למחוק את השורה,</b> כשאין דרך לדעת.</li>
+      <li><b>להשאיר,</b> כשהערך אמיתי.</li>
+    </ul>
+    בכל אחת מהן כותבות למה.</div>
+  </article>
+
+  <div class="next">✔ יודעות לבדוק. עכשיו: איך כותבים את זה. <a href="#table">לטבלה ←</a></div>
+</section>
+
+<!-- ===================== הטבלה ===================== -->
+<section id="table" class="stage s2">
+  <h2><span class="part">3 · הטבלה</span>טבלה אחת לכל קובץ</h2>
+  <p class="out">מבינות מה כותבים בכל חלק בטבלה, ולמה יש בה שלושה חלקים.</p>
+  <div class="box">
+    <div class="rec">
+      <a class="btn" href="files/cleaning-log.xlsx" download="טבלת תיעוד טיוב.xlsx">⬇ הורדת טבלת הטיוב</a>
+      <span>קובץ אקסל. גיליון לכל קובץ נתונים: <b>מסד ראשי</b> ו<b>קובץ משלים</b>.</span>
+    </div>
+  </div>
+
+  <article class="topic">
+    <h3>חלק א: איך בדקנו</h3>
+    <p>ארבע שורות, אחת לכל סוג בעיה, ועוד שורה למפתח. נכתבות <b>פעם אחת</b> לכל קובץ. הן מה שהופך את המספרים בחלק ב לתיעוד.</p>
+    <div class="box scroll">
+      <table>
+        <thead><tr><th>הבעיה</th><th>איך בדקנו</th></tr></thead>
+        <tbody>
+          <tr><td>חסרים</td><td>משפט אחד: הכלי, ומה בדיוק הסתכלנו</td></tr>
+          <tr><td>שגויים</td><td>…</td></tr>
+          <tr><td>חריגים</td><td>…</td></tr>
+          <tr><td>כפולים</td><td>…</td></tr>
+          <tr><td><b>המפתח</b></td><td>מה מזהה רשומה, ולמה בחרנו בו</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+  <article class="topic">
+    <h3>חלק ב: שורה לכל עמודה</h3>
+    <p>שורה לכל עמודה <b>שמשמשת את הניתוח</b>. מסד של 25 עמודות לא הופך לטבלה של 25 שורות.</p>
+    <div class="box scroll">
+      <table>
+        <thead><tr><th>עמודה בטבלה</th><th>מה כותבים</th></tr></thead>
+        <tbody>
+          <tr><td><b>עמודה</b></td><td>שם העמודה במסד</td></tr>
+          <tr><td><b>תקינות</b></td><td>כמה שורות בלי שום בעיה בעמודה הזו</td></tr>
+          <tr><td><b>חריגים · חסרים · שגויים</b></td><td>כמה שורות מכל סוג. 0 כשבדקתן ולא מצאתן</td></tr>
+          <tr><td><b>כפולים</b></td><td>רק בעמודת המפתח. בכל שאר העמודות: ״—״</td></tr>
+          <tr><td><b>אחוז שגויים</b></td><td>הבעיות חלקי מספר השורות. בקובץ מחושב לבד</td></tr>
+          <tr><td><b>מה עשינו ולמה</b></td><td>הפעולה, מה הכנסתן, <b>ולמה לא הדרך האחרת</b> (מחקתן ולא הצלתן, או להפך). ואיפה זה: שם השלב ביומן, או ״באקסל, גיליון מטויב״. אם לא טייבתן, כותבות למה</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+  <article class="topic">
+    <h3>חלק ג: מה ירד, וכמה נשאר</h3>
+    <ul>
+      <li><b>עמודות שהורדנו:</b> אילו, ולמה. שורה אחת לכולן.</li>
+      <li><b>שורות ריקות לגמרי:</b> כמה, ומה עשינו.</li>
+      <li><b>סיכום:</b> כמה שורות היו לפני הטיוב, וכמה אחריו. ההפרש צריך להיות מוסבר בטבלה.</li>
+    </ul>
+  </article>
+
+  <div class="trap"><b>״כי זה היה שגוי״ זה לא ״למה״.</b> ״למה״ עונה על השאלה: למה מחקתן ולא הצלתן, או להפך.
+  ואם הצלתן, מאיפה הערך שהכנסתן.</div>
+</section>
+
+<!-- ===================== דוגמה ===================== -->
+<section id="example" class="stage s2">
+  <h2><span class="part">4 · דוגמה מלאה</span>הטבלה של התדלוק</h2>
+  <p class="out">רואות טבלה מלאה, ויודעות מה צריך להיות בטבלה שלכן.</p>
+  <p class="sub">התדלוק משיעורים 2–4. 2,907 שורות בקובץ. הספירות בחלק ב הן על 2,905 השורות שאינן ריקות לגמרי.</p>
+
+  <h3>חלק א: איך בדקנו</h3>
+  <div class="box scroll">
+    <table>
+      <thead><tr><th>הבעיה</th><th>איך בדקנו</th></tr></thead>
+      <tbody>
+        <tr><td>חסרים</td><td>פאוור קוורי, <span class="en">entire data set</span>: <span class="en">Empty</span> בכל עמודה, ואז סינון על <span class="en">null</span> כדי לראות מי הן</td></tr>
+        <tr><td>שגויים</td><td>שינינו כל עמודה לסוג הנכון, ובדקנו <span class="en">Error</span> בפרופיל. <span class="en">Keep Errors</span> הראה את השורה</td></tr>
+        <tr><td>חריגים</td><td><span class="en">Min</span> ו־<span class="en">Max</span> בכל עמודת מספר ותאריך. במחיר: לכל סוג דלק לחוד, כי גז זול מבנזין</td></tr>
+        <tr><td>כפולים</td><td>על המפתח: <span class="en" dir="ltr">Count 2,907</span>, <span class="en" dir="ltr">Distinct 2,902</span>, <span class="en" dir="ltr">Unique 2,897</span>, ואז <span class="en">Keep Duplicates</span>. בדקנו שהשורות זהות בכל העמודות</td></tr>
+        <tr><td><b>המפתח</b></td><td>קוד תדלוק. מספר שניתן לכל תדלוק, ולכן כל תדלוק אמור להופיע פעם אחת</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>חלק ב: שורה לכל עמודה</h3>
+  <div class="box scroll">
+    <table>
+      <thead><tr><th>עמודה</th><th>תקינות</th><th>חריגים</th><th>חסרים</th><th>כפולים</th><th>שגויים</th><th>אחוז</th><th>מה עשינו ולמה</th></tr></thead>
+      <tbody>
+        <tr><td>קוד תדלוק</td><td>2,901</td><td>—</td><td>0</td><td>4</td><td>0</td><td>0.14%</td><td><span class="en">Remove Duplicates</span>. השורות זהות לגמרי, כך שזה אותו תדלוק שנרשם פעמיים, ובכל סכום הוא נספר כפול. <i>מחיקת תדלוקים כפולים</i></td></tr>
+        <tr><td>תאריך</td><td>2,904</td><td>0</td><td>0</td><td>—</td><td>1</td><td>0.03%</td><td><span class="en">Replace Errors</span> ← 01/01/2026. היה כתוב ״1 בינואר״ במילים. שאר השורה תקין, ולכן הצלנו ולא מחקנו. <i>תיקון תאריך שגוי</i></td></tr>
+        <tr><td>כמות (ליטרים)</td><td>2,904</td><td>1</td><td>0</td><td>—</td><td>0</td><td>0.03%</td><td><span class="en">Replace Values</span>: ‏50000 ← 50. כל שאר התדלוקים בין 25 ל־55 ליטר. כנראה 50 עם אפסים מיותרים, ולכן תיקנו ולא מחקנו. <i>תיקון כמות חריגה</i> (שיעור 4)</td></tr>
+        <tr><td>מחיר לליטר</td><td>2,899</td><td>0</td><td>6</td><td>—</td><td>0</td><td>0.21%</td><td><span class="en">Replace Values</span>: <span class="en">null</span> ← 7.40. כל השישה בנזין 95 בינואר, ובינואר כל 649 התדלוקים האחרים של בנזין 95 עלו 7.40. <i>השלמת מחיר חסר</i></td></tr>
+        <tr><td>קטגוריית דלק</td><td>2,905</td><td>0</td><td>0</td><td>—</td><td>0</td><td>0%</td><td>לא נדרש. ארבעה ערכים, כולם סוגי דלק אמיתיים</td></tr>
+        <tr><td>קוד לקוח</td><td>2,905</td><td>0</td><td>0</td><td>—</td><td>0</td><td>0%</td><td>לא נדרש. כל הקודים באותה תבנית, <code>CLT-</code> וארבע ספרות</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>חלק ג: מה ירד, וכמה נשאר</h3>
+  <div class="box scroll">
+    <table>
+      <tbody>
+        <tr><th>עמודות שהורדנו</th><td>שם המתדלק (<span class="en">Empty</span> ‏100%) ושם התחנה (ערך אחד בכל השורות). לא עונות על שום שאלה. <i>מחיקת עמודות בלי מידע</i></td></tr>
+        <tr><th>שורות ריקות לגמרי</th><td>2. <span class="en">Remove Blank Rows</span>, כי אין בהן שום מידע. <i>מחיקת שורות ריקות</i></td></tr>
+        <tr><th>סיכום</th><td>לפני: 2,907 שורות. אחרי: 2,901. ירדו 2 ריקות ו־4 כפולות. שאר התיקונים הצילו תאים, ולא מחקו שורות</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="why"><b>שימו לב לשתי השורות האחרונות בחלק ב.</b> ״לא נדרש״ עם אפסים בכל העמודות זה תיעוד, כי בחלק א כתוב איך בדקנו.
+  בלי חלק א, אותם אפסים יכולים להיות ״לא בדקנו״.</div>
+</section>
+
+<!-- ===================== המסד שלכן ===================== -->
+<section id="c" class="stage s3">
+  <h2><span class="part">5 · י״ב · המסד שלכן</span>טיוב ראשוני, עד סוף אוקטובר <span class="who">י״ב</span></h2>
+  <p class="out">לכל קובץ במסד שלכן יש טבלת טיוב מלאה, וכל תיקון שבה נעשה.</p>
+
+  <article class="topic">
+    <h3>אחת אחת</h3>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מורידות את <a class="file" href="files/cleaning-log.xlsx" download="טבלת תיעוד טיוב.xlsx">טבלת הטיוב</a>. גיליון אחד לכל קובץ.</li>
+        <li>מחליטות אילו עמודות משמשות את הניתוח, ומה המפתח. את אלה שלא, מורידות, וכותבות בחלק ג.</li>
+        <li>בודקות כל עמודה, ארבע בדיקות (<a href="#how">איך בודקים</a>). כותבות את המספרים, <b>גם 0</b>.</li>
+        <li>לכל בעיה מחליטות: לתקן, למחוק שורה, או להשאיר. מתקנות.</li>
+        <li>כותבות ״מה עשינו ולמה״, ואת חלק א.</li>
+        <li>סופרות שורות לפני ואחרי. ההפרש מוסבר בטבלה?</li>
+      </ol>
+    </details>
+    <div class="why"><b>עכשיו, לא בסוף.</b> מי שכותבת תוך כדי, מסיימת עם פרק. מי שמשאירה לסוף, מנסה להיזכר מה עשתה.
+    בפאוור קוורי היומן זוכר בשבילכן: כל שלב, לפי הסדר. לכן נותנות לכל שלב שם בעברית.</div>
+  </article>
+
+  <article class="topic">
+    <h3>החלק השני של הפרק: חישובים</h3>
+    <p>בשקף של פרק 3 יש עוד סעיף: <b>תיעוד חישובים, עמודות מחושבות ומדדים</b> שמשמשים בדשבורד. אותו כותבות תוך כדי הניתוח, משיעור 5: לכל עמודה שבניתן, מה היא מחשבת ואיזו שאלה היא משרתת.</p>
+  </article>
+</section>
+
+<section id="done">
+  <h2>איך אדע שהצלחתי</h2>
+  <div class="box">
+    <ul class="check">
+      <li><label><input type="checkbox"> יודעת להסביר את ההבדל בין ערך שגוי לערך חריג, עם דוגמה מהמסד שלי</label></li>
+      <li><label><input type="checkbox"> בחרתי מפתח לבדיקת כפילויות, וכתבתי למה</label></li>
+      <li><label><input type="checkbox"> בחלק א כתוב איך בדקתי כל אחד מארבעת הסוגים</label></li>
+      <li><label><input type="checkbox"> בחלק ב יש שורה לכל עמודה שמשמשת את הניתוח, גם כשהכול 0</label></li>
+      <li><label><input type="checkbox"> בכל ״למה״ כתוב גם למה לא הדרך האחרת</label></li>
+      <li><label><input type="checkbox"> ההפרש בין השורות לפני ואחרי מוסבר בטבלה</label></li>
+      <li><label><input type="checkbox"> יש טבלה לכל קובץ במסד שלי</label></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><a href="index.html">← חזרה למפת הדרך</a> · <a href="lesson3.html">שיעור 3</a></p>
+  <p>מבוסס על ההנחיות לפרק 3 בעבודה הכתובה: ״טיוב והכנת הנתונים״.</p>
+</footer>
+
+</div>
+</body>
+</html>
