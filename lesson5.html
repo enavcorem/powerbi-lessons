@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 5 — בעיות עדינות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="style.css?v=7">
+<script src="lesson.js?v=2" defer></script>
+</head>
+<body class="v2" data-lesson="lesson5">
+<div class="wrap">
+<!-- שיעור 5 (2.11). היה שיעור 4 עד 24.10 (הלוח זז שבוע). מקוצר: תחנת החריג ירדה לשורה ב־#recap -->
+
+<header class="intro">
+  <p class="eyebrow"><a href="index.html">פאוור BI</a> · שיעור 5 · 2.11</p>
+  <h1>בעיות עדינות</h1>
+  <p class="lede">שגיאות ושורות ריקות צועקות. היום מחפשות את הבעיות ששותקות: <strong>מספר שלא הגיוני, מילה עם רווח מיותר, קוד שמאבד אפסים</strong>.
+  פאוור BI לא יסמן אותן כשגיאה. רק השאלה ״זה הגיוני?״ תמצא אותן.</p>
+  <ul class="cycle" aria-label="מחזור הנתונים: אנחנו בשלב טיוב והכנה">
+    <li>שאלה</li><li class="arr" aria-hidden="true">←</li>
+    <li>איסוף נתונים</li><li class="arr" aria-hidden="true">←</li>
+    <li class="here">טיוב והכנה</li><li class="arr" aria-hidden="true">←</li>
+    <li>ניתוח</li><li class="arr" aria-hidden="true">←</li>
+    <li>הצגה</li><li class="arr" aria-hidden="true">←</li>
+    <li>החלטה</li>
+  </ul>
+</header>
+
+<nav class="stages" aria-label="שלבי השיעור">
+  <ol>
+    <li class="s0"><a href="#recap"><span class="n">↺</span>חזרה קטנה</a></li>
+    <li class="s0"><a href="#quiet"><span class="n">0</span>בעיות ששותקות</a></li>
+    <li class="s1"><a href="#a"><span class="n">1</span>עושות יחד</a></li>
+    <li class="s2"><a href="#room"><span class="n">2</span>כרטיס החדר</a></li>
+    <li class="s3"><a href="#own"><span class="n">3</span>על העבודה שלכן</a></li>
+    <li><a href="#stuck">נתקעתי</a></li>
+    <li><a href="#done">הצלחתי?</a></li>
+  </ol>
+  <button type="button" class="present-btn" aria-pressed="false">מצב הצגה</button>
+</nav>
+
+<section id="rec">
+  <h2>לא היית במיט?</h2>
+  <p class="sub">עברי על שלבים 0–1 עם ההקלטה, ואחר כך עשי את כרטיס החדר לבד. הכרטיס עומד בפני עצמו: קובץ חדש, בלי תלות בשבועות הקודמים.</p>
+  <div class="box">
+    <div class="rec">
+      <!-- להחליף בקישור ההקלטה אחרי השיעור, ולהוריד את class="off" -->
+      <a class="btn off" href="#" aria-disabled="true">ההקלטה תעלה אחרי השיעור</a>
+    </div>
+    <!-- אינדקס ההקלטה: יתווסף כאן אחרי השיעור, מתוך התמלול -->
+  </div>
+</section>
+
+<!-- ===================== 0–5: חזרה קטנה ===================== -->
+<section id="recap" class="stage s0 recap">
+  <h2><span class="part">פתיחה · חזרה קטנה · 5 דקות</span>שלוש שאלות מהסדנה</h2>
+  <p class="out">עונות בצ׳אט על שלוש שאלות, ובודקות את עצמכן מול התשובה.</p>
+  <p class="chat">מספר השאלה, ותשובה במשפט אחד. רק אחר כך פותחות את התשובה.</p>
+
+  <ol class="qs">
+    <li>
+      <p>מה צריך להיות כתוב בשורת תיעוד, כדי שתהיה <b>ראיה</b>?</p>
+      <details class="ans"><summary>תשובה</summary>
+        <p>ארבעה דברים: <b>איזה כלי</b>, <b>על מה</b> (איזו עמודה), <b>איזה מספר</b>, ו<b>מה עשיתן</b>.
+        ״אין כפילויות״ זה משפט. ״על קוד תדלוק מצאתי ארבעה כפולים ומחקתי״ זו ראיה.</p>
+      </details>
+    </li>
+    <li>
+      <p>למה מוחקות שורות ריקות <b>לפני</b> שבודקות כפולים?</p>
+      <details class="ans"><summary>תשובה</summary>
+        <p>שתי שורות ריקות הן ״כפולות״ זו של זו. אקסל ימחק אחת מהן, ויראה 5 כפולים ו־2,902 שורות במקום 4 ו־2,901. בפאוור קוורי הריק נספר כעוד ערך, ו־<span class="en">Distinct</span> יוצא גבוה באחד.</p>
+      </details>
+    </li>
+    <li>
+      <p>תדלוק של 50,000 ליטר. מוחקות את השורה?</p>
+      <details class="ans"><summary>תשובה</summary>
+        <p>לא בהכרח. 50,000 הוא כנראה 50 עם אפסים מיותרים, ושאר השורה תקינה, ולכן <b>מתקנות</b> ולא מוחקות: <span class="path">Transform › Replace Values</span>, ‏50000 ← 50, ונותנות לשלב שם בעברית. בטבלת התיעוד כותבות למה.
+        <span class="en">Max</span> יורד ל־55, והממוצע ל־39.76.
+        <b>עוד לא תיקנת? תקני עכשיו, בקובץ התדלוק שלך.</b> שיעור 6 ממשיך ממנו.</p>
+      </details>
+    </li>
+  </ol>
+  <div class="next">✔ זוכרות מה בודקים ואיך כותבים. היום: בעיות שלא צועקות. <a href="#quiet">לשלב 0 ←</a></div>
+</section>
+
+<!-- ===================== שלב 0 ===================== -->
+<section id="quiet" class="stage s0">
+  <h2><span class="part">שלב 0 · לפני שנכנסות</span>שלוש בעיות ששותקות, שלושה כלים</h2>
+  <p class="out">יודעות, לכל בעיה שקטה, באיזה כלי מוצאים אותה.</p>
+  <p class="sub">אף אחת מהן לא תופיע כ־<span class="en">Error</span>. כל אחת נראית בכלי אחר בפרופיל.</p>
+
+  <ul class="verbs">
+    <li><b>מספר שלא הגיוני ← Min ו־Max</b>תדלוק של 50,000 ליטר. הוא מספר תקין, אבל לא הגיוני. שואלות ״זה אפשרי?״.</li>
+    <li><b>מילה שנראית אותו דבר ← Value distribution</b>״עסקי״ ו״עסקי ״. בעיניים זה אותו דבר, אבל למחשב אלה שתי קטגוריות.</li>
+    <li><b>קוד שמאבד אפסים ← האייקון בכותרת</b><code>0002</code> שהפך ל־2. אם האייקון הוא <code>123</code> ולא <code>ABC</code>, האפסים כבר נעלמו.</li>
+  </ul>
+
+  <div class="trap"><b>שגיאות קודם.</b> לפני שמחפשות בעיות עדינות, בודקות שמעל כל עמודה כתוב <span class="en">Error</span> ‏0%.
+  שגיאות נוצרות כשמשנים סוג, ושגיאה שנשארת עלולה לתקוע את השלבים שאחריה. את זה עשינו בשיעור 3, ולכן מתחילות מקובץ נקי משגיאות.</div>
+
+  <div class="why"><b>קודם מסמנות עמודה, ואז בוחרות פקודה.</b> הלשונית <span class="path">Transform</span> מחולקת לקבוצות לפי סוג העמודה:
+  <span class="en">Any Column</span>, <span class="en">Text Column</span>, <span class="en">Number Column</span>, <span class="en">Date &amp; Time Column</span>.
+  פקודת טקסט על עמודת מספרים לא תעבוד, ולכן מסתכלות קודם על האייקון. בשיעור 6 נראה שגם בלשונית <span class="path">Add Column</span> יש אותן קבוצות.
+  <figure><img src="img/l4-03-transform-groups.png" alt="הלשונית Transform, ובתחתיתה שמות הקבוצות: Table, Any Column, Text Column, Number Column, Date &amp; Time Column, Scripts. כשמסומנת עמודת טקסט, הכלים של Number Column אפורים" width="1920" height="138" loading="lazy">
+  <figcaption>מסומנת עמודת טקסט, ולכן רוב הכלים של <span class="en">Number Column</span> אפורים.</figcaption></figure></div>
+
+  <div class="next">✔ אלה שלושת הדברים שנחפש היום. <a href="#a">לשלב 1: עושות יחד ←</a></div>
+</section>
+
+<!-- ===================== שלב 1 ===================== -->
+<section id="a" class="stage s1">
+  <h2><span class="part">שלב 1 · עושות יחד · תדלוק רכבים</span>״זה הגיוני?״</h2>
+  <p class="sub">ממשיכות מקובץ התדלוק משיעור 3.</p>
+
+  <article class="topic">
+    <h3><span class="t">1.1</span>חוזרות לפאוור קוורי</h3>
+    <p class="out">פאוור קוורי פתוח על התדלוק, עם פרופיל על כל הנתונים ובלי שגיאות.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>פותחות את קובץ התדלוק שלכן (<code>תדלוק.pbix</code>, משיעור 3). <span class="path">Home › Transform data</span>.</li>
+        <li>למטה משמאל: <span class="en">entire data set</span>. זה חוזר ל־1,000 בכל פתיחה.</li>
+        <li>עוברות על הכותרות: מעל כל עמודה <span class="en">Error</span> ‏0%?</li>
+      </ol>
+    </details>
+    <details><summary>לא שמרתי את קובץ התדלוק, או פתחתי קובץ אחר</summary>
+      <p>בהדגמה עושות יחד איתי, ואם אין קובץ פשוט מסתכלות. כרטיס החדר מתחיל מקובץ חדש, ולא צריך בו את התדלוק.
+      אחרי השיעור: <a href="lesson3.html#a" target="_blank" rel="noopener">שלב 1 בשיעור 3</a> מסביר איך לבנות את הקובץ מחדש.</p></details>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.2</span>טקסט מלוכלך</h3>
+    <p class="out">בסוג התשלום נשארו בדיוק שני ערכים, בלי מספרים.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>בעמודת סוג התשלום כתוב <code>1 - דלקן</code> ו־<code>2 - אשראי</code>. מסמנות את העמודה, ו<b>קליק על תא</b> עם <code>1 - דלקן</code>.</li>
+        <li><span class="path">Transform › Replace Values</span>. הערך נכנס לבד לשדה הראשון, עם הרווחים המדויקים. בשדה השני: <code>דלקן</code>.
+          <figure><img src="img/l4-15-replace-click.png" alt="חלון Replace Values: בשדה Value To Find כבר כתוב 1 - דלקן, ובשדה Replace With הוקלד דלקן" width="1048" height="449" loading="lazy" style="width:560px"></figure></li>
+        <li>אותו דבר ל־<code>2 - אשראי</code>.</li>
+        <li>רווחים מיותרים בתחילת הטקסט או בסופו: <span class="path">Transform › Format › Trim</span>. תווים נסתרים: <span class="path">Clean</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        ב־<span class="en">Value distribution</span> של סוג התשלום שני ערכים בלבד: דלקן ואשראי.
+        <figure><img src="img/l4-16-payment-two-values.png" alt="Value distribution של סוג תשלום: שני פסים, דלקן ואשראי. ביומן: שלושה Replaced Value, Trimmed Text ו־Cleaned Text" width="1644" height="818" loading="lazy"></figure></details>
+    </details>
+    <div class="why"><b>למה קליק על תא ולא להקליד?</b> גם הקלדה עובדת, אבל רק אם מקלידים בדיוק כמו בתא, כולל כל רווח. הקליק לא טועה.</div>
+    <div class="why"><b>למה ״עסקי״ ו״עסקי ״ הן שתי קטגוריות?</b> בעיניים הן זהות. למחשב הן שתי מילים שונות, כי באחת יש רווח בסוף.
+    גרף לפי סוג לקוח יציג שתי עמודות ״עסקי״. בחדר תמצאו בדיוק את זה.</div>
+    <div class="trap"><b><span class="en">Trim</span> כאן הוא לא <code>TRIM</code> של אקסל.</b> הוא מוריד רווחים רק בהתחלה ובסוף.
+    שני רווחים <b>באמצע</b> הטקסט נשארים שניים.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.3</span>לפצל עמודה, והמלכודת</h3>
+    <p class="out">קוד הלקוח פוצל בעותק, והאפסים בהתחלה נשארו.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><b>רשת ביטחון:</b> קודם משכפלות את העמודה. <span class="path">Add Column › Duplicate Column</span>. עובדות על העותק, והמקור נשאר.</li>
+        <li>על העותק של קוד הלקוח (<code>CLT-0002</code>): <span class="path">Transform › Split Column › By Delimiter</span>, והמפריד <code>-</code>.</li>
+        <li>מסתכלות על היומן: נוסף לבד שלב <span class="en">Changed Type</span>. הוא החליט ש־<code>0002</code> הוא מספר, <b>והפך אותו ל־2</b>.
+          <figure><img src="img/l4-17-split-trap.png" alt="אחרי הפיצול: ביומן Split Column by Delimiter ואחריו Changed Type. בעמודה קוד לקוח - Copy.2 האייקון 123 והערכים 2, 3, 5, 7 בלי האפסים" width="1644" height="691" loading="lazy">
+          <figcaption>האייקון <code>123</code>, והאפסים נעלמו.</figcaption></figure></li>
+        <li>מוחקות את ה־<span class="en">Changed Type</span> שנוסף לבד (ה־X שלידו). האפסים חוזרים.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בשתי העמודות החדשות האייקון <b>ABC</b>, ובשנייה <code>0002</code> ולא 2.
+        <figure><img src="img/l4-18-zeros-back.png" alt="אחרי מחיקת Changed Type: היומן נגמר ב־Split Column by Delimiter, ובעמודה קוד לקוח - Copy.2 האייקון ABC והערכים 0002, 0003, 0005" width="1644" height="691" loading="lazy"></figure></details>
+    </details>
+    <div class="trap"><b>המלכודת: Changed Type שנוסף לבד.</b> אחרי Split, ולפעמים אחרי פעולות אחרות, פאוור BI מוסיף שלב שמנחש סוגים.
+    בקודים (תעודת זהות, מיקוד, טלפון) הניחוש הורס את הנתונים. <b>ולהחזיר ל־Text אחר כך לא עוזר:</b> האפסים כבר נמחקו. רק מחיקת השלב מחזירה אותם.
+    <b>אחרי כל עמודה חדשה, בודקות את האייקון בכותרת.</b></div>
+    <div class="why"><b>Split או Extract?</b> <span class="en">Split</span> מפרק עמודה לכמה עמודות. <span class="en">Extract</span> שומר רק חלק אחד.
+    כשצריך רק את מה שאחרי המקף, <span class="path">Transform › Extract › Text After Delimiter</span> קצר יותר.</div>
+    <div class="why"><b>אותו מהלך נותן קטגוריית־על.</b> ״בנזין 95״ ו״בנזין 98״ הן שתי קטגוריות, אבל לשאלה ״בנזין או סולר?״ מספיקה המילה הראשונה.
+    משכפלות, מפצלות ברווח, ומוחקות את החלק עם המספר. בחדר תעשו בדיוק את זה על סוגי הפעילות.</div>
+  </article>
+
+  <div class="next">✔ טקסט ופיצול. עכשיו אתן, בזוגות, על קובץ חדש. <a href="#room">לשלב 2: כרטיס החדר ←</a></div>
+</section>
+
+<!-- ===================== שלב 2 ===================== -->
+<section id="room" class="stage s2">
+  <h2><span class="part">שלב 2 · בחדרים · בזוגות · כ־25 דקות · פעילות VR · י״א</span>כרטיס החדר: ארבע בעיות מוסתרות</h2>
+  <p class="sub">רשת של חדרי בריחה וסימולטורים שלחה 2,000 פעילויות. <b>הסתרנו בקובץ ארבע בעיות.</b> המשימה: למצוא את כולן, לתקן, ואז לסדר את הטקסט.</p>
+  <div class="roles">
+    <div><b>נהגת:</b> משתפת מסך ולוחצת. בת הזוג עושה את אותו הדבר במחשב שלה ומשווה.</div>
+    <div><b>נווטת:</b> מקריאה את הצעד ובודקת את ה־✔.</div>
+  </div>
+
+  <article class="topic">
+    <h3><span class="t">2.1</span>חיבור</h3>
+    <p class="out">פאוור קוורי פתוח על פעילויות ה־VR, עם פרופיל על כל הנתונים.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מורידות את <a class="file" href="files/vr-activities.xlsx" download="נתוני פעילות VR - לתרגול.xlsx">נתוני פעילות VR - לתרגול.xlsx</a>, ומעבירות אותו מ״הורדות״ לתיקייה <code>Power BI\שיעור 5</code>.</li>
+        <li>דוח חדש: <span class="path">File › New</span>. ואז <span class="path">Home › Get data › Excel workbook</span> ← <code>נתוני פעילות VR - לתרגול.xlsx</code>.</li>
+        <li>ב־Navigator מסמנות את <code>Activities_Raw</code>, ולוחצות <b>Transform Data</b>.</li>
+        <li>בלשונית <span class="path">View</span> שלוש התיבות. למטה: <span class="en">entire data set</span>.</li>
+      </ol>
+    </details>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.2</span>ציד, ורושמות</h3>
+    <p class="out">ארבע שורות בטבלת התיעוד, אחת לכל בעיה. <b>עוד בלי לתקן.</b></p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>שגיאות קודם: מעל כל עמודה <span class="en">Error</span> ‏0%? אם יש שגיאה, מטפלות בה קודם, כמו בשיעור 3.</li>
+        <li>לוחצות על כותרות, ומחפשות ארבע בעיות. רמזים:
+          <ul>
+            <li><b>קוד פעילות</b> — <span class="en">Distinct</span> מול <span class="en">Unique</span>.</li>
+            <li><b>מחיר למשתתף</b> — <span class="en">Min</span> מול <span class="en">Max</span>. זה הגיוני?</li>
+            <li><b>סוג לקוח</b> — כמה ערכים יש ב־<span class="en">Value distribution</span>?</li>
+            <li>והרביעית היא מהסוג שכבר מכירות.</li>
+          </ul></li>
+        <li>רושמות את ארבע הבעיות בטבלת התיעוד: עמודה, הבעיה, איך גיליתי.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע? (לפתוח רק אחרי שחיפשתן)</summary>
+        <ul>
+          <li><b>קוד פעילות:</b> ‏2001 distinct, ‏2000 unique. פעילות אחת רשומה פעמיים.</li>
+          <li><b>מחיר למשתתף:</b> <span class="en">Count</span> ‏2002, <span class="en">Empty</span> ‏1 (הנה הרביעית: שורה ריקה), <span class="en">Min</span> ‏64.12 ו־<span class="en">Max</span> <b>‏9182</b>.</li>
+          <li><b>סוג לקוח:</b> ״עסקי״ מופיע <b>פעמיים</b> בגרף.</li>
+        </ul>
+        <figure><img src="img/l4-01-outlier-profile.png" alt="פרופיל העמודה מחיר למשתתף: Count 2002, Empty 1, Min 64.12, Max 9182, Average 120.77" width="1244" height="829" loading="lazy">
+        <figcaption>9,182 ₪ למשתתף, כשכל השאר בין 64 ל־189. כנראה 91.82, והנקודה נשמטה.</figcaption></figure>
+        <figure><img src="img/l4-02-spaces-profile.png" alt="פרופיל העמודה סוג לקוח: Distinct 6, ובגרף Value distribution המילה עסקי מופיעה פעמיים, פעם עם עמודה ארוכה ופעם עם עמודה זעירה" width="1244" height="456" loading="lazy">
+        <figcaption>״עסקי״ פעמיים: בשורה האחרונה יש רווח בסוף המילה.</figcaption></figure></details>
+    </details>
+  </article>
+
+  <div class="swap">🔄 מתחלפות: הנהגת מפסיקה לשתף, והשנייה משתפת את המסך שלה.</div>
+
+  <article class="topic">
+    <h3><span class="t">2.3</span>מתקנות את הארבע</h3>
+    <p class="out">בסוג לקוח ארבעה ערכים, ובמחיר למשתתף אין יותר חריג.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Home › Remove Rows › Remove Blank Rows</span>.</li>
+        <li>מסמנות את <b>קוד פעילות</b>. <span class="path">Home › Remove Rows › Remove Duplicates</span>.</li>
+        <li>מסמנות את <b>סוג לקוח</b>. <span class="path">Transform › Format › Trim</span>.</li>
+        <li>מסמנות את <b>מחיר למשתתף</b>. <span class="path">Transform › Replace Values</span>: ‏<code>9182</code> ← <code>91.82</code>.
+          <figure><img src="img/l4-05-replace-outlier.png" alt="חלון Replace Values: Value To Find 9182, Replace With 91.82" width="1051" height="408" loading="lazy" style="width:560px"></figure></li>
+        <li>נותנות לארבעת השלבים שמות בעברית, כמו בשיעור 3: קליק על השלב ביומן ← <b>F2</b>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בסוג לקוח <b>4 distinct</b>. במחיר למשתתף: <span class="en">Count</span> ‏2000, <span class="en">Max</span> ‏188.86.
+        <figure><img src="img/l4-11-after-outlier.png" alt="Column statistics של מחיר למשתתף אחרי התיקון: Count 2000, Empty 0, Min 64.12, Max 188.86, Average 116.239" width="373" height="415" loading="lazy" style="width:260px">
+        <figcaption>גם הממוצע ירד: מ־120.77 ל־116.24. חריג אחד הזיז את הממוצע של 2,000 שורות.</figcaption></figure></details>
+    </details>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.4</span>מסדרות את הטקסט</h3>
+    <p class="out">ערוץ הזמנה בלי מספרים, ועמודה חדשה של קטגוריית־על לסוג הפעילות.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><b>ערוץ הזמנה</b> (<code>1-אתר</code>, <code>2-מוקד טלפוני</code>...): <span class="path">Transform › Extract › Text After Delimiter</span>, המפריד <code>-</code>.
+          <figure><img src="img/l4-07-extract-menu.png" alt="התפריט Extract פתוח: Length, First Characters, Last Characters, Range, Text Before Delimiter, Text After Delimiter, Text Between Delimiters" width="456" height="387" loading="lazy" style="width:340px"></figure>
+          (אפשר גם ארבע פעמים Replace Values, כמו בהדגמה. התוצאה זהה.)</li>
+        <li><b>סוג פעילות מלא</b> (<code>VR - מסע במעמקי הים</code>): קודם <span class="path">Add Column › Duplicate Column</span>.</li>
+        <li>על העותק: <span class="path">Transform › Split Column › By Delimiter</span>, ובשדה המפריד: רווח, מקף, רווח.</li>
+        <li>מסתכלות ביומן: נוסף לבד <span class="en">Changed Type1</span>. בודקות את האייקונים של שתי העמודות החדשות: שתיהן <b>ABC</b>? הפעם הוא לא הרס כלום. אבל בודקות תמיד.
+          <figure><img src="img/l4-10-auto-changed-type.png" alt="אחרי הפיצול: ביומן נוספו Split Column by Delimiter ומיד אחריו Changed Type1, ושתי העמודות החדשות מסוג טקסט" width="1644" height="567" loading="lazy"></figure></li>
+        <li>דאבל־קליק על כותרות העמודות החדשות, ושמות: <b>סוג פעילות ראשית</b> ו<b>שם פעילות</b>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בערוץ הזמנה ארבעה ערכים בלי מספרים (אתר, מוקד טלפוני, סוכן מכירות, אפליקציה).
+        בסוג פעילות ראשית: <b>6 distinct</b>, ובראש הגרף VR.</details>
+    </details>
+    <div class="why"><b>זה כבר לא תיקון, זו הכנה.</b> סוג הפעילות המלא לא היה שבור. פיצלנו אותו כי לשאלה ״איזה סוג פעילות מכניס הכי הרבה?״ צריך קטגוריית־על.
+    גם הכנה נכנסת לטבלת התיעוד, אבל ב״למה״ כותבות מה השאלה צריכה, ולא מה היה שבור.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.5</span>שומרות</h3>
+    <p class="out"><code>VR.pbix</code> שמור. בשיעור הבא ממשיכות ממנו.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מוסיפות לטבלת התיעוד שורה לערוץ ההזמנה ושורה לקטגוריית־העל.</li>
+        <li><span class="path">Home › Close &amp; Apply</span>, ושומרות בשם <code>VR</code> בתיקייה <code>Power BI\שיעור 5</code>.</li>
+      </ol>
+    </details>
+  </article>
+
+  <article class="topic">
+    <h3>המשך המטלה של טל <span class="opt">אם נשאר זמן</span></h3>
+    <p class="out">קוד הקבוצה כתוב כולו באותיות גדולות.</p>
+    <details class="how"><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מסמנות את <b>קוד קבוצה</b>. <span class="path">Transform › Format › UPPERCASE</span>.</li>
+      </ol>
+    </details>
+    <div class="why">הסינון לרבעון והמיון מהמטלה של טל פותחים את השיעור הבא, על אותו <code>VR.pbix</code>.</div>
+  </article>
+
+  <div class="next">✔ ארבע בעיות נמצאו ותוקנו, והטקסט מסודר. חוזרות למיט.</div>
+</section>
+
+<!-- ===================== 30–55: על העבודה שלכן ===================== -->
+<section id="own" class="stage s3 own">
+  <h2><span class="part">שלב 3 · 🛠 על העבודה שלכן · 25 דקות</span>סבב שני על הטקסט והמספרים</h2>
+  <p class="out">בתיעוד שלכן יש ראיה לבדיקת חריגים, טקסט וקודים.</p>
+  <p class="sub">כל אחת על הקובץ שלה. המורה עוברת ביניכן. נתקעתן? כותבות בצ׳אט, או מסתכלות ב<a href="#stuck">נתקעתי</a>.</p>
+
+  <div class="tracks">
+    <article class="topic" id="c">
+      <h3>המסד שלכן <span class="who">י״ב</span></h3>
+      <p class="out">חריגים, טקסט וקודים במסד שלכן נבדקו, ומה שמצאתן תוקן ותועד.</p>
+      <details class="how" open><summary>איך עושים</summary>
+        <ol class="do">
+          <li><b>חריגים:</b> לכל עמודה מספרית בודקות <span class="en">Min</span> ו־<span class="en">Max</span>. זה הגיוני? (גיל 200, מחיר 0, שנה 1900...)</li>
+          <li><b>טקסט:</b> לכל עמודת קטגוריה בודקות ב־<span class="en">Value distribution</span>: אין ערך שמופיע פעמיים בכתיב אחר, עם רווח, או עם מספר בהתחלה?</li>
+          <li><b>קודים:</b> יש עמודת קוד (מיקוד, מספר זהות)? בודקות שהאייקון שלה ABC, ושאף אפס לא נעלם.</li>
+          <li>מה שמצאתן: מתקנות, נותנות שם בעברית, וממלאות בטבלת התיעוד.</li>
+        </ol>
+      </details>
+      <div class="log">
+        <ul>
+          <li>שורה לכל בדיקה, גם כשלא מצאתן כלום: כלי, עמודה, מספר.</li>
+          <li>תיקון: מה היה, למה החלטתן ״תיקון״ ולא ״מחיקה״, ומה יצא אחרי.</li>
+        </ul>
+      </div>
+      <p><a href="kelim.html" target="_blank" rel="noopener">ארגז הכלים</a> מסכם את הצעדים לכל סוג בעיה.</p>
+    </article>
+
+    <article class="topic">
+      <h3>כרטיס החדר <span class="who">י״א</span></h3>
+      <p class="out">פעילות VR: מוצאות ארבע בעיות מוסתרות, מתקנות, ומסדרות את הטקסט.</p>
+      <ol class="do">
+        <li>עוברות ל<a href="#room">כרטיס החדר</a> (שלב 2), בזוגות: נהגת ונווטת.</li>
+        <li>מתחלפות בתפקידים באמצע.</li>
+        <li>בסוף, שורה בטבלת התיעוד לכל בעיה שמצאתן.</li>
+      </ol>
+      <div class="log">
+        <ul>
+          <li>שורה לכל בעיה: עמודה, מה הייתה, איך גיליתן.</li>
+          <li>ושורה לכל עמודה חדשה שיצרתן (הכנה).</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+
+  <p class="chat">בעיה אחת שמצאתן היום, כשורת תיעוד: מה בדקתן, לפי מה, מה מצאתן, מה עשיתן.</p>
+  <div class="why"><b>י״ב: לקלאסרום.</b> טבלת התיעוד עם השורות החדשות, וצילום של <span class="en">Min</span> ו־<span class="en">Max</span> לעמודה המספרית החשובה ביותר בשאלת המחקר, ומשפט: הגיוני או לא, ולמה.</div>
+</section>
+
+<section id="stuck">
+  <h2>נתקעתי</h2>
+  <p class="sub">כל אלה קרו למורות בקורס המקורי, או לנו כשהכנו את השיעור.</p>
+  <details><summary>Replace Values לא מצא את הערך</summary>
+    <p>הערך בשדה לא זהה בדיוק למה שבתא: רווח לפני או אחרי המקף, או רווח בסוף. הדרך הבטוחה: קליק על תא עם הערך <b>לפני</b> שפותחות את Replace Values, והוא ייכנס לבד.</p></details>
+  <details><summary>החלפתי ל־50, ואני לא מוצאת אותו</summary>
+    <p>הוא שם. היו כבר תדלוקים של 50 ליטר בדיוק, והחדש הצטרף אליהם. ב־<span class="en">Value distribution</span> העמודה של 50 גדלה באחד.</p></details>
+  <details><summary>אחרי Trim עדיין יש חמישה ערכים בסוג לקוח</summary>
+    <p>בדקו שבתחתית כתוב <span class="en">entire data set</span>, ושה־Trim נעשה על <b>סוג לקוח</b> ולא על עמודה אחרת (שורת הנוסחה מראה את שם העמודה). האם השורה הריקה עוד שם? היא הערך החמישי.</p></details>
+  <details><summary>Trim לא הוריד רווח כפול באמצע</summary>
+    <p>נכון, הוא לא אמור. <span class="en">Trim</span> בפאוור קוורי מוריד רווחים רק בהתחלה ובסוף, בשונה מ־<code>TRIM</code> של אקסל.</p></details>
+  <details><summary>Extract Length החליף את כל הטקסט במספרים</summary>
+    <p><span class="en">Length</span> מחזיר את <b>אורך</b> הטקסט. מוחקות את השלב, ובוחרות <span class="en">Text After Delimiter</span>.</p></details>
+  <details><summary>אחרי הפיצול האפסים נעלמו</summary>
+    <p>זו המלכודת. מוחקות את ה־<span class="en">Changed Type</span> שנוסף אחרי ה־Split, והאפסים חוזרים.
+    <b>לשנות ל־Text אחר כך לא עוזר:</b> בשלב הזה האפסים כבר נמחקו.</p></details>
+  <details><summary>לא מוצאת את Duplicate Column</summary>
+    <p>הוא בלשונית <span class="path">Add Column</span>, בקבוצה הראשונה. אפשר גם קליק ימני על כותרת העמודה ← <span class="en">Duplicate Column</span>.</p></details>
+  <details><summary>יש לי שלב ״Reordered Columns״ שלא עשיתי</summary>
+    <p>קליק על כותרת עמודה נרשם כגרירה. אם זה השלב האחרון — מוחקות אותו.</p></details>
+</section>
+
+<section id="done">
+  <h2>איך אדע שהצלחתי</h2>
+  <div class="box">
+    <ul class="check">
+      <li><label><input type="checkbox"> <span>אני יודעת באיזה כלי מוצאים מספר לא הגיוני, מילה עם רווח, וקוד שאיבד אפסים</span></label></li>
+      <li><label><input type="checkbox"> <span>מצאתי את ארבע הבעיות המוסתרות: כפילות, חריג, רווח ושורה ריקה</span></label></li>
+      <li><label><input type="checkbox"> <span>תיקנתי את החריג, ויודעת להסביר למה החלפתי ולא מחקתי</span></label></li>
+      <li><label><input type="checkbox"> <span>בסוג לקוח יש 4 ערכים, ובמחיר למשתתף Max ‏188.86</span></label></li>
+      <li><label><input type="checkbox"> <span>פיצלתי עמודה, ובדקתי את ה־Changed Type שנוסף לבד</span></label></li>
+      <li><label><input type="checkbox"> <span>לכל שלב ביומן יש שם בעברית, ושמרתי <code>VR.pbix</code> בתיקייה <code>Power BI\שיעור 5</code></span></label></li>
+      <li><label><input type="checkbox"> <span><b>י״ב:</b> הגשתי את הסבב השני בטבלת התיעוד, וצילום Min/Max</span></label></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><a href="index.html">← חזרה למפת הדרך</a> · <a href="lesson4.html">← שיעור 4</a> · <a href="lesson6.html">שיעור 6 (9.11) →</a></p>
+  <p>מבוסס על קורס Power BI של טל מיכולביץ, בשימוש באישורו.</p>
+</footer>
+
+</div>
+</body>
+</html>

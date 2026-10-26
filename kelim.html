@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ארגז כלים לטיוב</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="style.css?v=7">
+<style>
+/* ארגז כלים: CSS ייחודי לדף הזה בלבד. style.css לא משתנה */
+.k-steps { list-style: none; counter-reset: k; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px; }
+.k-steps li { counter-increment: k; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; font-size: 14.5px; }
+.k-steps li::before { content: counter(k); display: inline-flex; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-inline-end: 6px; }
+:root[data-theme="dark"] .k-steps li::before { color: #0f1513; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .k-steps li::before { color: #0f1513; } }
+.k-steps b { font-size: 16px; }
+.k-steps span.d { display: block; margin-top: 4px; color: var(--muted); }
+
+.k-bar { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 10px 0; margin-top: 22px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.k-bar .lbl { font-size: 14px; color: var(--muted); margin-inline-end: 2px; }
+.k-chip, .k-act { font: inherit; font-size: 14.5px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 5px 14px; }
+.k-chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+:root[data-theme="dark"] .k-chip[aria-pressed="true"] { color: #0f1513; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .k-chip[aria-pressed="true"] { color: #0f1513; } }
+.k-act { border-style: dashed; color: var(--muted); }
+.k-sp { flex: 1; }
+
+.k-jump { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 6px; padding: 0; list-style: none; }
+.k-jump a { display: inline-block; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 12px; font-size: 14.5px; text-decoration: none; color: var(--accent-ink); }
+.k-jump a:hover, .k-jump a:focus-visible { background: var(--accent-soft); }
+
+.k-card { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; margin: 12px 0; padding: 0 18px; box-shadow: var(--shadow); scroll-margin-top: 70px; }
+.k-card > summary { list-style: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 14px 0; border: 0; margin: 0; font-weight: 400; }
+.k-card > summary::-webkit-details-marker { display: none; }
+.k-card[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+.k-card > summary::after { content: "פתיחה ▾"; margin-inline-start: auto; font-size: 13.5px; color: var(--muted); }
+.k-card[open] > summary::after { content: "סגירה ▴"; }
+.k-n { display: inline-flex; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex: none; align-self: center; }
+:root[data-theme="dark"] .k-n { color: #0f1513; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .k-n { color: #0f1513; } }
+.k-t { font-family: var(--display); font-size: 21px; font-weight: 700; }
+.k-sub { color: var(--muted); font-size: 14.5px; flex-basis: 100%; padding-inline-start: 40px; margin-top: -2px; }
+
+.k-body { padding-bottom: 14px; }
+.k-block { margin-top: 14px; }
+.k-block > h3 { font-size: 16px; margin: 0 0 6px; color: var(--accent-ink); }
+.k-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 10px; }
+.k-two > div { background: var(--surface-2); border-radius: 3px; padding: 10px 14px; border-top: 3px solid var(--line); }
+.k-two > .pq { border-top-color: var(--st1); }
+.k-two > .xl { border-top-color: var(--st2); }
+.k-two h4 { margin: 0 0 6px; font-size: 14px; letter-spacing: 0; color: var(--muted); }
+.k-two > .pq h4 { color: var(--st1); }
+.k-two > .xl h4 { color: var(--st2); }
+ol.k, ul.k { margin: 0; padding-inline-start: 22px; font-size: 15.5px; }
+ol.k li, ul.k li { margin: 4px 0; }
+.k-two p { margin: 6px 0 0; font-size: 14.5px; }
+.k-doc { background: var(--clay-soft); border-inline-start: 4px solid var(--clay); border-radius: 3px; padding: 10px 14px; }
+.k-doc > h3 { color: var(--clay); }
+.k-doc p { margin: 4px 0 0; font-size: 15.5px; }
+.k-doc .tag { font-size: 13.5px; color: var(--muted); }
+.k-card figure { margin-top: 14px; }
+.k-card figure img { max-width: min(100%, 560px); }
+.k-lesson { margin: 12px 0 0; font-size: 14.5px; color: var(--muted); }
+.k-lesson a { color: var(--accent-ink); font-weight: 600; }
+.k-note { margin: 8px 0 0; font-size: 14.5px; }
+
+body[data-tool="pq"] .xl, body[data-tool="xl"] .pq { display: none; }
+
+@media (max-width: 520px) {
+  .k-bar { position: static; }
+  .k-card { padding: 0 12px; }
+  .k-t { font-size: 19px; }
+  .k-sub { padding-inline-start: 0; }
+  .k-two > div { padding: 8px 10px; }
+}
+
+@media print {
+  body { background: #fff; }
+  .k-bar, .k-jump, .k-act, .k-card > summary::after, footer a.noprint { display: none !important; }
+  .k-card { box-shadow: none; break-inside: avoid; border-color: #999; margin: 8px 0; }
+  .k-card > summary { padding: 8px 0; }
+  .k-card figure img { max-width: 320px; }
+  .k-two { grid-template-columns: 1fr 1fr; }
+  ol.k, ul.k, .k-doc p { font-size: 12.5px; }
+  .k-two > div { background: #fff; border: 1px solid #ccc; }
+  a { color: inherit; text-decoration: none; }
+  a[target="_blank"]::after { content: none !important; }
+}
+</style>
+</head>
+<body class="v2" data-lesson="kelim" data-tool="all">
+<div class="wrap">
+
+<header class="intro">
+  <p class="eyebrow"><a href="index.html">פאוור BI</a> · י״א וי״ב · דף עזר פתוח</p>
+  <h1>ארגז כלים לטיוב</h1>
+  <p class="lede">דף נוסחאות לשעת עבודה. לכל בעיה בנתונים: <strong>איך בודקות, איך מתקנות</strong> (בפאוור קוורי או באקסל), <strong>ומה כותבות בתיעוד.</strong>
+  פותחות כרטיס, מעתיקות את הצעדים, וחוזרות לעבודה. את ההסבר המלא יש ב<a href="tiyuv.html">פרק הטיוב</a>, ואת התרגול בשיעורים.</p>
+</header>
+
+<!-- ===================== מאיפה מתחילות ===================== -->
+<section id="start">
+  <h2>מאיפה מתחילות</h2>
+  <p class="sub">חמישה צעדים, באותו סדר בכל קובץ:</p>
+  <ol class="k-steps">
+    <li><b><span class="en">entire data set</span></b><span class="d">בפאוור קוורי, למטה משמאל. בלי זה הפרופיל מחושב על 1,000 שורות בלבד, ובכל פתיחה זה חוזר.</span></li>
+    <li><b>סוגים</b><span class="d">כל עמודה בסוג הנכון. מה שלא מצליח הופך ל־<span class="en">Error</span>. קוד עם האייקון <code>123</code>: האפסים כבר נעלמו.</span></li>
+    <li><b>ארבע בדיקות</b><span class="d">חסר, שגוי, חריג, כפול. בכפול מחליטות לפי מה: <b>המפתח</b>, כל השורה, או כמה עמודות יחד. אותו קוד אבל הבדל בעמודה אחרת? לא מוחקות אוטומטית, מחליטות איזו נכונה. כותבות כל מספר, גם 0.</span></li>
+    <li><b>מתקנות</b><span class="d">שורה שכולה בעיה: מוחקות. תא בשורה טובה: מצילות. עמודה בלי מידע: מורידות.</span></li>
+    <li><b>כותבות בתיעוד</b><span class="d">מה בדקתן, לפי מה, מה מצאתן (כמה ואיפה) ומה עשיתן. לא צריך לכתוב באיזה כלי ובאיזה כפתור.</span></li>
+  </ol>
+  <div class="trap"><b>פילטר בדיקה בפאוור קוורי מוחק באמת.</b> באקסל סינון רק מסתיר. בפאוור קוורי הוא שלב ביומן, ומה שסוננו לא יגיע לדוח.
+  סיימתן להסתכל? מוחקות את שלב הבדיקה (ה־X שלידו). ולכל שלב תיקון נותנות שם בעברית: קליק על השלב, <b>F2</b>.</div>
+</section>
+
+<!-- ===================== הכרטיסים ===================== -->
+<section id="cards">
+  <h2>הכרטיסים</h2>
+  <p class="sub">מצאתן משהו מוזר בעמודה? בחרו כרטיס. כל כרטיס סגור עד שפותחות אותו.</p>
+
+  <nav aria-label="קפיצה לכרטיס">
+    <ul class="k-jump">
+      <li><a href="#empty">1 · ריקים</a></li>
+      <li><a href="#blank">2 · שורה / עמודה ריקה</a></li>
+      <li><a href="#dups">3 · כפולים</a></li>
+      <li><a href="#errors">4 · שגויים</a></li>
+      <li><a href="#outliers">5 · חריגים</a></li>
+      <li><a href="#text">6 · טקסט</a></li>
+      <li><a href="#append">7 · איחוד קבצים</a></li>
+      <li><a href="#cols">8 · עמודות</a></li>
+    </ul>
+  </nav>
+
+  <div class="k-bar" role="group" aria-label="סינון לפי כלי">
+    <span class="lbl">להציג:</span>
+    <button type="button" class="k-chip" data-tool="all" aria-pressed="true">הכול</button>
+    <button type="button" class="k-chip" data-tool="pq" aria-pressed="false">פאוור קוורי</button>
+    <button type="button" class="k-chip" data-tool="xl" aria-pressed="false">אקסל</button>
+    <span class="k-sp"></span>
+    <button type="button" class="k-act" id="k-open">פתיחת הכול</button>
+    <button type="button" class="k-act" id="k-close">סגירת הכול</button>
+    <button type="button" class="k-act" id="k-print">הדפסה</button>
+  </div>
+
+  <!-- ===== 1. ריקים ===== -->
+  <details class="k-card" id="empty">
+    <summary><span class="k-n">1</span><span class="k-t">ריקים (חסר)</span><span class="k-sub">תא בלי ערך: ריק, או <span class="en">null</span>. בתדלוק: שישה תדלוקים בלי מחיר לליטר.</span></summary>
+    <div class="k-body">
+      <div class="k-block"><h3>איך בודקות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li><span class="path">View</span>: מסמנות <span class="en">Column quality</span>, <span class="en">Column distribution</span>, <span class="en">Column profile</span>. פעם אחת, והן נשארות.</li>
+              <li>למטה משמאל: <span class="en">entire data set</span>.</li>
+              <li>מעל כל עמודה: <span class="en">Valid · Error · Empty</span> באחוזים. קליק על הכותרת: <span class="en">Empty</span> ב־<span class="en">Column statistics</span>.</li>
+              <li>לראות מי הן: החץ בכותרת ← משאירות רק <span class="en">(null)</span>. מסתכלות מה משותף להן, ומוחקות את שלב הסינון (ה־X שלידו).</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li><code>=COUNTBLANK(…)</code> על העמודה: כמה תאים ריקים.</li>
+              <li>לראות מי הן: סינון על ״(ריקים)״ בחץ שבכותרת. מסתכלות מה משותף להן.</li>
+              <li>סיימתן? מסירות את הסינון. באקסל הוא רק מסתיר.</li>
+            </ol></div>
+        </div></div>
+      <div class="k-block"><h3>איך מתקנות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li><b>להציל</b> (יש סיבה): מסמנות את העמודה ← <span class="path">Transform › Replace Values</span>. ב־<span class="en">Value To Find</span> <code>null</code>, ב־<span class="en">Replace With</span> הערך.</li>
+              <li><b>למחוק</b> (אין דרך לדעת): החץ בכותרת ← <span class="en">Remove Empty</span>.</li>
+              <li><b>להשאיר:</b> כותבות בתיעוד ש־<span class="en">null</span> הוא ״לא נמדד״.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li><b>להציל:</b> מקלידות את הערך בכל אחד מהתאים הריקים.</li>
+              <li><b>למחוק:</b> מוחקות את השורה (קליק ימני על מספר השורה ← <span class="en">Delete</span>). זו מחיקה לצמיתות: בפאוור קוורי אפשר לחזור אחורה ביומן.</li>
+            </ol></div>
+        </div>
+        <p class="k-note"><b>להציל רק עם סיבה.</b> ״בינואר כל תדלוק של בנזין 95 עלה 7.40״ היא סיבה. ״נראה לי״ היא לא.</p>
+      </div>
+      <div class="k-block k-doc"><h3>מה כותבות בתיעוד</h3>
+        <p>״מחיר לליטר: פאוור קוורי, <span class="en">entire data set</span>, <span class="en">Empty</span> ‏6 (0.21%). סיננו על <span class="en">null</span>: כולם בנזין 95, כולם בינואר, ובינואר כל 649 התדלוקים האחרים של בנזין 95 עלו 7.40. <span class="en">Replace Values</span>: <span class="en">null</span> ← 7.40. הצלנו ולא מחקנו, כי שאר השורה תקין. אחרי: <span class="en">Empty</span> ‏0.״</p>
+        <p class="tag">בדקתן ולא מצאתן? כותבות גם את זה: ״<span class="en">Column quality</span>, <span class="en">entire data set</span>: <span class="en">Empty</span> ‏0 בכל העמודות״.</p></div>
+      <figure><img src="img/l2-03-view-profile.png" alt="פאוור קוורי אחרי סימון שלוש התיבות בלשונית View: מעל כל עמודה Valid, Error ו־Empty וגרף עמודות קטן, ולמטה חלונות Column statistics ו־Value distribution" width="1920" height="1122" loading="lazy">
+        <figcaption>מעל כל עמודה: כמה תקין (<span class="en">Valid</span>), כמה שגוי (<span class="en">Error</span>), כמה ריק (<span class="en">Empty</span>).</figcaption></figure>
+      <p class="k-lesson">בשיעור: <a href="lesson2.html#s1-6">ארבעה כלים לבחון את הדאטה</a> · <a href="lesson3.html#a">מחיר חסר: למחוק או להציל?</a></p>
+    </div>
+  </details>
+
+  <!-- ===== 2. שורה / עמודה ריקה ===== -->
+  <details class="k-card" id="blank">
+    <summary><span class="k-n">2</span><span class="k-t">שורה או עמודה ריקה</span><span class="k-sub">שורה ריקה לגמרי, או עמודה שלא עונה על שום שאלה. בתדלוק: שתי שורות ריקות ושתי עמודות מיותרות.</span></summary>
+    <div class="k-body">
+      <div class="k-block"><h3>איך בודקות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li><b>שורה ריקה:</b> אותו <span class="en">Empty</span> בכל העמודות (בהזמנות: ‏3 בכל עמודה) אומר ששורות שלמות ריקות. בתדלוק: <span class="en">Empty</span> ‏2.</li>
+              <li><b>עמודה בלי מידע:</b> <span class="en">Empty</span> ‏100%, או <span class="en">Distinct</span> ‏1: ערך אחד בכל השורות (בהזמנות, מקור ייבוא: <span class="en">ERP-Orders</span> בכולן).</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li><b>שורה ריקה:</b> סינון על <span class="en">(Blanks)</span> בעמודת המפתח, ובודקות שגם שאר התאים בשורה ריקים.</li>
+              <li><b>עמודה בלי מידע:</b> <code>=COUNTBLANK(…)</code> שווה למספר השורות, או שברשימת הסינון מופיע ערך אחד בלבד.</li>
+            </ol></div>
+        </div></div>
+      <div class="k-block"><h3>איך מתקנות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li>שורות: <span class="path">Home › Remove Rows › Remove Blank Rows</span>.</li>
+              <li>עמודות: מסמנות עמודה, <b>Ctrl</b> לעוד אחת, <span class="path">Home › Remove Columns</span>.</li>
+            </ol>
+            <p><b>סדר:</b> קודם <span class="en">Remove Blank Rows</span>, ורק אחר כך מחליפות <span class="en">null</span> במחיר. אחרת השורה הריקה מקבלת מחיר, ואיננה ״ריקה״ יותר.</p></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li>מסמנות את השורה או העמודה, קליק ימני ← <span class="en">Delete</span>.</li>
+            </ol>
+            <p>מחיקה באקסל היא מחיקה. כדאי לשמור עותק של הגיליון לפני.</p></div>
+        </div>
+        <p class="k-note"><span class="en">Remove Blank Rows</span> לא נוגע בשורה שחסר בה רק מחיר. אותה מטפלות בכרטיס <a href="#empty">ריקים</a>.</p>
+      </div>
+      <div class="k-block k-doc"><h3>מה כותבות בתיעוד</h3>
+        <p>״שורות: <span class="en">Remove Blank Rows</span>, שתי שורות ריקות לגמרי (<span class="en">Empty</span> ‏2 בכל העמודות), מ־2,907 ל־2,905. עמודות: הורדנו את שם המתדלק (<span class="en">Empty</span> ‏100%) ואת שם התחנה (ערך אחד בכל השורות). שתיהן לא עונות על שום שאלה.״</p></div>
+      <figure><img src="img/l3-06-remove-rows-menu.png" alt="התפריט Remove Rows פתוח: Remove Top Rows, Remove Bottom Rows, Remove Alternate Rows, Remove Duplicates, Remove Blank Rows, Remove Errors" width="581" height="318" loading="lazy" style="width:420px">
+        <figcaption><span class="path">Home › Remove Rows</span>.</figcaption></figure>
+      <p class="k-lesson">בשיעור: <a href="lesson2.html#s1-8">תיקונים ראשונים: עמודות, ריקות, כפילויות</a> · <a href="tiyuv.html#example">הטבלה המלאה של התדלוק</a></p>
+    </div>
+  </details>
+
+  <!-- ===== 3. כפולים ===== -->
+  <details class="k-card" id="dups">
+    <summary><span class="k-n">3</span><span class="k-t">כפולים</span><span class="k-sub">אותה רשומה פעמיים, ונספרת פעמיים בכל סכום. בתדלוק: ארבעה קודים שמופיעים פעמיים.</span></summary>
+    <div class="k-body">
+      <div class="k-block"><p class="k-note" style="margin-top:0"><b>קודם המפתח.</b> כפילות נבדקת על המפתח, לא על כל עמודה: ״בנזין 95״ מופיע 2,173 פעמים, וזו לא כפילות.
+        יש עמודת מזהה (קוד תדלוק, מספר הזמנה)? היא המפתח. אין? צירוף של כמה עמודות, כמו תאריך + לוחית רישוי + כמות. <a href="tiyuv.html#what">למה</a></p></div>
+      <div class="k-block"><h3>איך בודקות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li>קליק על כותרת המפתח. ב־<span class="en">Column statistics</span>: <span class="en">Count</span>, <span class="en">Distinct</span>, <span class="en">Unique</span>.</li>
+              <li><span class="en">Distinct</span> קטן מ־<span class="en">Count</span>? יש ערכים שחוזרים. בתדלוק, אחרי <a href="#blank">מחיקת הריקות</a>: <span class="en" dir="ltr">2,905 / 2,901 / 2,897</span>. בצילום למטה, לפני המחיקה: <span class="en" dir="ltr">2,907 / 2,902 / 2,897</span>.</li>
+              <li><span class="path">Home › Keep Rows › Keep Duplicates</span>. מסתכלות: השורות זהות בכל העמודות? בתדלוק: שמונה שורות, ארבעה קודים פעמיים. יצאו עשר? שתי השורות הריקות עוד שם.</li>
+              <li>מוחקות את שלב הבדיקה ב־X.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li>ליד המפתח: <code>=COUNTIF(…)</code>. תוצאה גדולה מ־1 היא כפילות.</li>
+              <li>או סימון: <span class="path">Home › Conditional Formatting › Duplicate Values</span>.</li>
+              <li>מסתכלות בשורות: זהות בכל העמודות?</li>
+            </ol></div>
+        </div></div>
+      <div class="k-block"><h3>איך מתקנות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li>קליק על כותרת המפתח. <b>רק היא מסומנת.</b></li>
+              <li><span class="path">Home › Remove Rows › Remove Duplicates</span>.</li>
+              <li>בדיקה: <span class="en">Count = Distinct = Unique</span> (בתדלוק 2,901).</li>
+              <li>קליק על השלב שלפני <span class="en">Removed Duplicates</span> ביומן: הכפילויות חוזרות. השלב האחרון: נעלמות.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li><span class="path">Data › Remove Duplicates</span>. מסמנות רק את עמודת המפתח.</li>
+              <li>אקסל מודיע כמה כפולים נמצאו וכמה ערכים ייחודיים נשארו. מעתיקות את שני המספרים לתיעוד.</li>
+            </ol>
+            <p>שורות ריקות קודם: ריקות נחשבות ״זהות״ זו לזו.</p></div>
+        </div>
+        <p class="k-note"><b>מסמנות את כל העמודות?</b> נמחקות רק שורות שזהות בכולן, ולפעמים קופצת שגיאה. רק עמודת המפתח.</p>
+      </div>
+      <div class="k-block k-doc"><h3>מה כותבות בתיעוד</h3>
+        <p>״המפתח: קוד תדלוק, כי כל תדלוק מקבל קוד פעם אחת. אחרי <span class="en">Remove Blank Rows</span>, בפאוור קוורי עם <span class="en">entire data set</span>: <span class="en">Count</span> ‏2,905, <span class="en">Distinct</span> ‏2,901, <span class="en">Unique</span> ‏2,897. <span class="en">Keep Duplicates</span>: ארבעה קודים, כל אחד פעמיים, והשורות זהות בכל העמודות. <span class="en">Remove Duplicates</span> על העמודה הזו בלבד. אחרי: ‏2,901 בשלושת המדדים.״</p></div>
+      <figure><img src="img/l2-14-fuel-profile.png" alt="פאוור קוורי על התדלוק, עמודת קוד תדלוק מסומנת. למטה Column statistics: Count 2907, Empty 2, Distinct 2902, Unique 2897, ו־Value distribution עם ארבעה עמודים גבוהים בהתחלה" width="1920" height="1032" loading="lazy">
+        <figcaption>ב־<span class="en">Value distribution</span>: ארבעת העמודים הגבוהים הם ארבעת הקודים שמופיעים פעמיים.</figcaption></figure>
+      <p class="k-lesson">בשיעור: <a href="lesson2.html#s1-6">ארבעה כלים לבחון את הדאטה</a> · <a href="lesson2.html#s1-7">לבודד את מה שחשוד</a> · <a href="lesson2.html#s1-8">תיקונים ראשונים</a></p>
+    </div>
+  </details>
+
+  <!-- ===== 4. שגויים ===== -->
+  <details class="k-card" id="errors">
+    <summary><span class="k-n">4</span><span class="k-t">שגויים (<span class="en">Error</span>)</span><span class="k-sub">ערך שכתוב בצורה שהתוכנה לא יודעת לקרוא. בתדלוק: ״1 בינואר״ במילים בעמודת תאריך. בהזמנות: 31/02/2026.</span></summary>
+    <div class="k-body">
+      <div class="k-block"><h3>איך בודקות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li>משנות כל עמודה לסוג הנכון (<span class="en">Date</span>, מספר). מה שלא מצליח הופך ל־<span class="en">Error</span>.</li>
+              <li>מעל כל עמודה: <span class="en">Error</span> באחוזים. עם <span class="en">entire data set</span>: בלי זה שגיאה אחרי שורה 1,000 לא תופיע.</li>
+              <li><span class="path">Home › Keep Rows › Keep Errors</span>. קליק על התא <span class="en">Error</span>, <b>ליד המילה</b> ולא עליה: למטה כתוב מה היה בתא.</li>
+              <li>מוחקות את שלב <span class="en">Kept Errors</span> ב־X. לחצתן על המילה ונוסף שלב? מוחקות גם אותו.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li>בעמודה של מספרים או תאריכים: ערך שמיושר לשמאל הוא טקסט.</li>
+              <li><code>=ISNUMBER(…)</code> על התא: <code>FALSE</code> אומר שזה לא מספר או תאריך.</li>
+            </ol></div>
+        </div></div>
+      <div class="k-block"><h3>איך מתקנות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li><b>להציל</b> (שאר השורה תקין, ואת הערך אפשר לדעת): מסמנות את העמודה ← <span class="path">Transform › Replace Values ▾ › Replace Errors</span>, וכותבות את הערך.</li>
+              <li><b>למחוק:</b> <span class="path">Home › Remove Rows › Remove Errors</span>.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li><b>להציל:</b> מקלידות בתא את הערך הנכון, בצורה שאקסל קורא (תאריך אמיתי).</li>
+              <li><b>למחוק:</b> מוחקות את השורה.</li>
+            </ol></div>
+        </div>
+        <p class="k-note"><b><span class="en">Replace Errors</span> מחליף את כל השגיאות בעמודה באותו ערך.</b> עם שגיאה אחת זה בסדר. עם חמש, מחמישה חודשים שונים, כולן יהפכו ל־1 בינואר. לכן קודם <span class="en">Keep Errors</span>, וסופרות.</p>
+        <p class="k-note"><b>שגוי או חריג?</b> שגוי: התוכנה לא מצליחה לקרוא. חריג: היא קוראת בלי בעיה, אבל זה לא הגיוני. את החריג מוצאות בכרטיס <a href="#outliers">חריגים</a>.</p>
+      </div>
+      <div class="k-block k-doc"><h3>מה כותבות בתיעוד</h3>
+        <p>״תאריך: המרנו ל־<span class="en">Date</span>, <span class="en">Error</span> ‏1 (0.03%). <span class="en">Keep Errors</span>: תדלוק 120128, בתא כתוב ״1 בינואר״ במילים. שאר השורה תקין, ולכן <span class="en">Replace Errors</span> ← 01/01/2026 ולא מחקנו. אחרי: <span class="en">Error</span> ‏0%.״</p>
+        <p class="tag">בהזמנות: ‏ORD-101234, בתא כתוב 31/02/2026. ״הצלנו ← 28/02/2026, היום האחרון בפברואר, הכי קרוב למה שנכתב. זו הנחה.״</p></div>
+      <figure><img src="img/l2-16-fuel-keep-errors.png" alt="פאוור קוורי אחרי Keep Errors: נשארה שורה אחת, תדלוק 120128, ולמטה הודעה DataFormat.Error: We couldn't parse the input provided as a Date value, ובפרטים מה שהיה כתוב בתא" width="1920" height="1032" loading="lazy">
+        <figcaption>אחרי <span class="en">Keep Errors</span>: שורה אחת, ולמטה מה שהיה כתוב בתא.</figcaption></figure>
+      <p class="k-lesson">בשיעור: <a href="lesson2.html#s1-7">לבודד את מה שחשוד</a> · <a href="lesson3.html#a">השגיאה: מצילות את התדלוק</a> · <a href="lesson3.html#room">אותו מהלך על ההזמנות</a></p>
+    </div>
+  </details>
+
+  <!-- ===== 5. חריגים ===== -->
+  <details class="k-card" id="outliers">
+    <summary><span class="k-n">5</span><span class="k-t">חריגים</span><span class="k-sub">ערך כתוב נכון, אבל לא הגיוני. בתדלוק: 50,000 ליטר, כשמכל של רכב מחזיק בערך 50.</span></summary>
+    <div class="k-body">
+      <div class="k-block"><h3>איך בודקות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li>קליק על כותרת של עמודת מספר או תאריך. ב־<span class="en">Column statistics</span>: <span class="en">Min</span> ו־<span class="en">Max</span>.</li>
+              <li>שואלות על הערך הקיצוני: <b>״זה אפשרי?״</b></li>
+              <li>לראות את השורה: <span class="en">Number filters</span> בחץ שבכותרת. אחר כך מוחקות את שלב הסינון.</li>
+              <li>במחיר: בודקות לכל סוג דלק לחוד, כי גז זול מבנזין.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li><code>=MIN(…)</code> ו־<code>=MAX(…)</code> על העמודה.</li>
+              <li>או גרף: מסמנות עמודה כולל הכותרת ← <span class="path">Insert › Insert Statistic Chart › Box and Whisker</span>. נקודה מחוץ לקווים היא מועמדת להיות חריג. מוצאות אותה בטבלה (מיון מהגדול לקטן).</li>
+            </ol></div>
+        </div></div>
+      <div class="k-block"><h3>איך מתקנות</h3>
+        <p class="k-note" style="margin-top:0">שלוש החלטות, ובכל אחת כותבות למה:
+          <b>לתקן</b> כשברור מה היה צריך להיות · <b>למחוק שורה</b> כשאין דרך לדעת · <b>להשאיר</b> כשהערך אמיתי (משאית יכולה לתדלק 400 ליטר).</p>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li><b>לתקן:</b> מסמנות את העמודה ← <span class="path">Transform › Replace Values</span>: ‏<code>50000</code> ← <code>50</code>.</li>
+              <li><b>למחוק:</b> סינון על הערך, או מחיקת השורה.</li>
+              <li><b>להשאיר:</b> לא עושות כלום, וכותבות למה.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li><b>לתקן:</b> מקלידות את הערך המתוקן בתא.</li>
+              <li><b>למחוק:</b> מוחקות את השורה.</li>
+              <li><b>להשאיר:</b> לא עושות כלום, וכותבות למה.</li>
+            </ol></div>
+        </div>
+      </div>
+      <div class="k-block k-doc"><h3>מה כותבות בתיעוד</h3>
+        <p>״כמות (ליטרים): ב־<span class="en">Column statistics</span>, <span class="en">Min</span> ‏25 ו־<span class="en">Max</span> ‏50,000, וכל שאר התדלוקים בין 25 ל־55. <span class="en">Replace Values</span>: ‏50000 ← 50, כנראה 50 עם אפסים מיותרים, ושאר השורה תקינה, ולכן תיקנו ולא מחקנו. אחרי: <span class="en">Max</span> ‏55, והממוצע ירד מ־56.98 ל־39.76.״</p></div>
+      <figure><img src="img/l4-12-quantity-before.png" alt="Column statistics של כמות דלק שנרכשה: Count 2901, Distinct 32, Unique 1, Min 25, Max 50000, Average 56.98" width="1244" height="818" loading="lazy" style="width:520px">
+        <figcaption>כל התדלוקים בין 25 ל־55 ליטר, ואחד של 50,000.</figcaption></figure>
+      <p class="k-lesson">בשיעור: <a href="lesson5.html#recap">ערך חריג: 50,000 ← 50 (שיעור 5, חזרה)</a> · <a href="tiyuv.html#how">חריגים באקסל: גרף <span class="en">Box Plot</span></a></p>
+    </div>
+  </details>
+
+  <!-- ===== 6. טקסט מלוכלך ===== -->
+  <details class="k-card" id="text">
+    <summary><span class="k-n">6</span><span class="k-t">טקסט מלוכלך</span><span class="k-sub">מילה שנראית אותו דבר ולמחשב היא שתיים (״עסקי״ ו״עסקי ״), מספר בתוך טקסט (<code>1 - דלקן</code>), וקוד שמאבד אפסים.</span></summary>
+    <div class="k-body">
+      <div class="k-block"><h3>איך בודקות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li>קליק על כותרת עמודת טקסט. ב־<span class="en">Value distribution</span>: ערך שמופיע <b>פעמיים</b> בגרף. בסוג לקוח: <span class="en">Distinct</span> ‏6, ו״עסקי״ פעמיים, כי באחת יש רווח בסוף.</li>
+              <li>האייקון בכותרת: <code>ABC</code> טקסט, <code>123</code> מספר. קוד כמו <code>0002</code> עם <code>123</code>: האפסים כבר נעלמו.</li>
+              <li>שם מול סמל: ב־<span class="en">Distinct</span> של השם 12, ובסמל 13? סמל אחד הופיע עם שני איותים.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li>ברשימת הערכים בחץ שבכותרת: אותו ערך פעמיים?</li>
+              <li><code>=LEN(A2)</code> מול <code>=LEN(TRIM(A2))</code>: אם המספרים שונים, יש רווחים מיותרים.</li>
+            </ol></div>
+        </div></div>
+      <div class="k-block"><h3>איך מתקנות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li><b>רווחים:</b> מסמנות עמודה ← <span class="path">Transform › Format › Trim</span>. תווים נסתרים: <span class="path">Clean</span>.</li>
+              <li><b>להחליף ערך:</b> <span class="path">Transform › Replace Values</span>. <b>קליק על תא</b> עם הערך, והוא נכנס לשדה הראשון בדיוק כמו שהוא, עם הרווחים. בשני: <code>דלקן</code>.</li>
+              <li><b>לשמור חלק:</b> <span class="path">Transform › Extract › Text After Delimiter</span>, והמפריד <code>-</code>.</li>
+              <li><b>לפצל:</b> קודם <span class="path">Add Column › Duplicate Column</span>, ואז על העותק <span class="path">Transform › Split Column › By Delimiter</span>.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li><b>רווחים:</b> <code>=TRIM(A2)</code>, ולתווים נסתרים <code>=CLEAN(A2)</code>. מעתיקות, ומדביקות על המקור כערכים (<span class="path">Paste Special › Values</span>).</li>
+              <li><b>להחליף ערך:</b> <span class="path">Ctrl+H</span>.</li>
+              <li><b>לפצל:</b> <span class="path">Data › Text to Columns › Delimited</span>. בשלב האחרון מסמנות את עמודת הקוד כ־<span class="en">Text</span>, כדי שהאפסים יישארו.</li>
+            </ol></div>
+        </div>
+        <p class="k-note"><b>מלכודת: <span class="en">Changed Type</span> שנוסף לבד.</b> אחרי <span class="en">Split</span> פאוור BI מנחש סוגים: <code>0002</code> הפך ל־2. מוחקות את השלב ה־<span class="en">Changed Type</span> שנוסף (ה־X שלידו), והאפסים חוזרים. <b>אחרי כל עמודה חדשה בודקות את האייקון.</b></p>
+        <p class="k-note"><b><span class="en">Trim</span> בפאוור קוורי מוריד רווחים רק בהתחלה ובסוף.</b> שני רווחים באמצע הטקסט נשארים שניים. ב־<code>TRIM</code> של אקסל גם הם הופכים לאחד.</p>
+      </div>
+      <div class="k-block k-doc"><h3>מה כותבות בתיעוד</h3>
+        <p>״סוג לקוח: אחרי <span class="en">Remove Blank Rows</span>, ב־<span class="en">Value distribution</span> ‏5 ערכים, ו״עסקי״ הופיע פעמיים: באחד יש רווח בסוף. בלי תיקון, גרף לפי סוג לקוח היה מציג שתי עמודות ״עסקי״. <span class="en">Trim</span> ← 4 ערכים.״</p>
+        <p class="tag">קוד לקוח <code>CLT-0002</code>: אחרי <span class="en">Split</span> האייקון <code>123</code> והאפסים נעלמו (<code>0002</code> ← 2). מחקנו את <span class="en">Changed Type</span> שנוסף לבד, והאפסים חזרו.</p></div>
+      <figure><img src="img/l4-02-spaces-profile.png" alt="פרופיל העמודה סוג לקוח: Distinct 6, ובגרף Value distribution המילה עסקי מופיעה פעמיים, פעם עם עמודה ארוכה ופעם עם עמודה זעירה" width="1244" height="456" loading="lazy" style="width:520px">
+        <figcaption>״עסקי״ פעמיים: בשורה האחרונה יש רווח בסוף המילה.</figcaption></figure>
+      <p class="k-lesson">בשיעור: <a href="lesson5.html#a">טקסט מלוכלך, ולפצל עמודה (שיעור 5)</a> · <a href="lesson5.html#room">מסדרות את הטקסט</a></p>
+    </div>
+  </details>
+
+  <!-- ===== 7. איחוד קבצים ===== -->
+  <details class="k-card" id="append">
+    <summary><span class="k-n">7</span><span class="k-t">איחוד קבצים</span><span class="k-sub">שניים עד שישה קבצים באותו מבנה, כמו שלוש שנים של רשויות מקומיות. קודם מאחדות, ואז קוראות את הפרופיל.</span></summary>
+    <div class="k-body">
+      <div class="k-block"><p class="k-note" style="margin-top:0"><b>שלוש שאלות לפני.</b> יש כבר קובץ ״כל השנים״ במקור? לוקחות אותו, ואין מה לאחד. צריכות <b>עוד שורות</b> (אותן עמודות, עוד שנים)? זה <span class="en">Append</span>, והכרטיס הזה. צריכות <b>עוד עמודות</b> (אותה רשות, שתי שנים זו ליד זו)? זה <span class="en">Merge</span>, בשיעור על המודל.</p></div>
+      <div class="k-block"><h3>איך בודקות (בפרופיל של האיחוד)</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li><span class="en">Column quality</span> ו־<span class="en">Column profile</span> דלוקים, ו־<span class="en">entire data set</span>. גוללות ימינה עד הסוף.</li>
+              <li><b>עמודה מלאה ב־33% או ב־67%</b> (״מדרגות״): הגיעה רק מחלק מהשנים. <span class="en">Append</span> מחבר עמודות לפי השם המדויק, לא לפי המיקום.</li>
+              <li><b>עמודת מפתח עם <span class="en">Empty</span> ‏3%:</b> שורה שאינה רשות, למשל שורת סה״כ.</li>
+              <li><b>שתי עמודות שמשלימות ל־100%</b> (34% ו־66%): כנראה אותה עמודה בשני שמות. חשודה, והמשמעות מחליטה.</li>
+              <li>מספר השורות: 10 + 9 + 11 = 30. כולן נכנסו?</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li>בפאוור קוורי של אקסל (<span class="path">Data › Get Data</span>) הכול זהה: אותו חלון, אותו פרופיל.</li>
+              <li>העתק־הדבק ידני: <b>אף פעם.</b> הוא מדביק לפי מיקום העמודה ולא לפי השם, ולא נשאר ממנו תיעוד.</li>
+              <li>אם בכל זאת: סופרות שורות לפני ואחרי, ובודקות שכותרות הקבצים זהות באותו סדר.</li>
+            </ol></div>
+        </div></div>
+      <div class="k-block"><h3>איך מתקנות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li>הכותרת לא בשורה 1 (בשנה אחת): <span class="path">Remove Top Rows</span> ← <code>1</code>, ואז <span class="path">Use First Row as Headers</span>.</li>
+              <li>מאחדות: <span class="path">Home › Append Queries ▾ › Append Queries as New</span> ← <span class="en">Three or more tables</span>. מתקבלת שאילתה חדשה, והשנתיות לא נוגעות.</li>
+              <li><b>בעיות מבנה</b> מתקנות בשאילתה של אותה שנה: שם עמודה (<b>F2</b>), ועמודת <b>שנה</b> (<span class="path">Add Column › Custom Column</span>, <code>2022</code> בלי מרכאות, סוג <span class="en">Whole Number</span>). <b>לפני</b> האיחוד: אחריו כבר אי אפשר לדעת איזו שורה מאיזה קובץ.</li>
+              <li><b>שורת סה״כ:</b> באיחוד, החץ בכותרת המפתח ← <span class="en">Remove Empty</span>.</li>
+              <li><b>בעיות ערכים</b> (סוגים, ריקים, איות) מתקנות פעם אחת, באיחוד, ובסוף קובעות סוגים שוב.</li>
+              <li>השנתיות לא נטענות לדוח: קליק ימני עליהן ← מורידות את <span class="en">Enable load</span>.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li>אותם צעדים בדיוק, בחלון הפאוור קוורי של אקסל.</li>
+              <li>בלי פאוור קוורי: לפני ההדבקה מתאימות שמות וסדר עמודות בין הקבצים, מוסיפות בכל קובץ עמודת שנה, ומוחקות שורות סה״כ.</li>
+            </ol></div>
+        </div>
+        <p class="k-note"><b>עמודה שקיימת רק בחלק מהשנים</b> (מתנ״סים רק ב־2022): שלוש אפשרויות. רק המשותפות · הכול · בררני (המשותפות ועוד מה שהשאלה צריכה, וזו ההמלצה). בכל מקרה כותבות ש־<code>null</code> כאן הוא ״לא נמדד״ ולא ״ריק״.</p>
+      </div>
+      <div class="k-block k-doc"><h3>מה כותבות בתיעוד</h3>
+        <p>״איחוד: <span class="en">Append Queries as New</span> על 2022 (10 שורות), 2023 (9) ו־2024 (11) ← 30 שורות. ב־2024 הכותרת הייתה בשורה 2: <span class="en">Remove Top Rows</span> ‏1 ו־<span class="en">Use First Row as Headers</span>. בפרופיל: סמל רשות <span class="en">Empty</span> ‏3% = שורת סה״כ של 2024, ולכן <span class="en">Remove Empty</span> ← 29 שורות. ״שם רשות״ 34% ו״שם הרשות״ 66% (אותה עמודה): שינוי שם בשאילתה של 2022. הוספנו עמודת שנה בכל שאילתה לפני האיחוד ← 9 עמודות.״</p>
+        <p class="tag">מתנ״סים (רק 2022) ושטח ירוק (רק 2023–2024) נשארו, ו־<code>null</code> בהן הוא ״לא נמדד״. נבדק במקור: ההוצאה לתושב בשקלים בכל השנים.</p></div>
+      <figure><img src="img/ap-06-staircase.png" alt="הצד הימני של Append1: מתנ״סים והוצאה לתושב מלאות ב־33%. שם הרשות מלאה ב־67%. הוצאה לתושב (₪) ושטח ירוק לתושב מלאות ב־63%" width="1920" height="902" loading="lazy">
+        <figcaption>״מדרגות״: עמודות שמלאות רק בחלק מהשורות. 33% = 10 שורות מתוך 30 = שנה אחת.</figcaption></figure>
+      <p class="k-lesson">בשיעור: <a href="append.html">הנספח: איחוד שנים</a> · <a href="append.html#broke">קוראות את הפרופיל</a> · <a href="append.html#after">בטבלה המאוחדת</a></p>
+    </div>
+  </details>
+
+  <!-- ===== 8. עמודות לשאלה ===== -->
+  <details class="k-card" id="cols">
+    <summary><span class="k-n">8</span><span class="k-t">עמודות לשאלה</span><span class="k-sub">שום דבר לא שבור, אבל השאלה צריכה עמודה שאין: שם חודש, סכום, גודל. זו הכנה, ולא תיקון.</span></summary>
+    <div class="k-body">
+      <div class="k-block"><p class="k-note" style="margin-top:0"><b>תיקון או הכנה?</b> תיקון עונה על ״מה היה שבור?״ ונעשה בטבלה הראשית. הכנה עונה על ״מה השאלה שלי צריכה?״ והיא עמודה חדשה, והמקור נשאר. בלשונית <span class="path">Add Column</span>, לא ב־<span class="path">Transform</span>. קודם מסמנות עמודה, ואז בוחרות פקודה.</p></div>
+      <div class="k-block"><h3>איך עושות</h3>
+        <div class="k-two">
+          <div class="pq"><h4>פאוור קוורי</h4>
+            <ol class="k">
+              <li><b>חודש ושנה:</b> מסמנות <b>תאריך</b> ← <span class="path">Add Column › Date › Month › Name of Month</span>. מסמנות שוב את התאריך ← <span class="path">Month › Month</span>, ושוב ← <span class="path">Year › Year</span>.</li>
+              <li><b>חישוב:</b> <span class="path">Add Column › Custom Column</span>. דאבל־קליק על העמודות ברשימה, וביניהן <code> * </code>. ה־<code>=</code> כבר שם.</li>
+              <li><b>לפי תנאי:</b> <span class="path">Add Column › Conditional Column</span>. מתחילות מהסף הקטן: הבדיקה מלמעלה למטה ונעצרת בראשונה שמתאימה.</li>
+              <li><b>אחרי כל עמודה כזו, סוג:</b> האייקון <code>ABC/123</code> (<span class="en">Any</span>) ← <span class="en">Fixed decimal number</span> למספר, <span class="en">Text</span> לטקסט.</li>
+            </ol></div>
+          <div class="xl"><h4>אקסל</h4>
+            <ol class="k">
+              <li><b>חודש ושנה:</b> <code>=MONTH(C2)</code>, ‏<code>=YEAR(C2)</code>, ושם החודש <code>=TEXT(C2,"mmmm")</code>. בתדלוק התאריך בעמודה C.</li>
+              <li><b>חישוב:</b> <code>=G2*H2</code> (ליטרים כפול מחיר לליטר, בתדלוק), וגוררות למטה.</li>
+              <li><b>לפי תנאי:</b> <code>=IF(G2&lt;=30,"תדלוק קטן",IF(G2&lt;=45,"תדלוק רגיל","תדלוק מלא"))</code>.</li>
+            </ol></div>
+        </div>
+        <p class="k-note"><b>הכפתור <span class="en">Date</span> אפור?</b> אחרי כל עמודה חדשה פאוור BI מסמן אותה, ועמודת מספר לא מקבלת פקודות של תאריך. מסמנות שוב את <b>תאריך</b>.</p>
+        <p class="k-note"><b>למה גם שם חודש וגם מספר חודש?</b> השם לגרף, שיהיה קריא. המספר לסדר: ״מרץ״ לא יודע שהוא בא אחרי ״פברואר״, אבל 3 יודע שהוא בא אחרי 2.</p>
+      </div>
+      <div class="k-block k-doc"><h3>מה כותבות בתיעוד</h3>
+        <p>״הכנה, לא תיקון. סכום תדלוק: <span class="en">Custom Column</span>, ליטרים כפול מחיר לליטר, סוג <span class="en">Fixed decimal number</span> (בשורה הראשונה 246.75). גודל תדלוק: <span class="en">Conditional Column</span>, עד 30 קטן, עד 45 רגיל, אחרת מלא; סוג <span class="en">Text</span>, 3 ערכים שונים. למה: השאלה שואלת כמה עולה תדלוק, ואם זה תלוי בגודל שלו.״</p>
+        <p class="tag">ב״למה״ של הכנה כותבות מה השאלה צריכה, ולא מה היה שבור.</p></div>
+      <figure><img src="img/l5-10-conditional-fuel.png" alt="חלון Add Conditional Column: אם הכמות קטנה או שווה ל־30 אז תדלוק קטן, אחרת אם קטנה או שווה ל־45 אז תדלוק רגיל, אחרת תדלוק מלא" width="1396" height="663" loading="lazy" style="width:560px">
+        <figcaption>עמודה לפי תנאי: מהסף הקטן אל הגדול.</figcaption></figure>
+      <p class="k-lesson">בשיעור: <a href="lesson6.html#prep">תיקון או הכנה?</a> · <a href="lesson6.html#a">עמודות תאריך, <span class="en">Custom</span>, <span class="en">Conditional</span> (שיעור 6)</a></p>
+    </div>
+  </details>
+
+</section>
+
+<footer>
+  <p><a href="index.html">← חזרה למפת הדרך</a> · <a href="tiyuv.html">פרק הטיוב</a> · <a href="lesson2.html">שיעור 2</a> · <a href="lesson3.html">שיעור 3</a> · <a href="lesson4.html">שיעור 4: סדנת טיוב</a> · <a href="lesson5.html">שיעור 5</a> · <a href="lesson6.html">שיעור 6</a> · <a href="append.html">נספח: איחוד שנים</a></p>
+  <p>הצעדים והמספרים בכרטיסים מועתקים מהשיעורים (קובץ התדלוק, ההזמנות, הפעילויות והרשויות המקומיות). הצעדים באקסל מקבילים לפאוור קוורי: כשיש הבדל, כתוב.</p>
+</footer>
+
+</div>
+<script>
+/* סינון לפי כלי, פתיחה וסגירה, הדפסה. בלי תלויות: עובד גם מ־file:// */
+(function () {
+  var body = document.body;
+  var cards = Array.prototype.slice.call(document.querySelectorAll('details.k-card'));
+
+  Array.prototype.forEach.call(document.querySelectorAll('.k-chip'), function (chip) {
+    chip.addEventListener('click', function () {
+      body.setAttribute('data-tool', chip.getAttribute('data-tool'));
+      Array.prototype.forEach.call(document.querySelectorAll('.k-chip'), function (c) {
+        c.setAttribute('aria-pressed', c === chip ? 'true' : 'false');
+      });
+    });
+  });
+
+  function setAll(open) { cards.forEach(function (d) { d.open = open; }); }
+  document.getElementById('k-open').addEventListener('click', function () { setAll(true); });
+  document.getElementById('k-close').addEventListener('click', function () { setAll(false); });
+
+  // הדפסה: פותחים את כל הכרטיסים, ומחזירים כמו שהיו אחרי
+  var before = [];
+  function openForPrint() { before = cards.map(function (d) { return d.open; }); setAll(true); }
+  function restoreAfterPrint() { cards.forEach(function (d, i) { d.open = before[i] === true; }); }
+  window.addEventListener('beforeprint', openForPrint);
+  window.addEventListener('afterprint', restoreAfterPrint);
+  document.getElementById('k-print').addEventListener('click', function () { window.print(); });
+
+  // קישור לכרטיס (#dups) פותח אותו
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    var el = id ? document.getElementById(id) : null;
+    if (el && el.tagName === 'DETAILS') {
+      el.open = true;
+      el.scrollIntoView();
+    }
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
+</script>
+</body>
+</html>

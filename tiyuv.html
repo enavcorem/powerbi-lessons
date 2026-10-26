@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 <script src="lesson.js?v=2" defer></script>
 </head>
 <body class="v2" data-lesson="tiyuv">
@@ -17,6 +17,10 @@
   <p class="eyebrow"><a href="index.html">פאוור BI</a> · י״ב · פרק 3 בעבודה הכתובה</p>
   <h1>פרק הטיוב: מה בדקנו, מה מצאנו, ומה עשינו</h1>
   <p class="lede">בפרק 3 בעבודה מראות שהנתונים נבדקו לפני שניתחתן אותם. לא רק מה תיקנתן, <strong>אלא גם מה בדקתן ולא מצאתן.</strong> ״הכול היה תקין״ זה לא תיעוד. ״בדקתי כך, ומצאתי 0״ זה תיעוד.</p>
+  <div class="rec" style="margin:10px 0 14px">
+    <a class="btn" href="kelim.html">ארגז כלים לטיוב</a>
+    <span>דף עזר: לכל בעיה, איך בודקות ומתקנות (פאוור קוורי או אקסל) ומה כותבות בתיעוד.</span>
+  </div>
   <ul class="cycle" aria-label="מחזור הנתונים: אנחנו בשלב טיוב והכנה">
     <li>שאלה</li><li class="arr" aria-hidden="true">←</li>
     <li>איסוף נתונים</li><li class="arr" aria-hidden="true">←</li>
@@ -113,7 +117,7 @@
     בכל אחת מהן כותבות למה.</div>
   </article>
 
-  <div class="next">✔ יודעות לבדוק. עכשיו: איך כותבים את זה. <a href="#table">לטבלה ←</a></div>
+  <div class="next">✔ יודעות לבדוק. עכשיו: איך כותבים את זה. <a href="#table">לטבלה ←</a> · הצעדים לכל בדיקה, בפאוור קוורי ובאקסל: <a href="kelim.html">ארגז הכלים</a></div>
 </section>
 
 <!-- ===================== הטבלה ===================== -->
@@ -179,7 +183,7 @@
 <section id="example" class="stage s2">
   <h2><span class="part">4 · דוגמה מלאה</span>הטבלה של התדלוק</h2>
   <p class="out">רואות טבלה מלאה, ויודעות מה צריך להיות בטבלה שלכן.</p>
-  <p class="sub">התדלוק משיעורים 2–4. 2,907 שורות בקובץ. הספירות בחלק ב הן על 2,905 השורות שאינן ריקות לגמרי.</p>
+  <p class="sub">התדלוק משיעורים 2–5. 2,907 שורות בקובץ. הספירות בחלק ב הן על 2,905 השורות שאינן ריקות לגמרי.</p>
 
   <h3>חלק א: איך בדקנו</h3>
   <div class="box scroll">
@@ -202,7 +206,7 @@
       <tbody>
         <tr><td>קוד תדלוק</td><td>2,901</td><td>—</td><td>0</td><td>4</td><td>0</td><td>0.14%</td><td><span class="en">Remove Duplicates</span>. השורות זהות לגמרי, כך שזה אותו תדלוק שנרשם פעמיים, ובכל סכום הוא נספר כפול. <i>מחיקת תדלוקים כפולים</i></td></tr>
         <tr><td>תאריך</td><td>2,904</td><td>0</td><td>0</td><td>—</td><td>1</td><td>0.03%</td><td><span class="en">Replace Errors</span> ← 01/01/2026. היה כתוב ״1 בינואר״ במילים. שאר השורה תקין, ולכן הצלנו ולא מחקנו. <i>תיקון תאריך שגוי</i></td></tr>
-        <tr><td>כמות (ליטרים)</td><td>2,904</td><td>1</td><td>0</td><td>—</td><td>0</td><td>0.03%</td><td><span class="en">Replace Values</span>: ‏50000 ← 50. כל שאר התדלוקים בין 25 ל־55 ליטר. כנראה 50 עם אפסים מיותרים, ולכן תיקנו ולא מחקנו. <i>תיקון כמות חריגה</i> (שיעור 4)</td></tr>
+        <tr><td>כמות (ליטרים)</td><td>2,904</td><td>1</td><td>0</td><td>—</td><td>0</td><td>0.03%</td><td><span class="en">Replace Values</span>: ‏50000 ← 50. כל שאר התדלוקים בין 25 ל־55 ליטר. כנראה 50 עם אפסים מיותרים, ולכן תיקנו ולא מחקנו. <i>תיקון כמות חריגה</i> (שיעור 5)</td></tr>
         <tr><td>מחיר לליטר</td><td>2,899</td><td>0</td><td>6</td><td>—</td><td>0</td><td>0.21%</td><td><span class="en">Replace Values</span>: <span class="en">null</span> ← 7.40. כל השישה בנזין 95 בינואר, ובינואר כל 649 התדלוקים האחרים של בנזין 95 עלו 7.40. <i>השלמת מחיר חסר</i></td></tr>
         <tr><td>קטגוריית דלק</td><td>2,905</td><td>0</td><td>0</td><td>—</td><td>0</td><td>0%</td><td>לא נדרש. ארבעה ערכים, כולם סוגי דלק אמיתיים</td></tr>
         <tr><td>קוד לקוח</td><td>2,905</td><td>0</td><td>0</td><td>—</td><td>0</td><td>0%</td><td>לא נדרש. כל הקודים באותה תבנית, <code>CLT-</code> וארבע ספרות</td></tr>
@@ -248,7 +252,7 @@
 
   <article class="topic">
     <h3>החלק השני של הפרק: חישובים</h3>
-    <p>בשקף של פרק 3 יש עוד סעיף: <b>תיעוד חישובים, עמודות מחושבות ומדדים</b> שמשמשים בדשבורד. אותו כותבות תוך כדי הניתוח, משיעור 5: לכל עמודה שבניתן, מה היא מחשבת ואיזו שאלה היא משרתת.</p>
+    <p>בשקף של פרק 3 יש עוד סעיף: <b>תיעוד חישובים, עמודות מחושבות ומדדים</b> שמשמשים בדשבורד. אותו כותבות תוך כדי הניתוח, משיעור 6: לכל עמודה שבניתן, מה היא מחשבת ואיזו שאלה היא משרתת.</p>
   </article>
 </section>
 
@@ -268,7 +272,7 @@
 </section>
 
 <footer>
-  <p><a href="index.html">← חזרה למפת הדרך</a> · <a href="lesson3.html">שיעור 3</a></p>
+  <p><a href="index.html">← חזרה למפת הדרך</a> · <a href="lesson3.html">שיעור 3</a> · <a href="kelim.html">ארגז כלים לטיוב</a></p>
   <p>מבוסס על ההנחיות לפרק 3 בעבודה הכתובה: ״טיוב והכנת הנתונים״.</p>
 </footer>
 

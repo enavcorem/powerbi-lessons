@@ -423,6 +423,45 @@ body.v2 { --stc: var(--accent); --stc-soft: var(--accent-soft); }
   .v2 .topic { padding: 2px 14px 14px; }
 }
 
+/* ---------- הקצב הקבוע (משיעור 4): חזרה קטנה בפתיחה, ו״על העבודה שלכן״ ---------- */
+/* <section id="recap" class="stage s0 recap">: 2–3 שאלות לצ׳אט, כל אחת ב־ol.qs > li, והתשובה ב־details.ans בתוכה */
+.v2 .recap ol.qs { list-style: none; counter-reset: q; padding: 0; margin: 12px 0 0; display: grid; gap: 10px; }
+.v2 .recap ol.qs > li {
+  counter-increment: q; background: var(--surface); border: 1px solid var(--line);
+  border-inline-start: 5px solid var(--stc); border-radius: 5px; padding: 12px 18px 4px; box-shadow: var(--shadow);
+}
+.v2 .recap ol.qs > li > p:first-child { margin: 0 0 8px; font-weight: 700; }
+.v2 .recap ol.qs > li > p:first-child::before { content: counter(q) ". "; color: var(--stc); font-variant-numeric: tabular-nums; }
+.v2 details.ans { background: none; border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 0; margin: 0; font-size: 15px; }
+.v2 details.ans > summary { padding: 8px 0; color: var(--muted); font-size: 14.5px; }
+.v2 details.ans > summary::before {
+  content: "תשובה"; display: inline-block; font-size: 12px; font-weight: 700; border-radius: 3px;
+  padding: 0 7px; margin-inline-end: 8px; vertical-align: 1px; color: #fff; background: var(--stc);
+}
+.v2 details.ans:not([open]) > summary::after { content: " · אחרי שעניתן"; font-weight: 400; }
+.v2 details.ans[open] > summary { border-bottom: 0; margin-bottom: 0; }
+/* שאלת יישום: בשיעור עונות בצ׳אט של המיט, ובהשלמה עונות לעצמן */
+.v2 .chat {
+  margin: 14px 0 0; padding: 10px 14px; border-radius: 4px; font-weight: 700;
+  background: var(--surface); border: 1.5px dashed var(--stc);
+}
+.v2 .chat::before { content: "✍️ שאלת יישום: "; color: var(--stc); }
+
+/* <section id="own" class="stage s3 own">: כרטיס לכל כיתה זה לצד זה, ובכל אחד ״מה נכנס לתיעוד״ (.log) */
+.v2 .own .tracks { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; align-items: start; margin: 14px 0 0; }
+.v2 .own .tracks > .topic { margin: 0; }
+.v2 .own .log {
+  margin: 12px 0 4px; padding: 10px 14px; border-radius: 4px; font-size: 15px;
+  background: var(--stc-soft); border: 1.5px solid var(--stc);
+}
+.v2 .own .log::before {
+  content: "נכנס לתיעוד"; display: inline-block; font-size: 12px; font-weight: 700; border-radius: 3px;
+  padding: 0 7px; margin-inline-end: 8px; vertical-align: 1px; color: #fff; background: var(--stc);
+}
+.v2 .own .log ul { margin: 6px 0 0; padding-inline-start: 20px; }
+:root[data-theme="dark"] .v2 :is(details.ans > summary, .own .log)::before { color: #0f1513; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .v2 :is(details.ans > summary, .own .log)::before { color: #0f1513; } }
+
 /* ---------- מצב הצגה למיט ---------- */
 body.v2.present { font-size: 20px; }
 body.v2.present .wrap { max-width: 1040px; }
@@ -431,6 +470,7 @@ body.v2.present h3 { font-size: 25px; }
 body.v2.present .out, body.v2.present .why, body.v2.present .trap, body.v2.present .ok,
 body.v2.present .sub, body.v2.present .etl li, body.v2.present .verbs li { font-size: 19px; }
 body.v2.present .etl b { font-size: 21px; }
+body.v2.present .recap ol.qs > li, body.v2.present details.ans, body.v2.present .chat, body.v2.present .own .log { font-size: 19px; }
 
 @media print {
   .v2 .stages, .v2 .tick, .v2 .next { display: none; }

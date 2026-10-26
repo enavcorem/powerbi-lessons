@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 4 — סדנת טיוב: תיעוד הוא ראיה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="style.css?v=7">
+<script src="lesson.js?v=2" defer></script>
+</head>
+<body class="v2" data-lesson="lesson4">
+<div class="wrap">
+<!-- שיעור 4 (26.10): סדנת טיוב. נבנה בעבודת לילה 24.10. כל מספר בדף יוצא מ־כלים/בדיקת-סדנת-טיוב.py (הפלט: כלים/סדנת-טיוב-פלט.txt) -->
+
+<header class="intro">
+  <p class="eyebrow"><a href="index.html">פאוור BI</a> · שיעור 4 · 26.10</p>
+  <h1>סדנת טיוב: תיעוד הוא ראיה</h1>
+  <p class="lede">״אין כפילויות״ זה משפט. ״בדקנו כפולות לפי קוד תדלוק. ארבעה קודים הופיעו פעמיים, והשורות זהות. מחקנו שורה אחת מכל זוג״ זו <strong>ראיה</strong>.
+  היום מתמקדות בשלושה דברים: ריקים, כפולות ושגיאות ברורות. בודקות אותם באקסל ובפאוור קוורי, לומדות לכתוב אותם בתיעוד, ואז כל אחת עובדת על הקובץ שלה.</p>
+  <p class="sub">✍️ <b>שאלות יישום:</b> בשיעור עונות עליהן בצ׳אט של המיט. משלימות לבד? עונות לעצמכן, ורק אחר כך פותחות את התשובה.</p>
+  <ul class="cycle" aria-label="מחזור הנתונים: אנחנו בשלב טיוב והכנה">
+    <li>שאלה</li><li class="arr" aria-hidden="true">←</li>
+    <li>איסוף נתונים</li><li class="arr" aria-hidden="true">←</li>
+    <li class="here">טיוב והכנה</li><li class="arr" aria-hidden="true">←</li>
+    <li>ניתוח</li><li class="arr" aria-hidden="true">←</li>
+    <li>הצגה</li><li class="arr" aria-hidden="true">←</li>
+    <li>החלטה</li>
+  </ul>
+</header>
+
+<nav class="stages" aria-label="שלבי השיעור">
+  <ol>
+    <li class="s0"><a href="#recap"><span class="n">0</span>חזרה קטנה</a></li>
+    <li class="s1"><a href="#s1"><span class="n">1</span>תיעוד = ראיה</a></li>
+    <li class="s1"><a href="#compare"><span class="n">2</span>אקסל מול פאוור קוורי</a></li>
+    <li class="s3"><a href="#own"><span class="n">3</span>על העבודה שלכן</a></li>
+    <li><a href="#stuck">נתקעתי</a></li>
+    <li><a href="#done">הצלחתי?</a></li>
+  </ol>
+  <button type="button" class="present-btn" aria-pressed="false">מצב הצגה</button>
+</nav>
+
+<!-- ===================== 0–5: חזרה קטנה ===================== -->
+<section id="recap" class="stage s0 recap">
+  <h2><span class="part">שלב 0 · חזרה קטנה · 5 דקות</span>שלוש שאלות משיעור 3</h2>
+  <p class="out">עונות על שלוש שאלות, ובודקות את עצמכן מול התשובה.</p>
+  <p class="chat">לכל שאלה תשובה במשפט אחד. בצ׳אט: מספר השאלה ואז התשובה. רק אחר כך פותחות את התשובה.</p>
+
+  <ol class="qs">
+    <li>
+      <p>בתדלוק יש תאריך שכתוב ״1 בינואר״, ויש תדלוק של 50,000 ליטר. מה מהם <b>שגוי</b>, ומה <b>חריג</b>?</p>
+      <details class="ans"><summary>תשובה</summary>
+        <p>״1 בינואר״ <b>שגוי</b>: התאריך נכון, אבל הוא כתוב במילים, והתוכנה לא קוראת אותו. מוצאות אותו כשמשנות סוג, והוא הופך ל־<span class="en">Error</span>.
+        ‏50,000 ליטר <b>חריג</b>: הוא כתוב נכון, אבל לא אפשרי. מוצאות אותו ב־<span class="en">Min</span> ו־<span class="en">Max</span>, כששואלות ״זה אפשרי?״.
+        עוד על זה ב<a href="tiyuv.html#what" target="_blank" rel="noopener">פרק הטיוב</a>.</p>
+      </details>
+    </li>
+    <li>
+      <p>״בנזין 95״ מופיע 2,173 פעמים בעמודה <b>קטגוריית דלק</b>. זו כפילות?</p>
+      <details class="ans"><summary>תשובה</summary>
+        <p>לא. כפילות היא <b>אותה רשומה</b> פעמיים. לכן בודקות אותה לפי <b>המפתח</b>: עמודה שאמורה להיות שונה בכל שורה. בתדלוק זה <b>קוד תדלוק</b>.
+        סוג דלק אמור לחזור על עצמו.</p>
+      </details>
+    </li>
+    <li>
+      <p>פתחתן את ההזמנות בפאוור קוורי, וב־<span class="en">Error</span> של התאריך כתוב 0%. אפשר לרשום ״אין שגיאות״?</p>
+      <details class="ans"><summary>תשובה</summary>
+        <p>עוד לא. בלי <span class="en">entire data set</span> הפרופיל בודק רק את 1,000 השורות הראשונות. בהזמנות, התאריך השגוי נמצא בשורה 1,237.
+        לכן בודקות תמיד על כל השורות.</p>
+      </details>
+    </li>
+  </ol>
+  <div class="next">✔ זוכרות מה בודקים. היום: איך כותבים מה בדקתן. <a href="#s1">לשלב 1 ←</a></div>
+</section>
+
+<!-- ===================== 5–15: תיעוד = ראיה ===================== -->
+<section id="s1" class="stage s1">
+  <h2><span class="part">שלב 1 · יחד · תדלוק רכבים</span>תיעוד = ראיה</h2>
+  <p class="out">יודעות לכתוב שורת תיעוד: מה בדקתן, לפי מה, מה מצאתן ומה עשיתן.</p>
+  <p class="sub">כל הדוגמאות מהתדלוק, שאותו טייבנו בשיעורים 2–3. הטבלה המלאה שלו נמצאת ב<a href="tiyuv.html#example" target="_blank" rel="noopener">פרק הטיוב</a>.</p>
+
+  <article class="topic">
+    <h3><span class="t">1.1</span>ארבעה דברים בשורת תיעוד</h3>
+    <ul class="verbs">
+      <li><b>מה בדקתן</b>ריקים, כפולות או שגיאות. לא צריך להסביר באיזה כלי ובאיזה כפתור. מספיק: ״בדקנו ריקים״.</li>
+      <li><b>לפי מה</b>בכפולות: לפי עמודת המפתח (״לפי קוד תדלוק״), לפי כל השורה, או לפי כמה עמודות יחד. בשיעור הבא, בחריגים: לפי מה החלטתן שזה חריג, למשל לפי בוקס פלוט.</li>
+      <li><b>מה מצאתן</b>איפה וכמה: ״6 ריקים במחיר לליטר״. גם כשלא מצאתן כלום, כותבות: ״בדקנו ריקים: אין״.</li>
+      <li><b>מה עשיתן</b>מחקתן, תיקנתן או השארתן, ולמה.</li>
+    </ul>
+    <div class="trap"><b>כפולה אמיתית, או רק דומה?</b> שתי שורות עם אותו קוד וכל השאר זהה: זו כפולה, ומוחקות אחת.
+    שתי שורות עם אותו קוד, אבל משהו שונה ביניהן (למשל סכום אחר): זו לא כפולה רגילה. לא מוחקות אוטומטית. מחליטות איזו נכונה, וכותבות בתיעוד מה החלטתן ולמה.</div>
+    <div class="trap"><b>קודם ריקות, אחר כך כפולות.</b> שתי שורות ריקות נראות ״כפולות״ זו של זו. אם לא מוחקות אותן קודם, המספרים יוצאים לא נכונים.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.2</span>״לא מספיק״ מול ״ככה״</h3>
+    <p class="out">רואות שלוש דוגמאות, ויודעות מה חסר בצד ימין.</p>
+    <div class="box scroll">
+      <table>
+        <thead><tr><th>לא מספיק</th><th>ככה</th></tr></thead>
+        <tbody>
+          <tr><td>״אין ריקים.״</td><td>בדקנו ריקים בכל העמודות. היו שתי שורות ריקות לגמרי, ומחקנו אותן. אחר כך נשארו 6 ריקים במחיר לליטר, ושם המתדלק ריקה כולה (הורדנו את העמודה). בשאר העמודות אין ריקים.</td></tr>
+          <tr><td>״בדקנו כפילויות ומחקנו.״</td><td>בדקנו כפולות לפי קוד תדלוק (המפתח). ארבעה קודים הופיעו פעמיים, והשורות זהות לגמרי. מחקנו שורה אחת מכל זוג. נשארו 2,901 תדלוקים.</td></tr>
+          <tr><td>״קטגוריית דלק: תקין.״</td><td>בדקנו אילו ערכים יש בקטגוריית דלק: ארבעה, סולר, בנזין 95, בנזין 98 וגז. כולם סוגי דלק אמיתיים, ולכן לא תיקנו כלום.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="why"><b>ארבעה דברים: מה בדקתן, לפי מה, מה מצאתן, מה עשיתן.</b>
+    מי שקוראת את העבודה שלכן לא הייתה שם. היא יכולה לסמוך רק על מה שכתוב.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.3</span>תרגיל: תקני את השורה</h3>
+    <p class="out">שורה אחת של ״הכול בסדר״, כתובה מחדש עם ארבעת הדברים.</p>
+    <div class="box">
+      <ol style="list-style-type: hebrew">
+        <li>״תאריך: הכול תקין.״</li>
+        <li>״מחיר לליטר: היו חסרים, השלמנו.״</li>
+      </ol>
+    </div>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>בוחרות שורה אחת מהשתיים.</li>
+        <li>כותבות אותה מחדש: מה בדקתן, לפי מה, מה מצאתן, מה עשיתן.</li>
+        <li>משוות לדוגמה שבבדיקה.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <p>לא חייב להיות מילה במילה. חייבים להיות ארבעת הדברים. למשל:</p>
+        <ol style="list-style-type: hebrew">
+          <li>בדקנו שגיאות בתאריך, אחרי שהפכנו אותו לסוג תאריך. הייתה שגיאה אחת: תאריך שכתוב במילים, ״1 בינואר״. תיקנו ל־01/01/2026.</li>
+          <li>בדקנו ריקים במחיר לליטר: 6 ריקים, כולם בנזין 95 בינואר. בינואר כל שאר התדלוקים של בנזין 95 עלו 7.40, ולכן השלמנו 7.40.</li>
+        </ol>
+      </details>
+    </details>
+  </article>
+
+  <div class="next">✔ יודעות מה כותבים. עכשיו: איך בודקים, בשני כלים. <a href="#compare">לשלב 2 ←</a></div>
+</section>
+
+<!-- ===================== 15–30: אותה בדיקה, שני כלים ===================== -->
+<section id="compare" class="stage s1">
+  <h2><span class="part">שלב 2 · יחד · תדלוק רכבים</span>אותה בדיקה, שני כלים</h2>
+  <p class="out">יודעות לבדוק ריקים וכפולים גם באקסל וגם בפאוור קוורי, ולומר מה כל כלי נותן לתיעוד.</p>
+  <p class="sub">המורה מדגימה. מי שרוצה, עושה איתה בכלי שבו היא עובדת על העבודה. את הקובץ מורידות כאן: <a class="file" href="files/fuel.xlsx" download="תדלוק רכבים.xlsx">תדלוק רכבים.xlsx</a></p>
+  <div class="trap"><b>באקסל עובדות על עותק.</b> ‏<span class="en">Remove Duplicates</span> ומחיקת שורות משנים את הקובץ עצמו. אין יומן, ואחרי שמירה אין <span class="en">Ctrl+Z</span>.
+  לכן הדבר הראשון: שמירה בשם חדש.</div>
+
+  <article class="topic">
+    <h3><span class="t">2.1</span>ריקים באקסל</h3>
+    <p class="out">יודעות אם יש ריקים בעמודה וכמה, ואילו שורות ריקות לגמרי.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <p><b>הדרך המהירה: סינון.</b></p>
+      <ol class="do">
+        <li>פותחות את הקובץ באקסל.</li>
+        <li><span class="path">File › Save As</span>, בשם <code>תדלוק - עותק לטיוב</code>.</li>
+        <li>לוחצות על החץ בכותרת <b>מחיר לליטר</b>, וגוללות לסוף הרשימה. יש שם <span class="en">(Blanks)</span>? אז יש ריקים.</li>
+        <li>מורידות את הסימון מ־<span class="en">Select All</span>, ומסמנות רק את <span class="en">(Blanks)</span>. <span class="en">OK</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        שמונה שורות.</details>
+      <p class="chat">⏸ בסינון יש שמונה שורות בלי מחיר. כמה מהן הן באמת תדלוקים בלי מחיר? ומה יש בשאר?</p>
+
+      <p><b>כשיש הרבה עמודות: נוסחה.</b> סינון עמודה־עמודה לוקח זמן. ‏<code>COUNTBLANK</code> סופר במקום.</p>
+      <ol class="do">
+        <li>לוחצות על החץ בכותרת <b>מחיר לליטר</b> › <span class="en">Clear Filter</span>.</li>
+        <li>בתא ריק מחוץ לטבלה, למשל <code>N2</code>, כותבות <code>=COUNTBLANK(H2:H2908)</code>. עמודה H היא <b>מחיר לליטר</b>.</li>
+        <li>בתא <code>N3</code> כותבות <code>=COUNTBLANK(B2:B2908)</code>. עמודה B היא <b>קוד תדלוק</b>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        מחיר לליטר: 8. קוד תדלוק: 2.</details>
+
+      <p><b>מוחקות את השורות הריקות לגמרי.</b></p>
+      <ol class="do">
+        <li>לוחצות על החץ בכותרת <b>קוד תדלוק</b>.</li>
+        <li>מורידות את הסימון מ־<span class="en">Select All</span>.</li>
+        <li>מסמנות רק את <span class="en">(Blanks)</span>, בסוף הרשימה. <span class="en">OK</span>.</li>
+        <li>מסמנות את השורות שנשארו.</li>
+        <li>לוחצות קליק ימני › <span class="en">Delete Row</span>.</li>
+        <li>לוחצות על החץ בכותרת <b>קוד תדלוק</b> › <span class="en">Clear Filter</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בסינון: שתי שורות ריקות לגמרי, 79 ו־113. אחרי המחיקה הנוסחאות מתעדכנות לבד: מחיר לליטר 6, קוד תדלוק 0.</details>
+    </details>
+    <div class="why"><b>ובשביל זה יש פאוור BI.</b> גם הנוסחה היא עדיין עמודה־עמודה. בפאוור קוורי, ‏<span class="en">Column quality</span> מראה <span class="en">Empty</span> מעל כל העמודות בבת אחת.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.2</span>ריקים בפאוור קוורי</h3>
+    <p class="out">יודעות כמה ריקים יש בכל עמודה, על כל השורות.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>בפאוור BI: <span class="path">Home › Get data › Excel workbook</span>, ובוחרות את הקובץ <b>המקורי</b>, לא את העותק.</li>
+        <li>ב־<span class="en">Navigator</span> מסמנות את <code>טבלת_תדלוקים</code>.</li>
+        <li>לוחצות <span class="en">Transform Data</span>.</li>
+        <li>למטה משמאל: <span class="en">Column profiling based on top 1000 rows</span> ← <span class="en">entire data set</span>.</li>
+        <li>מסמנות את <b>מחיר לליטר</b>, ומסתכלות על <span class="en">Empty</span> בפרופיל למטה.</li>
+        <li><span class="path">Home › Remove Rows › Remove Blank Rows</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        לפני: <span class="en">Empty</span> 8 במחיר לליטר. אחרי <span class="en">Remove Blank Rows</span>: ‏6. ביומן נוסף השלב <span class="en">Removed Blank Rows</span>.</details>
+    </details>
+    <div class="why"><b>8 = 6 + 2.</b> בשני הכלים השורות הריקות לגמרי נספרות כ״חסר״ בכל עמודה. לכן קודם מוחקות אותן, ורק אז סופרות חסרים באמת.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.3</span>כפולים באקסל</h3>
+    <p class="out">יודעות כמה קודים כפולים יש, באילו שורות, וכמה נמחקו.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>בתא הריק שצמוד לכותרות הטבלה, <code>L1</code>, כותבות <code>כמה פעמים</code>. הטבלה מתרחבת לבד.</li>
+        <li>בתא <code>L2</code> כותבות <code>=COUNTIF(B:B,B2)</code>. הנוסחה יורדת לבד לכל השורות.</li>
+        <li>לוחצות על החץ בכותרת <b>כמה פעמים</b> › <span class="path">Number Filters › Greater Than</span>.</li>
+        <li>כותבות 1. <span class="en">OK</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        שמונה שורות. ארבעה קודים, כל אחד פעמיים, זה מתחת לזה.</details>
+      <ol class="do">
+        <li>לוחצות על החץ בכותרת <b>כמה פעמים</b> › <span class="en">Clear Filter</span>.</li>
+        <li>מסמנות את עמודה B. <span class="path">Home › Conditional Formatting › Highlight Cells Rules › Duplicate Values</span> › <span class="en">OK</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        שמונה תאים צבועים בעמודת הקוד.</details>
+      <ol class="do">
+        <li>לוחצות על תא כלשהו בתוך הטבלה.</li>
+        <li><span class="path">Data › Remove Duplicates</span>.</li>
+        <li>לוחצות <span class="en">Unselect All</span>.</li>
+        <li>מסמנות רק את <b>קוד תדלוק</b>. <span class="en">OK</span>.</li>
+        <li>מעתיקות את המספרים מההודעה של אקסל לתיעוד, לפני שסוגרות אותה.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בהודעה: 4 ערכים כפולים נמצאו ונמחקו, ו־2,901 ערכים ייחודיים נשארו. בעמודה <b>כמה פעמים</b>: ‏1 בכל השורות.</details>
+    </details>
+    <div class="why"><b>הצבע מראה איפה, אבל לא סופר.</b> לתיעוד צריך מספר. את המספר נותנים <code>COUNTIF</code> וההודעה של <span class="en">Remove Duplicates</span>.</div>
+    <div class="trap"><b>בהודעה 5 ו־2,902?</b> השורות הריקות עוד בטבלה. שתי שורות ריקות הן ״כפולות״ זו של זו, ואקסל מחק אחת מהן. <span class="en">Ctrl+Z</span>, מוחקות את הריקות (2.1), ושוב.</div>
+    <div class="trap"><b>לפי מה בודקות?</b> מסמנות רק את קוד תדלוק: כפולות לפי המפתח. משאירות את כל העמודות מסומנות: כפולות לפי כל השורה, ואקסל מוחק רק שורות שזהות <b>בכל</b> העמודות.
+    בתדלוק יוצא אותו דבר, כי הכפולות זהות לגמרי. במסד שלכן לא בטוח, ולכן כותבות בתיעוד לפי מה בדקתן.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.4</span>כפולים בפאוור קוורי</h3>
+    <p class="out">יודעות כמה קודים כפולים יש, ואיפה רשום שמחקתן אותם.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>מסמנות את <b>קוד תדלוק</b>, ומסתכלות בפרופיל על <span class="en">Count</span>, ‏<span class="en">Distinct</span> ו־<span class="en">Unique</span>.</li>
+        <li><span class="path">Home › Keep Rows › Keep Duplicates</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בפרופיל: <span class="en" dir="ltr">Count 2,905</span>, <span class="en" dir="ltr">Distinct 2,901</span>, <span class="en" dir="ltr">Unique 2,897</span>.
+        אחרי <span class="en">Keep Duplicates</span>: שמונה שורות, ארבעה קודים, כל אחד פעמיים, והשורות זהות.</details>
+      <ol class="do">
+        <li>לוחצות ביומן על ה־X ליד <span class="en">Kept Duplicates</span>.</li>
+        <li>מסמנות את <b>קוד תדלוק</b>, ורק אותו.</li>
+        <li><span class="path">Home › Remove Rows › Remove Duplicates</span>.</li>
+        <li>מסתכלות שוב על <span class="en">Count</span> ו־<span class="en">Distinct</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <span class="en" dir="ltr">Count 2,901</span>, <span class="en" dir="ltr">Distinct 2,901</span>. ביומן: <span class="en">Removed Blank Rows</span> ואחריו <span class="en">Removed Duplicates</span>, ואין <span class="en">Kept Duplicates</span>.</details>
+    </details>
+    <div class="trap"><b><span class="en">Keep Duplicates</span> הוא רק להסתכל.</b> אחרי שראיתן, מוחקות את השלב מהיומן. אם הוא נשאר, גם הדוח יראה רק את שמונה השורות.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.5</span>מה כל כלי נותן לכן</h3>
+    <p class="out">יודעות מאיפה לוקחות את המספרים לתיעוד, בכל אחד מהכלים.</p>
+    <div class="box scroll">
+      <table>
+        <thead><tr><th></th><th>באקסל</th><th>בפאוור קוורי</th></tr></thead>
+        <tbody>
+          <tr><th>ריקים</th><td><code>COUNTBLANK</code>: מספר לכל עמודה. סינון על <span class="en">(Blanks)</span>: אילו שורות</td><td><span class="en">Empty</span> בפרופיל, על כל השורות. סינון על <span class="en">null</span>: אילו שורות</td></tr>
+          <tr><th>למצוא כפולים</th><td><code>COUNTIF</code> וסינון על גדול מ־1: כמה שורות, ואילו. צבע: רק איפה, בלי מספר</td><td><span class="en">Count</span> מול <span class="en">Distinct</span>: כמה. <span class="en">Keep Duplicates</span>: אילו</td></tr>
+          <tr><th>למחוק כפולים</th><td><span class="en">Remove Duplicates</span>: הודעה עם שני מספרים. מעתיקות אותה מיד</td><td><span class="en">Remove Duplicates</span>: שלב ביומן, ו־<span class="en">Count</span> אחריו</td></tr>
+          <tr><th>מה נשאר אחר כך</th><td>קובץ שהשתנה. מה שלא כתבתן, אין לו זכר</td><td>היומן: כל שלב בשמו, לפי הסדר. אפשר לראות, לבטל ולהזיז</td></tr>
+          <tr><th>נתונים חדשים</th><td>עושות הכול שוב, ביד</td><td><span class="en">Refresh</span>, וכל השלבים רצים שוב לבד</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="why"><b>בפאוור קוורי היומן זוכר בשבילכן. באקסל, אתן היומן.</b> באקסל רושמות את המספר באותו רגע, ולא בסוף, כי אחר כך הוא כבר לא שם.
+    שני הכלים בסדר לעבודה. בתיעוד לא כותבות באיזה כלי, אלא את ארבעת הדברים: מה בדקתן, לפי מה, מה מצאתן, מה עשיתן.</div>
+    <p>כל הבעיות, בשני הכלים, ומה כותבים בתיעוד: <a href="kelim.html" target="_blank" rel="noopener">ארגז הכלים</a>.</p>
+  </article>
+
+  <div class="next">✔ אותה בדיקה, אותם מספרים, בשני כלים. עכשיו על הקובץ שלכן. <a href="#own">לשלב 3 ←</a></div>
+</section>
+
+<!-- ===================== 30–60: על העבודה שלכן ===================== -->
+<section id="own" class="stage s3 own">
+  <h2><span class="part">שלב 3 · 🛠 על העבודה שלכן · 25 דקות</span>מטייבות ומתעדות</h2>
+  <p class="out">בתיעוד שלכן יש שלוש בדיקות: ריקים, כפולות ושגיאות ברורות. בכל אחת: מה בדקתן, לפי מה, מה מצאתן ומה עשיתן.</p>
+  <p class="sub">כל אחת על הקובץ שלה. המורה עוברת ביניכן. נתקעתן? שואלות בצ׳אט של המיט, או מסתכלות ב<a href="#stuck">נתקעתי</a>.</p>
+
+  <div class="tracks">
+    <article class="topic">
+      <h3>המסד שלכן <span class="who">י״ב</span></h3>
+      <p class="out">בטבלת הטיוב: ריקים, כפולות ושגיאות ברורות, עם מספרים.</p>
+      <details class="how" open><summary>איך עושים</summary>
+        <ol class="do">
+          <li>פותחות את המסד: בפאוור קוורי עם <span class="en">entire data set</span>, או עותק שלו באקסל.</li>
+          <li><b>ריקים:</b> סופרות שורות ריקות לגמרי, רושמות כמה, ומוחקות אותן.</li>
+          <li>סופרות ריקים בכל עמודה שמשמשת את הניתוח. רושמות, גם כשיצא 0.</li>
+          <li><b>כפולות:</b> מחליטות לפי מה בודקות. בדרך כלל לפי <a href="tiyuv.html#what" target="_blank" rel="noopener">המפתח</a>. לפעמים לפי כל השורה, או לפי כמה עמודות יחד. רושמות לפי מה, ולמה.</li>
+          <li>בודקות, ורושמות כמה כפולות יצאו.</li>
+          <li>יש כפולות? מסתכלות אם השורות זהות. אם יש ביניהן הבדל, לא מוחקות: מחליטות איזו נכונה, ורושמות למה.</li>
+          <li><b>שגיאות ברורות:</b> משנות כל עמודה לסוג הנכון, ומסתכלות על <span class="en">Error</span> בפרופיל, כמו ב<a href="lesson3.html" target="_blank" rel="noopener">שיעור 3</a>.</li>
+          <li>ממלאות את <a href="tiyuv.html#table" target="_blank" rel="noopener">טבלת הטיוב</a>: לכל בדיקה, מה בדקתן, לפי מה, מה מצאתן ומה עשיתן.</li>
+        </ol>
+      </details>
+      <div class="log">
+        <ul>
+          <li>חלק א: בקצרה, לפי מה בדקתן כל דבר. בלי כפתורים.</li>
+          <li>חלק ב: ריקים, שגויים וכפולים לכל עמודה.</li>
+          <li>חלק ג: כמה שורות ריקות ירדו.</li>
+        </ul>
+      </div>
+      <p>אין לכן עדיין את התבנית? <a class="file" href="files/cleaning-log.xlsx" download="טבלת תיעוד טיוב.xlsx">טבלת הטיוב</a></p>
+    </article>
+
+    <article class="topic">
+      <h3>ההזמנות <span class="who">י״א</span></h3>
+      <p class="out">ריקים וכפולות בהזמנות, באקסל ובפאוור קוורי. בשני הכלים אמור לצאת אותו מספר.</p>
+      <details class="how" open><summary>איך עושים</summary>
+        <ol class="do">
+          <li>מורידות את <a class="file" href="files/orders.xlsx" download="נתוני הזמנות.xlsx">נתוני הזמנות.xlsx</a>.</li>
+          <li>פותחות אותו באקסל.</li>
+          <li><span class="path">File › Save As</span>, בשם <code>הזמנות - עותק לטיוב</code>.</li>
+          <li>בתא ריק מחוץ לטבלה, למשל <code>T2</code>: <code>=COUNTBLANK(A2:A2004)</code>. עמודה A היא <b>קוד הזמנה</b>.</li>
+          <li>מוחקות את השורות הריקות לגמרי, כמו ב־<a href="#compare">2.1</a>.</li>
+          <li>ב־<code>R1</code> כותבות <code>כמה פעמים</code>.</li>
+          <li>ב־<code>R2</code> כותבות <code>=COUNTIF(A:A,A2)</code>.</li>
+          <li>מסננות את <b>כמה פעמים</b> על גדול מ־1, ורושמות כמה שורות וכמה קודים.</li>
+          <li>מנקות את הסינון.</li>
+          <li><span class="path">Data › Remove Duplicates</span>.</li>
+          <li>לוחצות <span class="en">Unselect All</span>.</li>
+          <li>מסמנות רק את <b>קוד הזמנה</b>. <span class="en">OK</span>.</li>
+          <li>רושמות את המספרים מההודעה, לפני שסוגרות אותה.</li>
+        </ol>
+        <details class="ok"><summary>מה אמור להופיע? (לפתוח רק אחרי שרשמתן)</summary>
+          <code>COUNTBLANK</code>: ‏3. בסינון: שש שורות, שלושה קודים. הן לא צמודות: מיון לפי קוד הזמנה מראה אותן בזוגות. בהודעה: 3 כפולים נמחקו, 1,997 נשארו.</details>
+        <ol class="do">
+          <li>בפאוור BI: <span class="path">Home › Get data › Excel workbook</span>, ובוחרות את הקובץ <b>המקורי</b>.</li>
+          <li>מסמנות את <code>Orders_Raw</code>.</li>
+          <li>לוחצות <span class="en">Transform Data</span>.</li>
+          <li>למטה משמאל: <span class="en">entire data set</span>.</li>
+          <li>מסמנות את <b>קוד הזמנה</b>. רושמות <span class="en">Empty</span>, ‏<span class="en">Count</span> ו־<span class="en">Distinct</span>.</li>
+          <li><span class="path">Home › Remove Rows › Remove Blank Rows</span>.</li>
+          <li>מסמנות את <b>קוד הזמנה</b>, ורק אותו. <span class="path">Home › Remove Rows › Remove Duplicates</span>.</li>
+          <li>רושמות שוב <span class="en">Count</span> ו־<span class="en">Distinct</span>.</li>
+        </ol>
+        <details class="ok"><summary>מה אמור להופיע? (לפתוח רק אחרי שרשמתן)</summary>
+          לפני: <span class="en">Empty</span> 3, <span class="en" dir="ltr">Count 2,003</span>, <span class="en" dir="ltr">Distinct 1,998</span>. אחרי: <span class="en" dir="ltr">Count 1,997</span>, <span class="en" dir="ltr">Distinct 1,997</span>. אותו מספר כמו באקסל.</details>
+      </details>
+      <div class="log">
+        <ul>
+          <li>שורה לריקים ושורה לכפולות: מה בדקתן, לפי מה, מה מצאתן, מה עשיתן.</li>
+          <li>ושורה אחת: יצא אותו מספר באקסל ובפאוור קוורי? ואם לא, למה.</li>
+        </ul>
+      </div>
+      <p>הטבלה: <a class="file" href="files/cleaning-log.xlsx" download="טבלת תיעוד טיוב.xlsx">טבלת הטיוב</a>, גיליון ״מסד ראשי״.</p>
+    </article>
+  </div>
+
+  <p class="chat">איזו בדיקה אחת עשיתן היום? כותבות אותה כשורת תיעוד: מה בדקתן, לפי מה, מה מצאתן, מה עשיתן.</p>
+  <div class="why"><b>י״ב: טיוב ראשוני עד 31.10.</b> מה שכתבתן היום הוא כבר חלק א, ושורות ראשונות בחלק ב. משם ממשיכות לשגויים ולחריגים, לפי <a href="kelim.html" target="_blank" rel="noopener">ארגז הכלים</a>.</div>
+</section>
+
+<section id="stuck">
+  <h2>נתקעתי</h2>
+  <p class="sub">רובם קרו בשיעורים הקודמים, או כשהכנו את הסדנה.</p>
+  <details><summary><code>COUNTBLANK</code> נתן 8 במחיר, ולא 6</summary>
+    <p>שתי השורות הריקות לגמרי עוד בטבלה, והן ריקות גם במחיר. מוחקות אותן (2.1), והנוסחה מתעדכנת לבד.</p></details>
+  <details><summary>אקסל אמר 5 כפולים ו־2,902, ולא 4 ו־2,901</summary>
+    <p>אותה סיבה: שתי שורות ריקות הן ״כפולות״ זו של זו, ואקסל מחק אחת. <span class="en">Ctrl+Z</span>, מוחקות את הריקות, ושוב <span class="en">Remove Duplicates</span>. בהזמנות: 5 ו־1,998 במקום 3 ו־1,997.</p></details>
+  <details><summary>אחרי Keep Duplicates יש 10 שורות, ולא 8</summary>
+    <p>שתיים מהן ריקות (<span class="en">null</span> בקוד תדלוק). גם כאן: <span class="en">Remove Blank Rows</span> לפני הבדיקה.</p></details>
+  <details><summary>Distinct הוא 2,902 בתדלוק (1,998 בהזמנות), ואחרי המחיקה הוא יורד באחד</summary>
+    <p>פאוור קוורי סופר את <span class="en">null</span> כעוד ערך שונה. אחרי <span class="en">Remove Blank Rows</span> אין <span class="en">null</span> בקוד, והוא יורד באחד.</p></details>
+  <details><summary>אחרי Remove Duplicates באקסל נשארו ארבע שורות</summary>
+    <p>הייתה מסומנת עמודה אחרת, כנראה <b>קטגוריית דלק</b>, ואקסל השאיר שורה אחת לכל סוג דלק. <span class="en">Ctrl+Z</span> מיד. ושוב: <span class="en">Unselect All</span>, ורק קוד תדלוק. בגלל זה עובדות על עותק.</p></details>
+  <details><summary>הנוסחה של COUNTIF לא ירדה לכל השורות</summary>
+    <p>הכותרת נכתבה בעמודה שלא צמודה לטבלה, ולכן הטבלה לא התרחבה. מוחקות, וכותבות שוב בתא שצמוד לכותרת האחרונה.</p></details>
+  <details><summary>בהזמנות, השורות הכפולות לא אחת ליד השנייה</summary>
+    <p>נכון, הן רחוקות זו מזו בקובץ. אחרי הסינון: החץ בכותרת <b>קוד הזמנה</b> › <span class="en">Sort A to Z</span>.</p></details>
+  <details><summary>בפרופיל Empty הוא 1 ולא 3 בהזמנות, או שהמספרים נעצרים ב־1,000</summary>
+    <p>הפרופיל מחושב על 1,000 השורות הראשונות. למטה משמאל: <span class="en">entire data set</span>. זה חוזר ל־1,000 בכל פתיחה.</p></details>
+  <details><summary>Keep Duplicates נשאר, וגם הדוח מראה רק שמונה שורות</summary>
+    <p>שלב הבדיקה לא נמחק. ביומן: ה־X ליד <span class="en">Kept Duplicates</span>. שלב שנועד רק להסתכל, מוחקים אחרי שראיתן.</p></details>
+  <details><summary>שיניתי סוג, ונפתח חלון Change Column Type</summary>
+    <p><span class="en">Replace current</span> מכניס את השינוי לשלב הסוגים הקיים. <span class="en">Add new step</span> יוצר שלב חדש. שתי האפשרויות בסדר.</p></details>
+</section>
+
+<section id="done">
+  <h2>איך אדע שהצלחתי</h2>
+  <div class="box">
+    <ul class="check">
+      <li><label><input type="checkbox"> <span>אני יודעת לכתוב שורת תיעוד עם ארבעה דברים: מה בדקתי, לפי מה, מה מצאתי ומה עשיתי</span></label></li>
+      <li><label><input type="checkbox"> <span>אני יודעת לכתוב לפי מה בדקתי כפולות: מפתח, כל השורה, או כמה עמודות</span></label></li>
+      <li><label><input type="checkbox"> <span>אני יודעת מה עושים כששתי שורות עם אותו קוד לא זהות</span></label></li>
+      <li><label><input type="checkbox"> <span>כתבתי מחדש שורה של ״הכול בסדר״</span></label></li>
+      <li><label><input type="checkbox"> <span>אני יודעת להסביר למה מוחקים שורות ריקות לפני שבודקים כפולים</span></label></li>
+      <li><label><input type="checkbox"> <span>ספרתי ריקים באקסל (<code>COUNTBLANK</code>) ובפאוור קוורי (<span class="en">Empty</span>), וקיבלתי אותו מספר</span></label></li>
+      <li><label><input type="checkbox"> <span>מצאתי כפולים באקסל (<code>COUNTIF</code>) ובפאוור קוורי (<span class="en">Count</span> מול <span class="en">Distinct</span>)</span></label></li>
+      <li><label><input type="checkbox"> <span>אני יודעת מה כל כלי משאיר אחריו: הודעה שצריך להעתיק, או שלב ביומן</span></label></li>
+      <li><label><input type="checkbox"> <span><b>י״ב:</b> בטבלת הטיוב שלנו יש ריקים, כפולות ושגיאות ברורות, עם מספרים</span></label></li>
+      <li><label><input type="checkbox"> <span><b>י״א:</b> בדקתי ריקים וכפולים בהזמנות בשני הכלים, והמספרים יצאו זהים</span></label></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><a href="index.html">← חזרה למפת הדרך</a> · <a href="lesson3.html">← שיעור 3</a> · <a href="lesson5.html">שיעור 5 (2.11) →</a></p>
+  <p>מבוסס על קורס Power BI של טל מיכולביץ, בשימוש באישורו.</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 6 — להכין את הנתונים לשאלה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="style.css?v=7">
+<script src="lesson.js?v=2" defer></script>
+</head>
+<body class="v2" data-lesson="lesson6">
+<div class="wrap">
+<!-- שיעור 6 (9.11). היה שיעור 5 עד 24.10 (הלוח זז שבוע). חזרה קטנה ו־#own בקצב החדש -->
+
+<header class="intro">
+  <p class="eyebrow"><a href="index.html">פאוור BI</a> · שיעור 6 · 9.11</p>
+  <h1>להכין את הנתונים לשאלה</h1>
+  <p class="lede">עד היום תיקנו מה שהיה שבור. היום שואלות שאלה אחרת: <strong>מה השאלה שלי צריכה, ואין לה עדיין?</strong>
+  רבעון אחד בלבד, שם של חודש, הכנסה אחרי הנחה, ״קבוצה קטנה או גדולה״. את כל אלה בונות בפאוור קוורי, פעם אחת.</p>
+  <ul class="cycle" aria-label="מחזור הנתונים: אנחנו בשלב טיוב והכנה">
+    <li>שאלה</li><li class="arr" aria-hidden="true">←</li>
+    <li>איסוף נתונים</li><li class="arr" aria-hidden="true">←</li>
+    <li class="here">טיוב והכנה</li><li class="arr" aria-hidden="true">←</li>
+    <li>ניתוח</li><li class="arr" aria-hidden="true">←</li>
+    <li>הצגה</li><li class="arr" aria-hidden="true">←</li>
+    <li>החלטה</li>
+  </ul>
+</header>
+
+<nav class="stages" aria-label="שלבי השיעור">
+  <ol>
+    <li class="s0"><a href="#recap"><span class="n">↺</span>חזרה קטנה</a></li>
+    <li class="s0"><a href="#prep"><span class="n">0</span>תיקון או הכנה?</a></li>
+    <li class="s1"><a href="#a"><span class="n">1</span>עושות יחד</a></li>
+    <li class="s2"><a href="#room"><span class="n">2</span>כרטיס החדר</a></li>
+    <li class="s3"><a href="#own"><span class="n">3</span>על העבודה שלכן</a></li>
+    <li><a href="#stuck">נתקעתי</a></li>
+    <li><a href="#done">הצלחתי?</a></li>
+  </ol>
+  <button type="button" class="present-btn" aria-pressed="false">מצב הצגה</button>
+</nav>
+
+<section id="rec">
+  <h2>לא היית במיט?</h2>
+  <p class="sub">עברי על שלבים 0–1 עם ההקלטה, ואחר כך עשי את כרטיס החדר לבד.
+  הכרטיס ממשיך את <code>VR.pbix</code> משיעור 5. אין לך אותו? בראש הכרטיס כתוב מה לעשות.</p>
+  <div class="box">
+    <div class="rec">
+      <!-- להחליף בקישור ההקלטה אחרי השיעור, ולהוריד את class="off" -->
+      <a class="btn off" href="#" aria-disabled="true">ההקלטה תעלה אחרי השיעור</a>
+    </div>
+    <!-- אינדקס ההקלטה: יתווסף כאן אחרי השיעור, מתוך התמלול -->
+  </div>
+</section>
+
+<!-- ===================== 0–5: חזרה קטנה ===================== -->
+<section id="recap" class="stage s0 recap">
+  <h2><span class="part">פתיחה · חזרה קטנה · 5 דקות</span>שלוש שאלות משיעור 5</h2>
+  <p class="out">עונות בצ׳אט על שלוש שאלות, ובודקות את עצמכן מול התשובה.</p>
+  <p class="chat">מספר השאלה, ותשובה במשפט אחד. רק אחר כך פותחות את התשובה.</p>
+
+  <ol class="qs">
+    <li>
+      <p>בסוג לקוח יש ״עסקי״ ו״עסקי ״, עם רווח בסוף. מה עושים, ומה <span class="en">Trim</span> לא יעשה?</p>
+      <details class="ans"><summary>תשובה</summary>
+        <p>מסמנות את העמודה, ו־<span class="path">Transform › Format › Trim</span>. הוא מוריד רווחים בתחילת הטקסט ובסופו, והשתיים הופכות לקטגוריה אחת.
+        שני רווחים <b>באמצע</b> הטקסט הוא משאיר, בשונה מ־<code>TRIM</code> של אקסל.</p>
+      </details>
+    </li>
+    <li>
+      <p>פיצלתן את קוד הלקוח <code>CLT-0002</code> במפריד <code>-</code>, ובעמודה החדשה כתוב 2. מה קרה, ומה עושות?</p>
+      <details class="ans"><summary>תשובה</summary>
+        <p>אחרי <span class="en">Split</span> פאוור BI הוסיף לבד שלב <span class="en">Changed Type</span>, ניחש שזה מספר, והאפסים נעלמו. מוחקות את השלב (ה־X שלידו) והאפסים חוזרים.
+        לשנות ל־<span class="en">Text</span> אחר כך <b>לא</b> עוזר, כי האפסים כבר נמחקו.</p>
+      </details>
+    </li>
+    <li>
+      <p>למה משכפלות עמודה לפני שמפצלות אותה?</p>
+      <details class="ans"><summary>תשובה</summary>
+        <p>עובדות על העותק (<span class="path">Add Column › Duplicate Column</span>), והעמודה המקורית נשארת שלמה. אם הפיצול הרס משהו, המקור עדיין שם.</p>
+      </details>
+    </li>
+  </ol>
+  <div class="next">✔ זוכרות מה עושים עם טקסט. היום: מוסיפות עמודות שהשאלה צריכה. <a href="#prep">לשלב 0 ←</a></div>
+</section>
+
+<!-- ===================== שלב 0 ===================== -->
+<section id="prep" class="stage s0">
+  <h2><span class="part">שלב 0 · לפני שנכנסות</span>תיקון או הכנה?</h2>
+  <p class="out">יודעות לומר על כל שינוי בנתונים אם הוא תיקון או הכנה, ואיפה עושים אותו.</p>
+
+  <ul class="verbs">
+    <li><b>תיקון ← ״מה היה שבור?״</b>שורה כפולה, 50,000 ליטר, ״עסקי ״ עם רווח. מתקנים בטבלה הראשית, כי זה נכון לכל שאלה.</li>
+    <li><b>הכנה ← ״מה השאלה שלי צריכה?״</b>שם של חודש, מחיר אחרי הנחה, גודל קבוצה. שום דבר לא היה שבור, אבל השאלה צריכה עמודה שאין.</li>
+    <li><b>שאלה ← עותק</b>״רק רבעון 2, רק מה שבוצע״. זה לא טיוב. זו בחירה בחלק מהנתונים, ולכן עושים אותה בעותק של הטבלה, והטבלה הראשית נשארת שלמה.</li>
+  </ul>
+
+  <div class="why"><b><span class="path">Transform</span> מול <span class="path">Add Column</span>.</b> בשיעור 5 ראינו: <span class="path">Transform</span> משנה את העמודה עצמה.
+  <span class="path">Add Column</span> יוצר עמודה חדשה, והמקור נשאר. הכנה כמעט תמיד היא <span class="path">Add Column</span>: לא נוגעות בתאריך, מוסיפות לידו ״שם חודש״.
+  בלשונית <span class="path">Add Column</span> יש אותן קבוצות כמו ב־<span class="path">Transform</span>: <span class="en">From Text</span>, <span class="en">From Number</span>, <span class="en">From Date &amp; Time</span>. ולכן גם כאן: <b>קודם מסמנות עמודה.</b></div>
+
+  <div class="why"><b>עותק שמחובר: <span class="en">Reference</span>.</b> קליק ימני על הטבלה ← <span class="en">Reference</span> יוצר שאילתה חדשה, שמתחילה בדיוק איפה שהטבלה הראשית נגמרת.
+  כל מה שנוסיף אחר כך לטבלה הראשית — עמודה, תיקון — יגיע לעותק לבד. בעותק עושות רק את מה ששייך לשאלה: הסינון והמיון.</div>
+
+  <div class="next">✔ תיקון בטבלה, הכנה בעמודה חדשה, שאלה בעותק. <a href="#a">לשלב 1: עושות יחד ←</a></div>
+</section>
+
+<!-- ===================== שלב 1 ===================== -->
+<section id="a" class="stage s1">
+  <h2><span class="part">שלב 1 · עושות יחד · תדלוק רכבים</span>שאלה בעותק, עמודות בטבלה</h2>
+  <p class="sub">ממשיכות מקובץ התדלוק של שבוע שעבר. אין קובץ? מסתכלות. החדר לא תלוי בתדלוק.</p>
+
+  <article class="topic">
+    <h3><span class="t">1.1</span>השאלה בעותק: רק רבעון 1</h3>
+    <p class="out">יש שאילתה שנייה, ״תדלוקים רבעון 1״, ובה רק ינואר עד מרץ. הטבלה הראשית לא השתנתה.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Home › Transform data</span>. למטה: <span class="en">entire data set</span>.</li>
+        <li>בצד שמאל של המסך (חלונית <span class="en">Queries</span>), <b>קליק ימני</b> על טבלת התדלוקים ← <span class="en">Reference</span>.
+          <figure><img src="img/l5-01-reference-menu.png" alt="קליק ימני על השאילתה טבלת_תדלוקים: תפריט עם Copy, Delete, Rename, Enable load, Duplicate, Reference ועוד" width="581" height="650" loading="lazy" style="width:300px">
+          <figcaption><span class="en">Reference</span> ולא <span class="en">Duplicate</span>. ההבדל — בסוף הנושא.</figcaption></figure></li>
+        <li>נוספה שאילתה. מימין, בשדה <span class="en">Name</span>: <code>תדלוקים רבעון 1</code>, ו־Enter.
+          <figure><img src="img/l5-02-reference-query.png" alt="שתי שאילתות בחלונית Queries: טבלת_תדלוקים ותדלוקים רבעון 1. בשורת הנוסחה: = טבלת_תדלוקים. ביומן של השאילתה החדשה רק Source" width="1920" height="350" loading="lazy">
+          <figcaption>בשורת הנוסחה <code>= טבלת_תדלוקים</code>, וביומן רק <span class="en">Source</span>: העותק מתחיל איפה שהטבלה נגמרת.</figcaption></figure></li>
+        <li>בעותק: החץ שבכותרת <b>תאריך</b> ← <span class="en">Date Filters › Quarter › Quarter 1</span>.
+          <figure><img src="img/l5-03-quarter-filter.png" alt="החץ בכותרת התאריך פתוח: Date Filters, ובתוכו Quarter, ובתוכו Quarter 1 עד Quarter 4" width="1064" height="885" loading="lazy" style="width:520px">
+          <figcaption>התפריט נסגר כשהעכבר זז? בוחרות בחצים במקלדת ו־Enter.</figcaption></figure></li>
+        <li>שוב החץ של <b>תאריך</b> ← <span class="en">Sort Descending</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בשורה העליונה <b>31/03/2026</b>. ביומן של העותק שלושה שלבים: <span class="en">Source</span>, <span class="en">Filtered Rows</span>, <span class="en">Sorted Rows</span>.
+        אחרי <span class="en">Close &amp; Apply</span>: בעותק <b>2,422</b> שורות, ובטבלה הראשית עדיין 2,901.
+        <figure><img src="img/l5-04-q1-sorted.png" alt="העותק אחרי סינון ומיון: התאריך העליון 31/03/2026, וביומן Source, Filtered Rows, Sorted Rows" width="1920" height="387" loading="lazy"></figure></details>
+    </details>
+    <div class="why"><b>המיון הוא גם בדיקה.</b> התאריך העליון אחרי מיון יורד הוא האחרון שעבר את הסינון. 31.3 — הסינון עבד.</div>
+    <div class="why"><b>למה <span class="en">Reference</span> ולא <span class="en">Duplicate</span>?</b> <span class="en">Duplicate</span> מעתיק את כל השלבים, ומשם כל שאילתה הולכת לבד.
+    <span class="en">Reference</span> נשאר מחובר: הוא מתחיל מהתוצאה של הטבלה הראשית. בנושא הבא נוסיף עמודות לטבלה הראשית, ונראה אותן מופיעות בעותק בלי לעשות כלום.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.2</span>עמודות תאריך</h3>
+    <p class="out">בטבלה הראשית שלוש עמודות חדשות: <b>שם חודש</b>, <b>מספר חודש</b>, <b>שנה</b>. והן מופיעות גם בעותק.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>חוזרות ל<b>טבלה הראשית</b>: קליק עליה בחלונית <span class="en">Queries</span>.</li>
+        <li>מסמנות את <b>תאריך</b>. <span class="path">Add Column › Date › Month › Name of Month</span>.
+          <figure><img src="img/l5-05-date-menu.png" alt="בלשונית Add Column הכפתור Date פתוח, ובו Month, ובתוכו Month, Start of Month, End of Month, Days in Month, Name of Month" width="995" height="567" loading="lazy" style="width:520px"></figure></li>
+        <li>מסמנות <b>שוב</b> את <b>תאריך</b>. <span class="path">Add Column › Date › Month › Month</span>.</li>
+        <li>מסמנות <b>שוב</b> את <b>תאריך</b>. <span class="path">Add Column › Date › Year › Year</span>.</li>
+        <li>שמות בעברית: מסמנות כותרת, <b>F2</b>, ומקלידות: <code>שם חודש</code>, <code>מספר חודש</code>, <code>שנה</code>.</li>
+        <li>קליק על העותק, ״תדלוקים רבעון 1״, וגוללות שמאלה עד הסוף.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בשם החודש כתוב <b>ינואר</b>, בעברית. בעותק מופיעות שלוש העמודות, אבל ביומן שלו עדיין רק שלושה שלבים.
+        <figure><img src="img/l5-07-columns-in-reference.png" alt="בעותק תדלוקים רבעון 1 מופיעות העמודות שם חודש (מרץ), מספר חודש (3) ושנה (2026), וביומן שלו רק Source, Filtered Rows, Sorted Rows" width="1920" height="359" loading="lazy">
+        <figcaption>העמודות נוספו בטבלה הראשית, והגיעו לעותק לבד. זה <span class="en">Reference</span>.</figcaption></figure></details>
+    </details>
+    <div class="trap"><b>הכפתור <span class="en">Date</span> אפור?</b> אחרי כל עמודה חדשה פאוור BI מסמן <b>אותה</b>, ולא את התאריך. עמודת מספר לא מקבלת פקודות של תאריך.
+    מסמנות שוב את <b>תאריך</b>, והכפתור חוזר.
+    <figure><img src="img/l5-06-date-greyed.png" alt="אחרי הוספת Month מסומנת העמודה Month, והכפתורים Date, Time ו־Duration בלשונית Add Column אפורים" width="1521" height="581" loading="lazy">
+    <figcaption>מסומנת <span class="en">Month</span>, ו־<span class="en">Date</span> אפור.</figcaption></figure></div>
+    <div class="why"><b>למה גם שם וגם מספר?</b> השם לגרף, שיהיה קריא. המספר לסדר: ״מרץ״ לא יודע שהוא בא אחרי ״פברואר״. אבל 3 יודע שהוא בא אחרי 2.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.3</span>עמודה מחושבת: <span class="en">Custom Column</span></h3>
+    <p class="out">עמודה חדשה, <b>סכום תדלוק</b>: ליטרים כפול מחיר לליטר, מסוג מספר.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>בטבלה הראשית: <span class="path">Add Column › Custom Column</span>. לא צריך לסמן עמודה קודם.</li>
+        <li>ב־<span class="en">New column name</span>: <code>סכום תדלוק</code>.</li>
+        <li>ב־<span class="en">Available columns</span>: <b>דאבל־קליק</b> על הכמות (ליטרים). השם נכנס לנוסחה בסוגריים מרובעים.</li>
+        <li>מקלידות <code> * </code>, ודאבל־קליק על המחיר לליטר.</li>
+        <li>למטה כתוב <span class="en">No syntax errors have been detected</span>? לוחצות <b>OK</b>.
+          <figure><img src="img/l5-08-custom-fuel.png" alt="חלון Custom Column: השם סכום תדלוק, והנוסחה כמות דלק שנרכשה (ליטרים) כפול מחיר לליטר, ולמטה No syntax errors have been detected" width="1051" height="663" loading="lazy" style="width:560px"></figure></li>
+        <li>בכותרת של העמודה החדשה, האייקון הוא <b>ABC/123</b>. קליק עליו ← <span class="en">Fixed decimal number</span>.
+          <figure><img src="img/l5-09-any-type.png" alt="העמודה סכום תדלוק עם האייקון ABC 123 ופרופיל ריק, ותפריט הסוגים פתוח עליה" width="774" height="456" loading="lazy" style="width:420px">
+          <figcaption>ABC/123 הוא ״כל דבר״ (<span class="en">Any</span>). שימו לב: הפרופיל ריק.</figcaption></figure></li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בשורה הראשונה <b>246.75</b>. האייקון <b>$</b>, והפרופיל מלא.</details>
+    </details>
+    <div class="trap"><b>ה־<code>=</code> כבר שם.</b> בתחילת שדה הנוסחה מופיע <code>=</code> קבוע. לא מקלידות עוד אחד, ולא מוחקות אותו.</div>
+    <div class="trap"><b>כל עמודה מ־<span class="en">Custom</span> או מ־<span class="en">Conditional</span> יוצאת <span class="en">Any</span>.</b> פאוור BI לא יודע מה יצא מהנוסחה.
+    הפרופיל ריק, ובדוח אי אפשר לסכם אותה. <b>אחרי כל עמודה כזו — סוג.</b></div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.4</span>עמודה לפי תנאי: <span class="en">Conditional Column</span></h3>
+    <p class="out">עמודה חדשה, <b>גודל תדלוק</b>, עם שלושה ערכים: תדלוק קטן, תדלוק רגיל, תדלוק מלא.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Add Column › Conditional Column</span>. השם: <code>גודל תדלוק</code>.</li>
+        <li>שורה ראשונה: <span class="en">Column Name</span> — הכמות (ליטרים). <span class="en">Operator</span> — <span class="en">is less than or equal to</span>. <span class="en">Value</span> — <code>30</code>. <span class="en">Output</span> — <code>תדלוק קטן</code>.</li>
+        <li><b>Add Clause</b>. שורה שנייה: אותה עמודה, אותו אופרטור, <code>45</code>, ו־<code>תדלוק רגיל</code>.</li>
+        <li>ב־<span class="en">Else</span>: <code>תדלוק מלא</code>. <b>OK</b>.
+          <figure><img src="img/l5-10-conditional-fuel.png" alt="חלון Add Conditional Column: אם הכמות קטנה או שווה ל־30 אז תדלוק קטן, אחרת אם קטנה או שווה ל־45 אז תדלוק רגיל, אחרת תדלוק מלא" width="1396" height="663" loading="lazy"></figure></li>
+        <li>האייקון שוב <b>ABC/123</b>. קליק עליו ← <span class="en">Text</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        האייקון <b>ABC</b>, ובפרופיל <b>3 distinct</b>.</details>
+    </details>
+    <div class="why"><b>הסדר קובע.</b> פאוור BI בודק את השורות מלמעלה למטה, ועוצר בראשונה שמתאימה. תדלוק של 20 ליטר עונה גם על ״עד 45״, אבל הוא נעצר ב״עד 30״.
+    לכן מתחילות מהסף הקטן.</div>
+    <div class="why"><b>אין ״בין״.</b> באופרטורים אין <span class="en">between</span>. ״בין 30 ל־45״ הוא בדיוק השורה השנייה, כי מה שמתחת ל־30 כבר נעצר בראשונה.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">1.5</span>טוענות, ורואות</h3>
+    <p class="out">גרף עמודות: סכום התדלוק לפי שם חודש.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Home › Close &amp; Apply</span>. בחלונית <span class="en">Data</span> יש עכשיו <b>שתי טבלאות</b>: הראשית והעותק.</li>
+        <li>גרף <span class="en">Clustered column chart</span>. מהטבלה הראשית: <b>שם חודש</b> ו<b>סכום תדלוק</b>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        חמש עמודות, מינואר עד מאי. אבל לא בסדר הזה:
+        <figure><img src="img/l5-11-chart-by-month.png" alt="גרף עמודות של סכום תדלוק לפי שם חודש: ינואר, מרץ, פברואר, אפריל, מאי, מהגבוה לנמוך" width="1279" height="802" loading="lazy">
+        <figcaption>ינואר, מרץ, פברואר, אפריל, מאי: מהגבוה לנמוך, לא לפי לוח השנה.</figcaption></figure></details>
+    </details>
+    <div class="why"><b>הגרף ממיין לפי הגובה.</b> ״מרץ״ לא יודע שהוא בא אחרי ״פברואר״. כאן נכנס <b>מספר חודש</b> מ־1.2: בשלב הדוחות נלמד להגיד לגרף ״סדר לפי המספר, הצג את השם״.</div>
+  </article>
+
+  <div class="next">✔ שאלה בעותק, ושלושה סוגי עמודות חדשות. עכשיו אתן, על ה־VR. <a href="#room">לשלב 2: כרטיס החדר ←</a></div>
+</section>
+
+<!-- ===================== שלב 2 ===================== -->
+<section id="room" class="stage s2">
+  <h2><span class="part">שלב 2 · בחדרים · בזוגות · כ־25 דקות · פעילות VR · י״א</span>כרטיס החדר: מה הכניס רבעון 2?</h2>
+  <p class="sub">המנהלת של רשת חדרי הבריחה שואלת: <b>ברבעון 2, איזה גודל קבוצה הכניס הכי הרבה כסף?</b> בקובץ אין עמודת הכנסה, ואין ״גודל קבוצה״. בונות אותן.</p>
+  <div class="roles">
+    <div><b>נהגת:</b> משתפת מסך ולוחצת. בת הזוג עושה את אותו הדבר במחשב שלה ומשווה.</div>
+    <div><b>נווטת:</b> מקריאה את הצעד ובודקת את ה־✔.</div>
+  </div>
+
+  <details><summary><b>אין לך את <code>VR.pbix</code> משיעור 5?</b> (כ־10 דקות)</summary>
+    <p>מורידות את <a class="file" href="files/vr-activities.xlsx" download="נתוני פעילות VR - לתרגול.xlsx">נתוני פעילות VR - לתרגול.xlsx</a>,
+    ועושות את <a href="lesson5.html#room" target="_blank" rel="noopener">כרטיס החדר של שיעור 5</a>, רק נושאים <b>2.1</b> ו־<b>2.3</b>: חיבור, ותיקון ארבע הבעיות.
+    את 2.2 ואת 2.4 אפשר לדלג. שומרות בשם <code>VR</code>, וחוזרות לכאן.</p>
+  </details>
+
+  <article class="topic">
+    <h3><span class="t">2.1</span>השאלה בעותק</h3>
+    <p class="out">שאילתה בשם <b>פעילות שבוצעה ברבעון 2</b>, ובה רק אפריל עד יוני, ורק מה שבוצע.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>פותחות את <code>VR.pbix</code>. <span class="path">Home › Transform data</span>. רואות פס צהוב ״<span class="en">This preview may be</span>…״? לוחצות <b>Refresh</b>.</li>
+        <li>קליק ימני על <code>Activities_Raw</code> ← <span class="en">Reference</span>. השם: <code>פעילות שבוצעה ברבעון 2</code>.</li>
+        <li>בעותק: החץ של <b>תאריך פעילות</b> ← <span class="en">Date Filters › Quarter › Quarter 2</span>.</li>
+        <li>גוללות ל<b>סטטוס פעילות</b>. <b>קליק ימני על תא</b> שכתוב בו <code>בוצע</code> ← <span class="en">Text Filters › Equals</span>.
+          <figure><img src="img/l5-12-status-equals.png" alt="קליק ימני על תא בוצע: תפריט עם Copy, Text Filters, Replace Values, ובתוך Text Filters האפשרויות Equals, Does Not Equal, Begins With ועוד" width="691" height="567" loading="lazy" style="width:420px">
+          <figcaption>קליק ימני על התא — הערך כבר בפנים. אפשר גם בחץ שבכותרת: מורידות את הווי מ״בוטל״.</figcaption></figure></li>
+        <li>החץ של <b>תאריך פעילות</b> ← <span class="en">Sort Descending</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בשורה העליונה <b>11/06/2026</b>. ביומן של העותק: <span class="en">Source</span>, ‏<span class="en">Filtered Rows</span>, ‏<span class="en">Filtered Rows1</span>, ‏<span class="en">Sorted Rows</span>.
+        <figure><img src="img/l5-13-vr-q2-reference.png" alt="העותק פעילות שבוצעה ברבעון 2: התאריך העליון 11/06/2026, וביומן Source, Filtered Rows, Filtered Rows1, Sorted Rows" width="1920" height="387" loading="lazy"></figure>
+        <b>לא 30.6?</b> נכון. הנתונים נגמרים ב־11 ביוני.</details>
+    </details>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.2</span>עמודות תאריך — בטבלה הראשית</h3>
+    <p class="out">ב־<code>Activities_Raw</code> שלוש עמודות חדשות: שם חודש, מספר חודש, שנה.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>קליק על <code>Activities_Raw</code>. <b>לא על העותק.</b></li>
+        <li>מסמנות את <b>תאריך פעילות</b>. <span class="path">Add Column › Date › Month › Name of Month</span>.</li>
+        <li>מסמנות שוב את <b>תאריך פעילות</b>. <span class="path">Add Column › Date › Month › Month</span>.</li>
+        <li>מסמנות שוב את <b>תאריך פעילות</b>. <span class="path">Add Column › Date › Year › Year</span>.</li>
+        <li>שמות: <code>שם חודש</code>, <code>מספר חודש</code>, <code>שנה</code> (מסמנות כותרת ← F2).</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בשורה הראשונה: מאי, 5, 2026. ובעותק? קליק עליו, וגוללות עד הסוף: שלוש העמודות שם.</details>
+    </details>
+  </article>
+
+  <div class="swap">🔄 מתחלפות: הנהגת מפסיקה לשתף, והשנייה משתפת את המסך שלה.</div>
+
+  <article class="topic">
+    <h3><span class="t">2.3</span>מחיר אחרי הנחה</h3>
+    <p class="out">עמודה בשם <b>מחיר למשתתף לאחר הנחה</b>, מעוגלת לשתי ספרות, מסוג <span class="en">Fixed decimal</span>.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li>ב־<code>Activities_Raw</code>: <span class="path">Add Column › Custom Column</span>. השם: <code>מחיר למשתתף לאחר הנחה</code>.</li>
+        <li>הנוסחה, בדאבל־קליק על השדות: <code>[מחיר למשתתף] * (1 - [אחוז הנחה])</code>. <b>OK</b>.
+          <figure><img src="img/l5-14-custom-discount.png" alt="חלון Custom Column: השם מחיר למשתתף לאחר הנחה, והנוסחה מחיר למשתתף כפול סוגריים 1 פחות אחוז הנחה" width="1051" height="663" loading="lazy" style="width:560px"></figure></li>
+        <li>העמודה מסומנת. <span class="path">Transform › Rounding › Round…</span>, ובחלון: <code>2</code>.</li>
+        <li><span class="path">Transform › Data Type</span> ← <span class="en">Fixed decimal number</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בשורה הראשונה <b>104.10</b> (מחיר 118.3, הנחה 12%). <span class="en">Min</span> ‏55, ‏<span class="en">Max</span> ‏188.86. האייקון <b>$</b>.</details>
+    </details>
+    <div class="why"><b>למה <code>1 -</code>?</b> אחוז ההנחה כתוב כשבר: 0.12 הוא 12%. משלמים את מה שנשאר: ‎1 − 0.12 = 0.88 מהמחיר.</div>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.4</span>סך הכנסה</h3>
+    <p class="out">עמודה בשם <b>סך הכנסה</b>: משתתפים כפול המחיר אחרי הנחה.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Add Column › Custom Column</span>. השם: <code>סך הכנסה</code>.</li>
+        <li>הנוסחה: <code>[מספר משתתפים] * [מחיר למשתתף לאחר הנחה]</code>. העמודה מ־2.3 נמצאת בסוף הרשימה. <b>OK</b>.</li>
+        <li>סוג: <span class="en">Fixed decimal number</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בשורה הראשונה <b>1,873.80</b> (18 משתתפים × 104.10).</details>
+    </details>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.5</span>גודל קבוצה</h3>
+    <p class="out">עמודה בשם <b>גודל קבוצה</b>, עם שלושה ערכים.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Add Column › Conditional Column</span>. השם: <code>גודל קבוצה</code>.</li>
+        <li><b>מספר משתתפים</b> ‏<span class="en">is less than or equal to</span> ‏<code>6</code> ← <code>קבוצה קטנה</code>.</li>
+        <li><b>Add Clause</b>: <b>מספר משתתפים</b> ‏<span class="en">is less than or equal to</span> ‏<code>20</code> ← <code>קבוצה בינונית</code>.</li>
+        <li><span class="en">Else</span>: <code>קבוצה גדולה</code>. <b>OK</b>.
+          <figure><img src="img/l5-15-conditional-group.png" alt="חלון Add Conditional Column: מספר משתתפים קטן או שווה ל־6 אז קבוצה קטנה, קטן או שווה ל־20 אז קבוצה בינונית, אחרת קבוצה גדולה" width="1396" height="663" loading="lazy"></figure></li>
+        <li>סוג: <span class="en">Text</span>.</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        בפרופיל <b>3 distinct</b>. ובעותק? כל העמודות החדשות שם.
+        <figure><img src="img/l5-16-vr-columns-in-reference.png" alt="העותק פעילות שבוצעה ברבעון 2 עם העמודות שנה, מחיר למשתתף לאחר הנחה, סך הכנסה וגודל קבוצה, וביומן שלו עדיין רק ארבעה שלבים" width="1920" height="387" loading="lazy"></figure></details>
+    </details>
+  </article>
+
+  <article class="topic">
+    <h3><span class="t">2.6</span>טוענות, ועונות למנהלת</h3>
+    <p class="out">גרף: סך הכנסה לפי גודל קבוצה, ברבעון 2 בלבד. ושתי שורות חדשות בטבלת התיעוד.</p>
+    <details class="how" open><summary>איך עושים</summary>
+      <ol class="do">
+        <li><span class="path">Home › Close &amp; Apply</span>.</li>
+        <li>גרף <span class="en">Clustered column chart</span>. <b>מהעותק</b>, ״פעילות שבוצעה ברבעון 2״: <b>גודל קבוצה</b> ו<b>סך הכנסה</b>.</li>
+        <li>ב<a href="tiyuv.html">טבלת התיעוד</a>, שורה לכל עמודה שבניתן. ב״הבעיה״ כותבות ״חסרה עמודה ל…״, וב״למה״: מה השאלה צריכה.</li>
+        <li>שומרות (<code>Ctrl+S</code>).</li>
+      </ol>
+      <details class="ok"><summary>מה אמור להופיע?</summary>
+        <ul>
+          <li><b>קבוצה גדולה:</b> ‎₪ 782,398.22</li>
+          <li><b>קבוצה בינונית:</b> ‎₪ 602,293.79</li>
+          <li><b>קבוצה קטנה:</b> ‎₪ 155,847.89</li>
+        </ul>
+        <figure><img src="img/l5-17-chart-group-size.png" alt="גרף עמודות של סך הכנסה לפי גודל קבוצה ברבעון 2: קבוצה גדולה כ־0.78 מיליון, בינונית כ־0.6 מיליון, קטנה כ־0.16 מיליון" width="1279" height="802" loading="lazy"></figure>
+        <b>יצא 2.75 מיליון בסך הכול?</b> הגרף בנוי מהטבלה הראשית. מחליפות לשדות מהעותק.</details>
+    </details>
+    <div class="why"><b>התשובה למנהלת היא החלטה, לא מספר.</b> ״קבוצות גדולות מכניסות פי חמישה מקטנות״ מוביל לשאלה הבאה: האם לשווק לחברות ולבתי ספר? בעבודה של י״ב זו בדיוק המטרה האנליטית.</div>
+  </article>
+
+  <article class="topic">
+    <h3>המשך המטלה של טל <span class="opt">אם נשאר זמן</span></h3>
+    <p class="out">עמודה בשם <b>קבוצה ופעילות</b>: קוד הקבוצה ושם הפעילות, עם מקף ביניהם.</p>
+    <details class="how"><summary>איך עושים</summary>
+      <ol class="do">
+        <li>ב־<code>Activities_Raw</code> מסמנות את <b>קוד קבוצה</b>, ואז, עם <b>Ctrl</b>, את <b>שם פעילות</b> (העמודה שנוצרה מהפיצול בשיעור 5).</li>
+        <li><span class="path">Add Column › Merge Columns</span>. <span class="en">Separator</span>: <span class="en">Custom</span>, ‏<code>-</code>. השם: <code>קבוצה ופעילות</code>.</li>
+      </ol>
+    </details>
+    <div class="trap"><b>יצא הפוך?</b> הסדר נקבע לפי סדר הסימון. ובעברית ואנגלית באותה עמודה, התצוגה עלולה להתהפך גם כשהסדר נכון.</div>
+  </article>
+
+  <div class="next">✔ שאלה בעותק, ארבע עמודות חדשות, ותשובה למנהלת. חוזרות למיט.</div>
+</section>
+
+<!-- ===================== 30–55: על העבודה שלכן ===================== -->
+<section id="own" class="stage s3 own">
+  <h2><span class="part">שלב 3 · 🛠 על העבודה שלכן · 25 דקות</span>בונות את מה שהשאלה צריכה</h2>
+  <p class="out">בתיעוד שלכן יש שורה לכל עמודה חדשה שבניתן: מה השאלה צריכה, ומה בנית.</p>
+  <p class="sub">כל אחת על הקובץ שלה. המורה עוברת ביניכן. נתקעתן? כותבות בצ׳אט, או מסתכלות ב<a href="#stuck">נתקעתי</a>.</p>
+
+  <div class="tracks">
+    <article class="topic" id="c">
+      <h3>המסד שלכן <span class="who">י״ב</span></h3>
+      <p class="out">במסד שלכן שתי עמודות חדשות שמשרתות את שאלת המחקר, ושתיהן מתועדות.</p>
+      <details class="how" open><summary>איך עושים</summary>
+        <ol class="do">
+          <li>קוראות שוב את שאלת המחקר. שואלות: איזו עמודה הייתי רוצה בגרף, ואין לי?</li>
+          <li>בוחרות שתיים. רעיונות:
+            <ul>
+              <li><b>תאריך:</b> שנה, חודש, יום בשבוע (<span class="path">Add Column › Date</span>).</li>
+              <li><b>חישוב:</b> יחס, אחוז, סכום של שתי עמודות (<span class="en">Custom Column</span>).</li>
+              <li><b>קבוצות:</b> קבוצת גיל, רמת הכנסה, ״מעל או מתחת לממוצע״ (<span class="en">Conditional Column</span>).</li>
+            </ul></li>
+          <li>בונות אותן <b>בטבלה הראשית</b>, ובודקות את האייקון של כל אחת.</li>
+          <li>השאלה שלכן מתמקדת בחלק מהנתונים (שנה, מדינה, קבוצה)? עותק עם <span class="en">Reference</span>, והסינון שם.</li>
+          <li>שורה בטבלת התיעוד לכל עמודה.</li>
+        </ol>
+      </details>
+      <div class="log">
+        <ul>
+          <li>שורה לכל עמודה חדשה, בטבלת התיעוד.</li>
+          <li>ב״למה״: מה השאלה צריכה. זו הכנה, ולא תיקון.</li>
+          <li>אם סיננתן בעותק: שם העותק, והסינון.</li>
+        </ul>
+      </div>
+      <div class="why"><b>המסד שלכן מגיע בקובץ לכל שנה?</b> קודם מאחדים את הקבצים לטבלה אחת (<span class="en">Append</span>), ורק אחר כך מטייבים, כדי שכל שלב יחול על כל השנים. זה לא בשיעור: <a href="append.html">הנספח ״איחוד שנים״</a>, ואיתי בזמן הפתוח או בפגישה האישית.</div>
+      <p>אין לכן עדיין מסד שנפתח ומטויב? עושות את <a href="#room">כרטיס החדר</a> עם י״א, ומיישמות על המסד בהמשך.</p>
+    </article>
+
+    <article class="topic">
+      <h3>כרטיס החדר <span class="who">י״א</span></h3>
+      <p class="out">פעילות VR: עותק, עמודות תאריך, שתי עמודות מחושבות ועמודת קבוצה, וגרף מהעותק.</p>
+      <ol class="do">
+        <li>עוברות ל<a href="#room">כרטיס החדר</a> (שלב 2), בזוגות: נהגת ונווטת.</li>
+        <li>מתחלפות בתפקידים באמצע.</li>
+        <li>בסוף, שורה בטבלת התיעוד לכל עמודה שבניתן.</li>
+      </ol>
+      <div class="log">
+        <ul>
+          <li>שורה לכל עמודה חדשה: איך נקראת, מה חישבה.</li>
+          <li>ב״למה״: מה המנהלת של רשת חדרי הבריחה צריכה לדעת.</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+
+  <p class="chat">שורת ראיה אחת: עמודה אחת שבניתן היום, ומה השאלה שהיא עונה עליה.</p>
+  <div class="why"><b>י״ב: לקלאסרום.</b> טבלת התיעוד עם שתי השורות החדשות, וצילום של גרף לפי אחת העמודות. לא סיימתן? ממשיכות עד שיעור 7 (16.11), הסדנה שבה סוגרות את הטיוב.</div>
+</section>
+
+<section id="stuck">
+  <h2>נתקעתי</h2>
+  <p class="sub">כל אלה קרו למורות בקורס המקורי, או לנו כשהכנו את השיעור.</p>
+  <details><summary>הכפתור Date בלשונית Add Column אפור</summary>
+    <p>מסומנת העמודה שנוצרה עכשיו, ולא התאריך. פאוור BI מסמן כל עמודה חדשה. קליק על כותרת התאריך, והכפתור חוזר.</p></details>
+  <details><summary>בעמודה החדשה הפרופיל ריק, והאייקון ABC/123</summary>
+    <p>זה הסוג <span class="en">Any</span>, שיוצא מכל <span class="en">Custom</span> ו־<span class="en">Conditional</span>. קליק על האייקון ← הסוג הנכון: מספר (<span class="en">Fixed decimal</span>) או טקסט (<span class="en">Text</span>).</p></details>
+  <details><summary>הנוסחה ב־Custom Column מתחילה ב־״= =״</summary>
+    <p>הקלדתן <code>=</code>, אבל הוא כבר קיים בשדה. מוחקות את זה שהקלדתן.</p></details>
+  <details><summary>הקלדתי בשדה הנוסחה ולא רואה כלום</summary>
+    <p>לפעמים השדה לא מציג טקסט בעברית בזמן ההקלדה. מסתכלות על השורה למטה: <span class="en">No syntax errors</span> אומר שהנוסחה שם. אחרי OK רואים אותה בשורת הנוסחה למעלה.</p></details>
+  <details><summary>התפריט של Date Filters נסגר לפני שהגעתי ל־Quarter</summary>
+    <p>העכבר יצא מהתפריט בדרך. פותחות שוב את החץ, ועוברות בחצים במקלדת: למטה עד <span class="en">Date Filters</span>, ימינה, למטה עד <span class="en">Quarter</span>, ימינה, ו־Enter.</p></details>
+  <details><summary>ברשימת הסינון יש רק חלק מהתאריכים (List may be incomplete)</summary>
+    <p>הרשימה מציגה רק חלק, אבל הסינון רץ על כל הנתונים. גם <span class="en">Max</span> שמופיע ״מאי״ אחרי סינון לרבעון 1 הוא שאריות של התצוגה. סומכות על ה־<span class="en">Sort Descending</span>.</p></details>
+  <details><summary>הוספתי את העמודות בעותק ולא בטבלה הראשית</summary>
+    <p>הן יעבדו, אבל רק בעותק. אם עוד לא התקדמתן הרבה: מוחקות את השלבים ביומן של העותק (ה־X), ובונות שוב בטבלה הראשית.</p></details>
+  <details><summary>בדוח יש שתי טבלאות, ולא ברור מאיזו לבנות</summary>
+    <p>הראשית היא כל הנתונים. העותק הוא השאלה. גרף שעונה על השאלה — מהעותק.</p></details>
+  <details><summary>יש לי שלב ״Reordered Columns״ שלא עשיתי</summary>
+    <p>קליק על כותרת נרשם כגרירה. מוחקות את השלב ב־X. אם הוא באמצע היומן, פאוור BI ישאל אם למחוק, ומאשרות.</p></details>
+  <details><summary>פס צהוב: ״This preview may be up to … days old״</summary>
+    <p>התצוגה שמורה מהפעם הקודמת. לוחצות <b>Refresh</b> בפס.</p></details>
+  <details><summary>בגרף החודשים לא בסדר</summary>
+    <p>הגרף ממיין לפי הגובה. זה בסדר להיום. בשלב הדוחות נסדר לפי מספר חודש.</p></details>
+</section>
+
+<section id="done">
+  <h2>איך אדע שהצלחתי</h2>
+  <div class="box">
+    <ul class="check">
+      <li><label><input type="checkbox"> <span>אני יודעת להסביר מה ההבדל בין תיקון, הכנה ושאלה, ואיפה עושים כל אחד</span></label></li>
+      <li><label><input type="checkbox"> <span>יצרתי עותק עם Reference, וסיננתי בו לרבעון 2 ול״בוצע״. התאריך העליון 11/06/2026</span></label></li>
+      <li><label><input type="checkbox"> <span>הוספתי עמודות תאריך בטבלה הראשית, וראיתי אותן מופיעות בעותק</span></label></li>
+      <li><label><input type="checkbox"> <span>בניתי שתי עמודות Custom, ותיקנתי להן את הסוג</span></label></li>
+      <li><label><input type="checkbox"> <span>בניתי עמודת Conditional עם שני ספים</span></label></li>
+      <li><label><input type="checkbox"> <span>בגרף מהעותק: קבוצה גדולה ‎₪ 782,398.22</span></label></li>
+      <li><label><input type="checkbox"> <span>שמרתי <code>VR.pbix</code></span></label></li>
+      <li><label><input type="checkbox"> <span><b>י״ב:</b> הגשתי שתי עמודות שהשאלה שלי צריכה, בטבלת התיעוד, וצילום גרף</span></label></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <!-- שיעור 7 (16.11, סדנה) הוא שורה במפת הדרך בלבד, בלי דף -->
+  <p><a href="index.html">← חזרה למפת הדרך</a> · <a href="lesson5.html">← שיעור 5</a></p>
+  <p>מבוסס על קורס Power BI של טל מיכולביץ, בשימוש באישורו.</p>
+</footer>
+
+</div>
+</body>
+</html>
