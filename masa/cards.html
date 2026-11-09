@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>כרטיסי מיומנות · Power BI</title>
+<meta name="description" content="8 כרטיסי מיומנות קצרים ל-Power BI Desktop: ייבוא, Power Query, מיון, קשרים, ויזואלים, סלייסרים ועיצוב מותנה. עם סרטונים ותרגול.">
+<meta name="theme-color" content="#14112a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20100%20100'%3E%3Ctext%20y%3D'.9em'%20font-size%3D'90'%3E%F0%9F%8E%AC%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800;900&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  /* כרטיסי מיומנות: באותו סגנון של מפת המסע, עמוד עצמאי לגמרי */
+  :root{
+    --bg:#14112a; --bg-2:#1b1738; --surface:#221d45; --surface-2:#2c2658; --border:#3a3370;
+    --ink:#f4f2ff; --ink-soft:#bdb7e3; --ink-faint:#8a84b8;
+    --pink:#ff5fa2; --cyan:#3fd8ff; --yellow:#ffd23f; --green:#4ee39a; --purple:#a78bfa; --orange:#ff9f43;
+    --radius:18px;
+    --font-display:'Rubik', system-ui, sans-serif; --font-body:'Heebo', system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    background-image:radial-gradient(1200px 500px at 85% -10%, rgba(255,95,162,.18), transparent 60%),
+                     radial-gradient(900px 500px at 0% 10%, rgba(63,216,255,.14), transparent 60%);
+    background-attachment:fixed;
+    color:var(--ink); font-family:var(--font-body); line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  button{font-family:inherit; color:inherit;}
+  a{color:var(--cyan);}
+  .wrap{max-width:980px; margin:0 auto; padding:0 16px 80px;}
+  .en{direction:ltr; unicode-bidi:isolate; white-space:nowrap;}
+
+  /* סרגל עליון */
+  .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:900; font-size:22px; letter-spacing:-.3px; text-decoration:none; color:var(--ink);}
+  .logo .mark{width:38px; height:38px; border-radius:12px; display:grid; place-items:center; font-size:22px;
+    background:linear-gradient(135deg, var(--yellow), var(--orange) 50%, var(--pink)); box-shadow:0 6px 20px -6px rgba(255,159,67,.6);}
+  .logo small{display:block; font-family:var(--font-body); font-weight:500; font-size:11.5px; color:var(--ink-faint); letter-spacing:0;}
+  .home-link{font-size:13.5px; font-weight:700; color:var(--ink-soft); text-decoration:none; background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:7px 14px;}
+
+  /* כרטיס פתיחה */
+  .hero{border-radius:24px; padding:22px; background:linear-gradient(145deg, #2a2160, #1d1842 60%); border:1px solid var(--border); position:relative; overflow:hidden;}
+  .hero:after{content:""; position:absolute; inset:auto -60px -80px auto; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle, rgba(255,210,63,.18), transparent 70%); pointer-events:none;}
+  .hero h1{margin:0 0 4px; font-family:var(--font-display); font-weight:900; font-size:clamp(24px, 5.4vw, 34px); line-height:1.15;}
+  .hero .lead{margin:0 0 14px; color:var(--ink-soft); font-size:15px; max-width:640px;}
+  .team-row{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .field{display:flex; flex-direction:column; gap:5px;}
+  .field label{font-weight:700; font-size:14px;}
+  .field label small{font-weight:500; color:var(--ink-faint);}
+  .field input[type=text], .field textarea{width:100%; background:rgba(0,0,0,.25); border:1px solid var(--border); border-radius:12px; padding:11px 12px; color:var(--ink); font:inherit; font-size:16px;}
+  .field textarea{min-height:76px; resize:vertical;}
+  .field input:focus, .field textarea:focus{outline:2px solid var(--purple); border-color:transparent;}
+  .xp{height:14px; border-radius:999px; background:rgba(0,0,0,.35); overflow:hidden; border:1px solid rgba(255,255,255,.08); margin-top:16px;}
+  .xp > i{display:block; height:100%; width:0; border-radius:999px; background:linear-gradient(90deg, var(--yellow), var(--orange), var(--pink)); transition:width .8s cubic-bezier(.2,.8,.2,1);}
+  .xp-row{display:flex; justify-content:space-between; gap:8px; font-size:13px; color:var(--ink-soft); margin-top:6px; font-weight:600; flex-wrap:wrap;}
+  .xp-row b{color:var(--ink);}
+  .hero-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
+
+  /* כפתורים */
+  .btn{border:none; border-radius:999px; padding:10px 16px; font-weight:800; font-size:14.5px; cursor:pointer; font-family:var(--font-display); display:inline-flex; align-items:center; gap:6px; justify-content:center; text-decoration:none;}
+  .btn.main{background:linear-gradient(135deg, var(--pink), var(--orange)); color:#2a0e1b; box-shadow:0 8px 20px -8px rgba(255,95,162,.7);}
+  .btn.ghost{background:var(--surface-2); color:var(--ink); border:1px solid var(--border);}
+  .btn.small{padding:7px 12px; font-size:13px;}
+  .btn:focus-visible, .tab:focus-visible, summary:focus-visible, .home-link:focus-visible{outline:3px solid var(--yellow); outline-offset:2px;}
+
+  /* ניווט */
+  .tabs{position:sticky; top:0; z-index:20; display:flex; gap:8px; overflow-x:auto; padding:12px 0 10px; margin-top:8px;
+    background:linear-gradient(var(--bg) 75%, transparent); scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{flex:0 0 auto; border:1px solid var(--border); background:var(--surface); border-radius:999px; padding:8px 15px; font-weight:800; font-size:14.5px; font-family:var(--font-display); white-space:nowrap; text-decoration:none; color:var(--ink);}
+  .tab:hover{border-color:var(--purple);}
+
+  section{scroll-margin-top:64px;}
+  .sec-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:26px 0 6px; flex-wrap:wrap;}
+  .sec-head h2{margin:0; font-family:var(--font-display); font-weight:900; font-size:22px;}
+  .sec-head span{color:var(--ink-faint); font-size:13.5px;}
+  .intro{color:var(--ink-soft); font-size:14.5px; margin:0 0 12px;}
+
+  /* שלבים */
+  .stage{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:10px; overflow:hidden;}
+  .stage.done{border-color:rgba(78,227,154,.55); background:linear-gradient(160deg, rgba(78,227,154,.12), var(--surface) 55%);}
+  .stage.current{border-color:var(--cyan); box-shadow:0 0 0 1px var(--cyan);}
+  .stage > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:14px 16px;}
+  .stage > summary::-webkit-details-marker{display:none;}
+  .stage .se{width:44px; height:44px; flex:0 0 auto; border-radius:13px; display:grid; place-items:center; font-size:23px; background:var(--surface-2);}
+  .stage.done .se{background:rgba(78,227,154,.2);}
+  .stage .st{flex:1; min-width:0;}
+  .stage .st small{display:block; font-size:12px; font-weight:800; color:var(--ink-faint); letter-spacing:.3px;}
+  .stage.current .st small{color:var(--cyan);}
+  .stage .st b{font-family:var(--font-display); font-size:17.5px; font-weight:800; display:block; line-height:1.25;}
+  .pill{font-size:12.5px; font-weight:800; color:var(--ink-soft); background:var(--bg-2); border:1px solid var(--border); padding:3px 10px; border-radius:999px; white-space:nowrap;}
+  .stage.done .pill{color:var(--green); border-color:rgba(78,227,154,.5);}
+  .chev{font-size:14px; color:var(--ink-faint); transition:transform .2s;}
+  .stage[open] > summary .chev{transform:rotate(180deg);}
+  .stage-body{padding:0 16px 16px;}
+  .why{margin:0 0 12px; color:var(--ink-soft); font-size:14.5px;}
+
+  .think{background:rgba(167,139,250,.08); border:1px dashed rgba(167,139,250,.45); border-radius:14px; padding:10px 14px; margin:0 0 12px;}
+  .think .lbl{font-size:12px; font-weight:800; color:var(--purple); letter-spacing:.3px;}
+  .think ul{margin:4px 0 0; padding-inline-start:20px; font-size:14.5px;}
+  .think li{margin:3px 0;}
+
+  .checks{display:flex; flex-direction:column; gap:6px; margin:0;}
+  .check{display:flex; align-items:flex-start; gap:10px; padding:9px 12px; background:var(--bg-2); border:1px solid var(--border); border-radius:12px; cursor:pointer; font-size:14.5px; transition:border-color .12s, background .12s;}
+  .check:hover{border-color:var(--purple);}
+  .check input{appearance:none; -webkit-appearance:none; flex:0 0 auto; width:22px; height:22px; margin:1px 0 0; border-radius:7px; border:2px solid var(--ink-faint); background:transparent; display:grid; place-items:center; cursor:pointer;}
+  .check input:checked{background:var(--green); border-color:var(--green);}
+  .check input:checked:after{content:"✓"; color:#0c2a1c; font-weight:900; font-size:14px; line-height:1;}
+  .check input:focus-visible{outline:3px solid var(--yellow); outline-offset:2px;}
+  .check.on{border-color:rgba(78,227,154,.45); background:rgba(78,227,154,.07);}
+  .check.on span{color:var(--ink-soft);}
+  .check small{display:block; color:var(--ink-faint); font-size:12.5px; margin-top:1px;}
+  .check.gate{border:1px solid rgba(255,210,63,.5); background:rgba(255,210,63,.07);}
+  .check.gate span b{color:var(--yellow);}
+
+  .hint{margin-top:12px; font-size:14px; background:rgba(63,216,255,.07); border-inline-start:3px solid var(--cyan); padding:8px 12px; border-radius:8px;}
+  .hint b{color:var(--cyan);}
+  .bridge-note{margin:0 0 12px; font-size:14px; background:rgba(255,210,63,.07); border-inline-start:3px solid var(--yellow); padding:8px 12px; border-radius:8px;}
+  .bridge-note b{color:var(--yellow);}
+  .peek{margin-top:10px; font-size:14px;}
+  .peek summary{cursor:pointer; font-weight:700; color:var(--cyan);}
+  .peek ul{margin:6px 0 0; padding-inline-start:20px;}
+
+  /* דשבורדים */
+  .dash-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:10px; margin-top:12px;}
+  .dash{background:var(--bg-2); border:1px solid var(--border); border-radius:16px; padding:12px;}
+  .dash.done{border-color:rgba(78,227,154,.55);}
+  .dash-h{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px;}
+  .dash-h b{font-family:var(--font-display); font-size:16px;}
+  .dash .field{margin-bottom:8px;}
+  .dash .field input{font-size:15px; padding:9px 11px;}
+  .dash .check{background:var(--surface); padding:7px 10px; font-size:13.5px;}
+
+  /* גשר מאקסל */
+  .bridge{display:flex; flex-direction:column; gap:8px;}
+  .br{display:grid; grid-template-columns:1fr auto 1.15fr; gap:10px; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:10px 14px;}
+  .br .x{font-weight:700;}
+  .br .x small, .br .p small{display:block; font-weight:500; color:var(--ink-faint); font-size:12.5px;}
+  .br .arr{color:var(--yellow); font-weight:900; font-size:18px;}
+  .br .p{font-weight:700; color:var(--cyan);}
+  .br-head{display:grid; grid-template-columns:1fr auto 1.15fr; gap:10px; padding:0 14px; font-size:12.5px; font-weight:800; color:var(--ink-faint);}
+  .br-head span:nth-child(2){visibility:hidden;}
+  code{font-family:ui-monospace, Consolas, monospace; font-size:12.5px; background:rgba(0,0,0,.35); padding:1px 6px; border-radius:6px; direction:ltr; unicode-bidi:isolate; display:inline-block; color:var(--ink);}
+
+  /* מוקשים */
+  .mines{display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:10px;}
+  .mine{background:repeating-linear-gradient(135deg, var(--surface) 0 14px, #251f4d 14px 28px); border:1px solid var(--border); border-radius:16px;}
+  .mine summary{list-style:none; cursor:pointer; padding:12px 14px; display:flex; gap:10px; align-items:flex-start;}
+  .mine summary::-webkit-details-marker{display:none;}
+  .mine .me{font-size:22px; line-height:1.2;}
+  .mine summary b{font-family:var(--font-display); font-weight:800; font-size:15.5px; display:block;}
+  .mine summary small{color:var(--ink-soft); font-size:13px; display:block;}
+  .mine .reveal{margin-inline-start:auto; font-size:12px; font-weight:800; color:var(--yellow); white-space:nowrap; padding-top:3px;}
+  .mine[open] .reveal{color:var(--ink-faint);}
+  .mine .mh{padding:0 14px 14px; font-size:14px;}
+  .mine .mh p{margin:0; background:rgba(0,0,0,.3); border-radius:12px; padding:10px 12px; border:1px dashed rgba(255,255,255,.18);}
+
+  /* 3 לפני המורה */
+  .steps{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;}
+  .stp{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:14px; position:relative;}
+  .stp .n{position:absolute; top:10px; inset-inline-end:12px; font-family:var(--font-display); font-weight:900; font-size:13px; color:var(--ink-faint);}
+  .stp .e{font-size:28px; line-height:1;}
+  .stp b{display:block; font-family:var(--font-display); font-weight:800; font-size:16px; margin:6px 0 2px;}
+  .stp p{margin:0; font-size:13.5px; color:var(--ink-soft);}
+  .stp.teacher{border-color:rgba(255,210,63,.5);}
+  .prompt-box{margin-top:12px; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:14px;}
+  .prompt-box .lbl{font-size:12px; font-weight:800; color:var(--purple); letter-spacing:.3px;}
+  .spell{background:rgba(0,0,0,.3); border-radius:12px; padding:10px 12px; font-size:14.5px; border:1px dashed rgba(255,255,255,.18); margin:6px 0 10px; overflow-wrap:anywhere;}
+
+  /* סטטוס */
+  .status-card{background:var(--surface); border:1px solid var(--border); border-inline-start:5px solid var(--pink); border-radius:var(--radius); padding:16px;}
+  .status-card .field{margin-bottom:10px;}
+  .preview{white-space:pre-wrap; background:rgba(0,0,0,.3); border-radius:12px; padding:12px; font-size:14px; border:1px dashed rgba(255,255,255,.18); margin:10px 0 0; min-height:60px;}
+  .row{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
+
+  .toast{position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(140px); z-index:60; background:var(--ink); color:var(--bg);
+    padding:12px 18px; border-radius:16px; font-weight:800; font-family:var(--font-display); font-size:15.5px; box-shadow:0 12px 30px -10px rgba(0,0,0,.6);
+    transition:transform .35s cubic-bezier(.2,.9,.3,1.3), opacity .2s, visibility .35s; max-width:calc(100vw - 32px); text-align:center; opacity:0; visibility:hidden;}
+  .toast.on{transform:translateX(-50%) translateY(0); opacity:1; visibility:visible;}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+  .foot{margin-top:40px; text-align:center; color:var(--ink-faint); font-size:12.5px;}
+  .foot button{background:none; border:none; color:var(--ink-soft); text-decoration:underline; cursor:pointer; font-size:12.5px; padding:4px;}
+
+  @media (max-width:720px){
+    .steps{grid-template-columns:repeat(2, 1fr);}
+  }
+  @media (max-width:560px){
+    .hero{padding:18px;}
+    .team-row{grid-template-columns:1fr;}
+    .stage > summary{padding:12px; gap:10px;}
+    .stage .se{width:38px; height:38px; font-size:20px;}
+    .stage .st b{font-size:16px;}
+    .stage-body{padding:0 12px 14px;}
+    .br, .br-head{grid-template-columns:1fr; gap:2px;}
+    .br-head{display:none;}
+    .br .arr{transform:rotate(-90deg); width:max-content; font-size:15px; line-height:1;}
+    .mines, .dash-grid{grid-template-columns:1fr;}
+    .hero-actions .btn{flex:1;}
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+
+  /* כרטיסי מיומנות */
+  .ui{direction:ltr; unicode-bidi:isolate; display:inline-block; font-family:ui-monospace, Consolas, monospace; font-size:12.5px; font-weight:600; background:rgba(63,216,255,.1); border:1px solid rgba(63,216,255,.3); color:#bfefff; padding:0 6px; border-radius:6px; line-height:1.6; white-space:normal; overflow-wrap:anywhere;}
+  .val{direction:ltr; unicode-bidi:isolate; font-family:ui-monospace, Consolas, monospace; font-size:13px; color:var(--yellow); white-space:nowrap;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
+  .chip{display:inline-flex; align-items:center; gap:6px; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:7px 12px; font-weight:700; font-size:13.5px; font-family:var(--font-display);}
+  .chip:hover{border-color:var(--purple);}
+  .chip.on{border-color:rgba(78,227,154,.6); background:rgba(78,227,154,.1);}
+  .chip i{font-style:normal; color:var(--ink-faint); font-size:12px;}
+  .file-box{display:flex; gap:14px; align-items:flex-start; background:var(--surface); border:1px solid var(--border); border-inline-start:5px solid var(--green); border-radius:var(--radius); padding:16px; margin-top:16px;}
+  .file-box .fi{font-size:34px; line-height:1;}
+  .file-box h2{margin:0 0 4px; font-family:var(--font-display); font-weight:900; font-size:19px;}
+  .file-box p{margin:0 0 8px; color:var(--ink-soft); font-size:14.5px;}
+  .file-box ul{margin:0 0 12px; padding-inline-start:20px; font-size:14px; color:var(--ink-soft);}
+  .file-box li{margin:2px 0;}
+  .card{scroll-margin-top:72px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin:14px 0; position:relative; transition:box-shadow .3s, border-color .3s;}
+  .card:target{border-color:var(--cyan); box-shadow:0 0 0 2px var(--cyan), 0 10px 40px -12px rgba(63,216,255,.5);}
+  .card.done{border-color:rgba(78,227,154,.55); background:linear-gradient(160deg, rgba(78,227,154,.10), var(--surface) 50%);}
+  .card-h{display:flex; gap:12px; align-items:flex-start;}
+  .card-h .ce{width:48px; height:48px; flex:0 0 auto; border-radius:14px; display:grid; place-items:center; font-size:25px; background:var(--surface-2);}
+  .card-h small{display:block; font-size:12px; font-weight:800; color:var(--cyan); letter-spacing:.3px;}
+  .card-h h3{margin:0; font-family:var(--font-display); font-weight:900; font-size:20px; line-height:1.25;}
+  .card-h p{margin:4px 0 0; color:var(--ink-soft); font-size:14.5px;}
+  .lbl2{font-size:12.5px; font-weight:800; color:var(--ink-faint); letter-spacing:.3px; margin:16px 0 6px;}
+  ol.how{margin:0; padding:0; list-style:none; counter-reset:s; display:flex; flex-direction:column; gap:6px;}
+  ol.how li{counter-increment:s; display:flex; gap:10px; align-items:flex-start; background:var(--bg-2); border:1px solid var(--border); border-radius:12px; padding:9px 12px; font-size:14.5px;}
+  ol.how li:before{content:counter(s); flex:0 0 auto; width:24px; height:24px; border-radius:8px; display:grid; place-items:center; font-family:var(--font-display); font-weight:900; font-size:13px; background:linear-gradient(135deg, var(--yellow), var(--orange)); color:#2a1600; margin-top:1px;}
+  ol.how li > span{min-width:0;}
+  .vids{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:8px;}
+  .vid{display:flex; gap:10px; align-items:flex-start; text-decoration:none; color:var(--ink); background:var(--bg-2); border:1px solid var(--border); border-radius:12px; padding:10px 12px;}
+  .vid:hover{border-color:var(--pink);}
+  .vid .play{flex:0 0 auto; width:32px; height:32px; border-radius:50%; display:grid; place-items:center; background:var(--pink); color:#2a0e1b; font-size:13px;}
+  .vid.learn .play{background:var(--surface-2); font-size:16px;}
+  .vid .vt{min-width:0;}
+  .vid b{display:block; font-size:14px; line-height:1.35; overflow-wrap:anywhere;}
+  .vid b[dir=ltr]{text-align:left;}
+  .vid small{display:block; color:var(--ink-faint); font-size:12.5px; margin-top:2px;}
+  .extra{font-size:13px; color:var(--ink-soft); margin:8px 0 0;}
+  .practice{margin-top:14px; background:rgba(255,210,63,.07); border:1px dashed rgba(255,210,63,.5); border-radius:14px; padding:10px 14px; font-size:14.5px;}
+  .practice b{color:var(--yellow);}
+  .selfq{margin-top:10px; background:rgba(167,139,250,.08); border:1px dashed rgba(167,139,250,.45); border-radius:14px; padding:10px 14px; font-size:14.5px;}
+  .selfq > b{color:var(--purple);}
+  .selfq details{margin-top:6px;}
+  .selfq summary{cursor:pointer; font-weight:700; color:var(--purple); font-size:13.5px;}
+  .selfq details p{margin:6px 0 0; background:rgba(0,0,0,.3); border-radius:10px; padding:8px 10px;}
+  .card .check{margin-top:12px;}
+  .toplink{position:absolute; top:14px; inset-inline-end:14px; font-size:12px; color:var(--ink-faint); text-decoration:none;}
+  @media (max-width:560px){
+    .card{padding:14px;}
+    .card-h .ce{width:42px; height:42px; font-size:22px;}
+    .card-h h3{font-size:18px;}
+    .vids{grid-template-columns:1fr;}
+    .file-box{flex-direction:column; gap:8px;}
+  }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="logo" href="#top" id="top"><span class="mark">🎬</span><span>כרטיסי מיומנות<small>Power BI Desktop</small></span></a>
+  </header>
+
+  <main>
+  <section class="hero" aria-labelledby="h1">
+    <h1 id="h1">🎬 כרטיסי מיומנות ל-<span class="en">Power BI</span></h1>
+    <p class="lead">8 מיומנויות, כל אחת בכרטיס קצר: בשביל מה, איך עושים, סרטון של כמה דקות, ותרגול על קובץ קטן. מתרגלות כאן, ואז עושות את אותו הדבר לבד בפרויקט שלכן.</p>
+    <div class="xp" role="progressbar" aria-label="כרטיסים שתרגלתי" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="xpBar"><i id="xpFill"></i></div>
+    <div class="xp-row"><span id="xpText">0 מתוך 8 כרטיסים</span><span>הכפתורים בממשק באנגלית, כמו <span style="white-space:nowrap">ב-Power BI</span></span></div>
+    <nav class="chips" aria-label="הכרטיסים"><a class="chip" href="#import" data-chip="import"><i>1</i> 📥 ייבוא</a><a class="chip" href="#pq-duplicates" data-chip="pq-duplicates"><i>2</i> 🧹 כפילויות</a><a class="chip" href="#pq-replace" data-chip="pq-replace"><i>3</i> 🔁 החלפת ערכים</a><a class="chip" href="#types-sort" data-chip="types-sort"><i>4</i> 🔢 סוג ומיון</a><a class="chip" href="#relationships" data-chip="relationships"><i>5</i> 🔗 קשרים</a><a class="chip" href="#visuals" data-chip="visuals"><i>6</i> 📊 ויזואלים</a><a class="chip" href="#slicer" data-chip="slicer"><i>7</i> 🎚️ סלייסר</a><a class="chip" href="#conditional-format" data-chip="conditional-format"><i>8</i> 🎨 עיצוב מותנה</a></nav>
+  </section>
+
+  <section class="file-box" id="practice-file" aria-labelledby="hf">
+    <span class="fi" aria-hidden="true">🥪</span>
+    <div>
+      <h2 id="hf">קובץ התרגול: הקפיטריה של בית הספר</h2>
+      <p>קובץ קטן ובדוי, רק לתרגול (לא הנתונים של הפרויקט שלכן). יש בו "בעיות" שהוכנסו בכוונה, כדי שיהיה מה לתקן. אל תתקנו אותן באקסל: כל התיקונים נעשים <span style="white-space:nowrap">ב-Power BI</span>.</p>
+      <ul>
+        <li><bdi dir="ltr" class="val">Purchases</bdi>: 42 קניות. כל שורה היא קנייה אחת: כיתה, מוצר, כמות, זמן המתנה בתור, שביעות רצון <span style="white-space:nowrap">(1–5)</span>, אמצעי תשלום.</li>
+        <li><bdi dir="ltr" class="val">Items</bdi>: 10 מוצרים, עם קטגוריה ומחיר בשקלים. זו טבלת העזר.</li>
+        <li><bdi dir="ltr" class="val">About</bdi>: דף הסבר קצר.</li>
+      </ul>
+      <a class="btn main" href="pbi-practice-data.xlsx" download>⬇️ הורדת קובץ התרגול</a>
+    </div>
+  </section>
+
+  
+  <article class="card" id="import" aria-labelledby="h-import">
+    <div class="card-h"><span class="ce" aria-hidden="true">📥</span><div><small>כרטיס 1 מתוך 8</small><h3 id="h-import">ייבוא נתונים מאקסל</h3><p><b>בשביל מה:</b> להכניס קובץ אקסל ל-Power BI ולהחליט: לטעון כמו שהוא, או לנקות קודם.</p></div></div>
+    <div class="lbl2">👣 איך עושים</div>
+    <ol class="how"><li><span><bdi dir="ltr" class="ui">Home › Get data › Excel workbook</bdi> (או <bdi dir="ltr" class="ui">Import data from Excel</bdi> במסך הפתיחה הריק), ובחרו את הקובץ.</span></li><li><span>בחלון <bdi dir="ltr" class="ui">Navigator</bdi> סמנו ✓ רק את הגיליונות שאתן צריכות. לחיצה על שם גיליון מציגה תצוגה מקדימה.</span></li><li><span><bdi dir="ltr" class="ui">Load</bdi> טוען ישר למודל, בלי שינוי. <bdi dir="ltr" class="ui">Transform Data</bdi> פותח את <bdi dir="ltr" class="ui">Power Query Editor</bdi> כדי לנקות קודם. כשיש בנתונים בעיות, בוחרים <bdi dir="ltr" class="ui">Transform Data</bdi>.</span></li><li><span>ב-Power Query כל פעולה נרשמת ב-<bdi dir="ltr" class="ui">Applied Steps</bdi>, כמו מתכון שאפשר לחזור עליו. בסיום: <bdi dir="ltr" class="ui">Home › Close &amp; Apply</bdi>.</span></li><li><span>לבדיקה: <bdi dir="ltr" class="ui">Table view</bdi> (סמל הטבלה בסרגל השמאלי) מציג את הנתונים שנטענו.</span></li></ol>
+    
+    <div class="lbl2">🎬 לצפייה (לבחור אחד)</div>
+    <div class="vids"><a class="vid" href="https://www.youtube.com/watch?v=hIbtQluthCQ" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="rtl">קורס Power BI - טעינת המידע - תותח אקסל</b><small>🇮🇱 עברית · איל ברדוגו · <bdi dir="ltr">4:26</bdi> · ממשק ישן מעט, העיקרון זהה</small></span></a><a class="vid" href="https://www.youtube.com/watch?v=IAcVHRhal0c" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="ltr">How to Get Excel Data into Power BI Desktop</b><small>🇬🇧 English · Power BI Tutorials by MadeEasy · <bdi dir="ltr">3:29</bdi></small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-quickstart-connect-to-data" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Quickstart: Connect to data in Power BI Desktop</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a></div>
+    
+    <div class="practice"><b>🏋️ תרגול על קובץ התרגול:</b> ייבאו את קובץ התרגול עם <bdi dir="ltr" class="ui">Transform Data</bdi>. אילו גיליונות צריך לסמן ב-<bdi dir="ltr" class="ui">Navigator</bdi>, ואיזה לא?</div>
+    <div class="selfq"><b>🤔 בדיקה עצמית:</b> כמה שורות ועמודות יש בגיליון <bdi dir="ltr" class="val">Purchases</bdi> לפני כל ניקוי? (רמז: השורה התחתונה של חלון Power Query)
+      <details><summary>ענינו? לבדיקת התשובה</summary><p>42 שורות ו-10 עמודות. מסמנים את <bdi dir="ltr" class="val">Purchases</bdi> ואת <bdi dir="ltr" class="val">Items</bdi>. את <bdi dir="ltr" class="val">About</bdi> לא צריך: זה דף הסבר, לא נתונים.</p></details>
+    </div>
+    <label class="check"><input type="checkbox" data-card="import"><span><b>תרגלתי ואני יכולה להסביר את זה בקול</b><small>נשמר במכשיר הזה</small></span></label>
+  </article>
+  <article class="card" id="pq-duplicates" aria-labelledby="h-pq-duplicates">
+    <div class="card-h"><span class="ce" aria-hidden="true">🧹</span><div><small>כרטיס 2 מתוך 8</small><h3 id="h-pq-duplicates">Power Query: הסרת כפילויות ועמודות</h3><p><b>בשביל מה:</b> לוודא שכל שורה היא רשומה אמיתית אחת, ולהשאיר רק את העמודות שצריך.</p></div></div>
+    <div class="lbl2">👣 איך עושים</div>
+    <ol class="how"><li><span>ב-<bdi dir="ltr" class="ui">Power Query Editor</bdi> לחצו על כותרת עמודה כלשהי, ואז <bdi dir="ltr" class="ui">Ctrl+A</bdi> כדי לבחור את כל העמודות.</span></li><li><span><bdi dir="ltr" class="ui">Home › Remove Rows › Remove Duplicates</bdi>: נמחקות רק שורות שזהות בכל העמודות שנבחרו.</span></li><li><span>⚠️ בחרתן עמודה אחת בלבד? אז נשארת שורה אחת לכל ערך בעמודה הזו, וכל השאר נמחק. כמעט תמיד זו טעות.</span></li><li><span>עמודות: בחרו עמודה (עם <bdi dir="ltr" class="ui">Ctrl</bdi> אפשר כמה) ← <bdi dir="ltr" class="ui">Home › Remove Columns</bdi>. או הפוך: <bdi dir="ltr" class="ui">Home › Choose Columns</bdi> וסמנו רק את מה שנשאר.</span></li><li><span>טעיתן? ב-<bdi dir="ltr" class="ui">Applied Steps</bdi> לחצו על ✕ ליד הצעד, והוא נעלם.</span></li></ol>
+    
+    <div class="lbl2">🎬 לצפייה (לבחור אחד)</div>
+    <div class="vids"><a class="vid" href="https://www.youtube.com/watch?v=u3RT7Ib_2YM" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="ltr">Removing Duplicate Records in the Microsoft Power BI Query Editor</b><small>🇬🇧 English · MsBelindaAllen · <bdi dir="ltr">2:15</bdi> · מראה גם את הסכנה של עמודה אחת</small></span></a><a class="vid" href="https://www.youtube.com/watch?v=EDaINKT4JEg" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="rtl">קורס Power BI Data Analyst למתחילים | הכרת לשונית Home ב Power Query | שיעור 5</b><small>🇮🇱 עברית · Tzachi Golan · <bdi dir="ltr">2:33</bdi> · הסרת שורות ועמודות</small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-query/working-with-duplicates" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Working with duplicate values</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a></div>
+    
+    <div class="practice"><b>🏋️ תרגול על קובץ התרגול:</b> הסירו את העמודות <bdi dir="ltr" class="val">Notes</bdi> ו-<bdi dir="ltr" class="val">Register</bdi> (לא צריך אותן לניתוח), ואז הסירו כפילויות לפי כל העמודות.</div>
+    <div class="selfq"><b>🤔 בדיקה עצמית:</b> כמה שורות נשארו? ומה היה קורה אם הייתן בוחרות רק את <bdi dir="ltr" class="val">Grade</bdi> לפני <bdi dir="ltr" class="ui">Remove Duplicates</bdi>?
+      <details><summary>ענינו? לבדיקת התשובה</summary><p>נשארות 40: שתי קניות (<bdi dir="ltr" class="val">1013</bdi> ו-<bdi dir="ltr" class="val">1034</bdi>) הוזנו פעמיים. עם <bdi dir="ltr" class="val">Grade</bdi> בלבד היו נשארות 11 שורות בלבד, אחת לכל כתיב של הכיתה. ככה גם רואים שיש בעיה בכיתוב (ראו כרטיס 3).</p></details>
+    </div>
+    <label class="check"><input type="checkbox" data-card="pq-duplicates"><span><b>תרגלתי ואני יכולה להסביר את זה בקול</b><small>נשמר במכשיר הזה</small></span></label>
+  </article>
+  <article class="card" id="pq-replace" aria-labelledby="h-pq-replace">
+    <div class="card-h"><span class="ce" aria-hidden="true">🔁</span><div><small>כרטיס 3 מתוך 8</small><h3 id="h-pq-replace">Power Query: החלפת ערכים וניקוי טקסט</h3><p><b>בשביל מה:</b> לאחד ערכים שנכתבו בכמה צורות, כדי שכל קבוצה תיספר פעם אחת.</p></div></div>
+    <div class="lbl2">👣 איך עושים</div>
+    <ol class="how"><li><span>קודם רואים את הבעיה: החץ בכותרת העמודה מציג את כל הערכים השונים. אפשר גם <bdi dir="ltr" class="ui">View › Column distribution</bdi>.</span></li><li><span>רווחים מיותרים ותווים נסתרים: בחרו עמודה ← <bdi dir="ltr" class="ui">Transform › Format › Trim</bdi>, ואחר כך <bdi dir="ltr" class="ui">Clean</bdi>.</span></li><li><span>אותיות גדולות וקטנות: <bdi dir="ltr" class="ui">Transform › Format › Capitalize Each Word</bdi>.</span></li><li><span>מה שנשאר: לחיצה ימנית על העמודה ← <bdi dir="ltr" class="ui">Replace Values</bdi>. ב-<bdi dir="ltr" class="ui">Value To Find</bdi> כותבים את הכתיב השגוי, וב-<bdi dir="ltr" class="ui">Replace With</bdi> את הנכון. ב-<bdi dir="ltr" class="ui">Advanced options</bdi> יש <bdi dir="ltr" class="ui">Match entire cell contents</bdi>, כדי לא להחליף חלק ממילה.</span></li><li><span>בודקים שוב בחץ של הכותרת שנשארו רק הערכים הנכונים.</span></li></ol>
+    <div class="hint"><b>למה דווקא ב-Power Query?</b> בדוח עצמו Power BI לא מבחין בין אותיות גדולות לקטנות, אז <bdi dir="ltr" class="val">grade 9</bdi> ו-<bdi dir="ltr" class="val">Grade 9</bdi> עלולים להתאחד בגרף ולהסתיר את הבעיה. ב-Power Query רואים כל כתיב בנפרד.</div>
+    <div class="lbl2">🎬 לצפייה (לבחור אחד)</div>
+    <div class="vids"><a class="vid" href="https://www.youtube.com/watch?v=fde9oxAkbPA" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="ltr">REPLACE VALUES Power Query Power BI QUICK and EASY in 1 Minute</b><small>🇬🇧 English · THE B.I. NERD · <bdi dir="ltr">1:02</bdi></small></span></a><a class="vid" href="https://www.youtube.com/watch?v=jvbVVDyGpEs" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="ltr">Trim Vs Clean in Power BI and Power Query</b><small>🇬🇧 English · RADACAD · <bdi dir="ltr">3:03</bdi> · ההבדל בין Trim ל-Clean</small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-query/replace-values" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Replace values and errors</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a></div>
+    
+    <div class="practice"><b>🏋️ תרגול על קובץ התרגול:</b> אחדו את <bdi dir="ltr" class="val">Grade</bdi> ל-4 ערכים בלבד (<bdi dir="ltr" class="val">Grade 9</bdi> עד <bdi dir="ltr" class="val">Grade 12</bdi>), ואת <bdi dir="ltr" class="val">PaidWith</bdi> ל-3 (<bdi dir="ltr" class="val">Cash</bdi>, <bdi dir="ltr" class="val">Card</bdi>, <bdi dir="ltr" class="val">App</bdi>).</div>
+    <div class="selfq"><b>🤔 בדיקה עצמית:</b> אחרי <bdi dir="ltr" class="ui">Trim</bdi> ו-<bdi dir="ltr" class="ui">Capitalize Each Word</bdi>, כמה כתיבים של <bdi dir="ltr" class="val">Grade</bdi> עדיין נשארים, ואילו?
+      <details><summary>ענינו? לבדיקת התשובה</summary><p>נשארים 6: ארבעת הנכונים, ועוד <bdi dir="ltr" class="val">Grade-9</bdi> ו-<bdi dir="ltr" class="val">Grade12</bdi>. מספיקות עוד שתי פעולות <bdi dir="ltr" class="ui">Replace Values</bdi>. בסוף: 4 כיתות, ו-24 קניות ב-<bdi dir="ltr" class="val">Card</bdi>.</p></details>
+    </div>
+    <label class="check"><input type="checkbox" data-card="pq-replace"><span><b>תרגלתי ואני יכולה להסביר את זה בקול</b><small>נשמר במכשיר הזה</small></span></label>
+  </article>
+  <article class="card" id="types-sort" aria-labelledby="h-types-sort">
+    <div class="card-h"><span class="ce" aria-hidden="true">🔢</span><div><small>כרטיס 4 מתוך 8</small><h3 id="h-types-sort">סוגי נתונים ומיון קטגוריות</h3><p><b>בשביל מה:</b> לוודא שמספר הוא מספר ותאריך הוא תאריך, ולסדר קטגוריות טקסט בסדר הגיוני ולא לפי א״ב.</p></div></div>
+    <div class="lbl2">👣 איך עושים</div>
+    <ol class="how"><li><span>הסמל בכותרת העמודה ב-Power Query מראה את הסוג: <bdi dir="ltr" class="ui">ABC</bdi> טקסט, <bdi dir="ltr" class="ui">123</bdi> מספר שלם, <bdi dir="ltr" class="ui">1.2</bdi> עשרוני, 📅 תאריך. לחיצה על הסמל משנה את הסוג.</span></li><li><span>הבעיה: טקסט ממוין לפי א״ב, אז <bdi dir="ltr" class="val">2-5 min</bdi> מופיע לפני <bdi dir="ltr" class="val">Under 2 min</bdi>. הפתרון: עמודת סדר מספרית.</span></li><li><span><bdi dir="ltr" class="ui">Add Column › Conditional Column</bdi>: קראו לעמודה <bdi dir="ltr" class="val">WaitOrder</bdi>. אם <bdi dir="ltr" class="val">WaitTime</bdi> שווה <bdi dir="ltr" class="val">Under 2 min</bdi> אז 1; ב-<bdi dir="ltr" class="ui">Add Clause</bdi> הוסיפו <bdi dir="ltr" class="val">2-5 min</bdi> ← 2, <bdi dir="ltr" class="val">5-10 min</bdi> ← 3; וב-<bdi dir="ltr" class="ui">Else</bdi> 4. שנו את סוג העמודה ל-<bdi dir="ltr" class="ui">Whole Number</bdi>, ואז <bdi dir="ltr" class="ui">Close &amp; Apply</bdi>.</span></li><li><span>ב-<bdi dir="ltr" class="ui">Table view</bdi> לחצו על העמודה <bdi dir="ltr" class="val">WaitTime</bdi> ← <bdi dir="ltr" class="ui">Column tools › Sort by column</bdi> ← <bdi dir="ltr" class="val">WaitOrder</bdi>.</span></li><li><span>בגרף: <bdi dir="ltr" class="ui">⋯ More options › Sort axis</bdi> ← בחרו <bdi dir="ltr" class="val">WaitTime</bdi> ← <bdi dir="ltr" class="ui">Sort ascending</bdi>. (בלי זה, גרף עמודות ממוין לפי הגובה של העמודות.)</span></li></ol>
+    
+    <div class="lbl2">🎬 לצפייה (לבחור אחד)</div>
+    <div class="vids"><a class="vid" href="https://www.youtube.com/watch?v=SxFp8NJpjz0" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="ltr">Custom sort order | Sort by column in Power BI</b><small>🇬🇧 English · The BI Hub · <bdi dir="ltr">2:05</bdi> · עם טבלת סדר נפרדת, אותו רעיון</small></span></a><a class="vid" href="https://www.youtube.com/watch?v=tAGQ5h5wc_I&amp;t=409s" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="rtl">קורס Power BI - ויזואליזציות ופילטרים - תותח אקסל</b><small>🇮🇱 עברית · איל ברדוגו · <bdi dir="ltr">מ-6:49</bdi> · מיון לפי עמודה אחרת</small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-sort-by-column" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Sort one column by another column in Power BI</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-data-types" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Data types in Power BI</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a></div>
+    
+    <div class="practice"><b>🏋️ תרגול על קובץ התרגול:</b> בדקו את הסוגים (<bdi dir="ltr" class="val">Date</bdi> כתאריך; <bdi dir="ltr" class="val">Quantity</bdi> ו-<bdi dir="ltr" class="val">Satisfaction</bdi> כמספר שלם). בנו גרף עמודות: <bdi dir="ltr" class="val">WaitTime</bdi> בציר ו-<bdi dir="ltr" class="val">Satisfaction</bdi> בערכים (בחץ שליד השדה: <bdi dir="ltr" class="ui">Average</bdi>). מיינו את הציר לפי <bdi dir="ltr" class="val">WaitTime</bdi>. אחר כך צרו את <bdi dir="ltr" class="val">WaitOrder</bdi>, הגדירו <bdi dir="ltr" class="ui">Sort by column</bdi>, ובדקו שוב.</div>
+    <div class="selfq"><b>🤔 בדיקה עצמית:</b> באיזה סדר הופיעו הקטגוריות כשמיינתן לפי <bdi dir="ltr" class="val">WaitTime</bdi> לפני <bdi dir="ltr" class="val">WaitOrder</bdi>, ובאיזה סדר אחרי? ומה הגרף מראה?
+      <details><summary>ענינו? לבדיקת התשובה</summary><p>לפני: <bdi dir="ltr" class="val">2-5 min</bdi>, <bdi dir="ltr" class="val">5-10 min</bdi>, <bdi dir="ltr" class="val">Over 10 min</bdi>, <bdi dir="ltr" class="val">Under 2 min</bdi>, לפי א״ב (ספרות לפני אותיות). אחרי: מ-<bdi dir="ltr" class="val">Under 2 min</bdi> ועד <bdi dir="ltr" class="val">Over 10 min</bdi>. הממוצע יורד מ-4.3 ל-1.75: ככל שהתור ארוך יותר, שביעות הרצון נמוכה יותר.</p></details>
+    </div>
+    <label class="check"><input type="checkbox" data-card="types-sort"><span><b>תרגלתי ואני יכולה להסביר את זה בקול</b><small>נשמר במכשיר הזה</small></span></label>
+  </article>
+  <article class="card" id="relationships" aria-labelledby="h-relationships">
+    <div class="card-h"><span class="ce" aria-hidden="true">🔗</span><div><small>כרטיס 5 מתוך 8</small><h3 id="h-relationships">קשר בין טבלאות (1 לרבים)</h3><p><b>בשביל מה:</b> לחבר טבלה ראשית לטבלת עזר, כדי להשתמש בעמודות של שתיהן באותו גרף (כמו XLOOKUP, רק קבוע).</p></div></div>
+    <div class="lbl2">👣 איך עושים</div>
+    <ol class="how"><li><span>עברו ל-<bdi dir="ltr" class="ui">Model view</bdi> (הסמל השלישי בסרגל השמאלי). כל טבלה מופיעה שם כקופסה.</span></li><li><span>גררו את <bdi dir="ltr" class="val">ItemID</bdi> מ-<bdi dir="ltr" class="val">Items</bdi> אל <bdi dir="ltr" class="val">ItemID</bdi> ב-<bdi dir="ltr" class="val">Purchases</bdi>. או: <bdi dir="ltr" class="ui">Home › Manage relationships › New</bdi>.</span></li><li><span>בחלון בדקו: <bdi dir="ltr" class="ui">Cardinality</bdi> = <bdi dir="ltr" class="ui">One to many (1:*)</bdi>, ו-<bdi dir="ltr" class="ui">Cross filter direction</bdi> = <bdi dir="ltr" class="ui">Single</bdi>. צד ה-1 הוא הטבלה שבה כל מפתח מופיע פעם אחת.</span></li><li><span>המפתח חייב להיות מאותו סוג בשתי הטבלאות (למשל <bdi dir="ltr" class="ui">Whole Number</bdi> בשתיהן). אם לא, תקנו ב-Power Query.</span></li><li><span>לפעמים Power BI יוצר קשר לבד. לחצו פעמיים על הקו ובדקו שהוא נכון.</span></li></ol>
+    
+    <div class="lbl2">🎬 לצפייה (לבחור אחד)</div>
+    <div class="vids"><a class="vid" href="https://www.youtube.com/watch?v=ugxQrcSms7c" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="rtl">קורס Power BI - קשרים בין טבלאות - תותח אקסל</b><small>🇮🇱 עברית · איל ברדוגו · <bdi dir="ltr">8:52</bdi> · ממשק ישן מעט</small></span></a><a class="vid" href="https://www.youtube.com/watch?v=b8Y_20LJdP8" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="rtl">קורס Power BI Data Analyst למתחילים | יצירת קשרים בין טבלאות ב Power BI | שיעור 9</b><small>🇮🇱 עברית · Tzachi Golan · <bdi dir="ltr">2:37</bdi></small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-create-and-manage-relationships" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Create and manage relationships in Power BI Desktop</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a></div>
+    
+    <div class="practice"><b>🏋️ תרגול על קובץ התרגול:</b> חברו <bdi dir="ltr" class="val">Items</bdi> (צד 1) אל <bdi dir="ltr" class="val">Purchases</bdi> (צד הרבים). בנו גרף עמודות: <bdi dir="ltr" class="val">Category</bdi> מ-<bdi dir="ltr" class="val">Items</bdi> בציר, ו-<bdi dir="ltr" class="val">Quantity</bdi> מ-<bdi dir="ltr" class="val">Purchases</bdi> בערכים.</div>
+    <div class="selfq"><b>🤔 בדיקה עצמית:</b> בגרף מופיעה עמודה בשם <bdi dir="ltr" class="val">(Blank)</bdi>. למה, ומה תעשו איתה?
+      <details><summary>ענינו? לבדיקת התשובה</summary><p>יש קנייה אחת (<bdi dir="ltr" class="val">1023</bdi>) עם <bdi dir="ltr" class="val">ItemID</bdi> = 111, שלא קיים ב-<bdi dir="ltr" class="val">Items</bdi>, ולכן אין לה קטגוריה (2 יחידות). לא מוחקים בשקט: מתעדים, ואם יודעים מה המוצר, מוסיפים אותו לטבלת <bdi dir="ltr" class="val">Items</bdi>.</p></details>
+    </div>
+    <label class="check"><input type="checkbox" data-card="relationships"><span><b>תרגלתי ואני יכולה להסביר את זה בקול</b><small>נשמר במכשיר הזה</small></span></label>
+  </article>
+  <article class="card" id="visuals" aria-labelledby="h-visuals">
+    <div class="card-h"><span class="ce" aria-hidden="true">📊</span><div><small>כרטיס 6 מתוך 8</small><h3 id="h-visuals">בחירת ויזואל: עמודות, פיזור, מטריצה</h3><p><b>בשביל מה:</b> לבחור גרף לפי השאלה: השוואה בין קבוצות, קשר בין שני משתנים, או התפלגות.</p></div></div>
+    <div class="lbl2">👣 איך עושים</div>
+    <ol class="how"><li><span>ב-<bdi dir="ltr" class="ui">Report view</bdi> בחרו ויזואל בחלונית <bdi dir="ltr" class="ui">Visualizations</bdi>, וגררו שדות מחלונית <bdi dir="ltr" class="ui">Data</bdi> אל השדות שלו.</span></li><li><span><b>השוואה בין קבוצות</b> ← <bdi dir="ltr" class="ui">Clustered bar chart</bdi> (אופקי, טוב לשמות ארוכים) או <bdi dir="ltr" class="ui">Clustered column chart</bdi>.</span></li><li><span><b>קשר בין שני מספרים</b> ← <bdi dir="ltr" class="ui">Scatter chart</bdi>: מספר אחד ב-<bdi dir="ltr" class="ui">X Axis</bdi>, השני ב-<bdi dir="ltr" class="ui">Y Axis</bdi>, ומה שכל נקודה מייצגת ב-<bdi dir="ltr" class="ui">Values</bdi>.</span></li><li><span><b>טבלה צולבת</b> (כמו Pivot באקסל) ← <bdi dir="ltr" class="ui">Matrix</bdi>: <bdi dir="ltr" class="ui">Rows</bdi>, <bdi dir="ltr" class="ui">Columns</bdi>, <bdi dir="ltr" class="ui">Values</bdi>.</span></li><li><span><b>התפלגות</b> (כמה יש מכל ערך) ← עמודות של ספירה (<bdi dir="ltr" class="ui">Count</bdi>). בכל שדה בערכים בדקו בחץ אם הוא <bdi dir="ltr" class="ui">Sum</bdi>, <bdi dir="ltr" class="ui">Average</bdi> או <bdi dir="ltr" class="ui">Count</bdi>.</span></li></ol>
+    
+    <div class="lbl2">🎬 לצפייה (לבחור אחד)</div>
+    <div class="vids"><a class="vid" href="https://www.youtube.com/watch?v=VEsF6OKb8wk" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="rtl">קורס Power BI Data Analyst למתחילים | סוגי הגרפים והויזואליזציות ומתי נכון להשתמש בהם | שיעור 19</b><small>🇮🇱 עברית · Tzachi Golan · <bdi dir="ltr">4:52</bdi> · איזה גרף מתאים לאיזו שאלה</small></span></a><a class="vid" href="https://www.youtube.com/watch?v=Ll-gl2GwQnA" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="rtl">קורס Power BI - גרפים ויצירת Dashboard מהתחלה ועד הסוף - תותח אקסל</b><small>🇮🇱 עברית · איל ברדוגו · <bdi dir="ltr">7:01</bdi> · בניית גרפים ודשבורד, ממשק ישן מעט</small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-scatter" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Scatter, bubble, and dot plot charts</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-matrix-visual" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Create a matrix visual</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a></div>
+    
+    <div class="practice"><b>🏋️ תרגול על קובץ התרגול:</b> בנו שלושה: (1) עמודות: <bdi dir="ltr" class="val">Quantity</bdi> לפי <bdi dir="ltr" class="val">Category</bdi>. (2) פיזור: <bdi dir="ltr" class="val">Price</bdi> ב-X, <bdi dir="ltr" class="val">Quantity</bdi> ב-Y, ו-<bdi dir="ltr" class="val">ItemName</bdi> ב-<bdi dir="ltr" class="ui">Values</bdi>. (3) מטריצה: <bdi dir="ltr" class="val">Grade</bdi> בשורות, <bdi dir="ltr" class="val">Category</bdi> בעמודות, <bdi dir="ltr" class="val">Quantity</bdi> בערכים.</div>
+    <div class="selfq"><b>🤔 בדיקה עצמית:</b> איזה משלושת הוויזואלים עונה על "האם מוצרים יקרים נמכרים פחות?", ומה התשובה?
+      <details><summary>ענינו? לבדיקת התשובה</summary><p>הפיזור. אין קשר ברור: <bdi dir="ltr" class="val">Schnitzel baguette</bdi> (18 ₪, הכי יקר) נמכר 11 יחידות, בדיוק כמו <bdi dir="ltr" class="val">Chocolate milk</bdi> (7 ₪). ועם פחות מעשר נקודות, כל מסקנה צריכה להיות זהירה.</p></details>
+    </div>
+    <label class="check"><input type="checkbox" data-card="visuals"><span><b>תרגלתי ואני יכולה להסביר את זה בקול</b><small>נשמר במכשיר הזה</small></span></label>
+  </article>
+  <article class="card" id="slicer" aria-labelledby="h-slicer">
+    <div class="card-h"><span class="ce" aria-hidden="true">🎚️</span><div><small>כרטיס 7 מתוך 8</small><h3 id="h-slicer">סלייסר וסינון בין ויזואלים</h3><p><b>בשביל מה:</b> לתת לצופה לסנן את כל הדף בלחיצה, ולהבין איך גרפים מסננים זה את זה.</p></div></div>
+    <div class="lbl2">👣 איך עושים</div>
+    <ol class="how"><li><span>לחצו על מקום ריק בדף ← <bdi dir="ltr" class="ui">Visualizations › Slicer</bdi> ← גררו שדה (למשל <bdi dir="ltr" class="val">Grade</bdi>) אל <bdi dir="ltr" class="ui">Field</bdi>.</span></li><li><span><bdi dir="ltr" class="ui">Format visual › Slicer settings</bdi>: ב-<bdi dir="ltr" class="ui">Style</bdi> בוחרים <bdi dir="ltr" class="ui">Vertical list</bdi>, <bdi dir="ltr" class="ui">Tile</bdi> או <bdi dir="ltr" class="ui">Dropdown</bdi>. שם גם <bdi dir="ltr" class="ui">Single select</bdi>. בחירה של כמה ערכים: <bdi dir="ltr" class="ui">Ctrl</bdi>+לחיצה.</span></li><li><span>סינון בין ויזואלים: לחיצה על עמודה בגרף אחד מסננת או מדגישה את כל השאר. לחיצה נוספת עליה מבטלת.</span></li><li><span>לשליטה: בחרו את הסלייסר ← <bdi dir="ltr" class="ui">Format › Edit interactions</bdi>, ומעל כל ויזואל בחרו: <bdi dir="ltr" class="ui">Filter</bdi>, <bdi dir="ltr" class="ui">Highlight</bdi> או <bdi dir="ltr" class="ui">None</bdi> (לא מושפע).</span></li></ol>
+    
+    <div class="lbl2">🎬 לצפייה (לבחור אחד)</div>
+    <div class="vids"><a class="vid" href="https://www.youtube.com/watch?v=6MOsIe3nddQ" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="ltr">How to Add a Slicer in Power BI (2025 Step-by-Step Beginner Tutorial)</b><small>🇬🇧 English · Just Ask Jake · <bdi dir="ltr">2:26</bdi></small></span></a><a class="vid" href="https://www.youtube.com/watch?v=AwRqIZEwn-Y" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="ltr">Cross Filtering: How to Filter Between Visuals in Power BI</b><small>🇬🇧 English · PowerBI with Bogdan · <bdi dir="ltr">3:14</bdi> · כולל Edit interactions</small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-slicers" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Overview of slicers in Power BI</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-bi/create-reports/service-reports-visual-interactions" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Change how visuals interact in a report</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a></div>
+    <p class="extra">בעברית: סינון בלחיצה על ויזואל, בסרטון של איל ברדוגו: <a href="https://www.youtube.com/watch?v=tAGQ5h5wc_I&amp;t=495s" target="_blank" rel="noopener">מ-8:15</a></p>
+    <div class="practice"><b>🏋️ תרגול על קובץ התרגול:</b> הוסיפו סלייסר <bdi dir="ltr" class="val">Grade</bdi> (<bdi dir="ltr" class="ui">Dropdown</bdi>) וסלייסר <bdi dir="ltr" class="val">PaidWith</bdi> (<bdi dir="ltr" class="ui">Tile</bdi>). בחרו <bdi dir="ltr" class="val">Grade 12</bdi> וראו מה קורה לגרף ולמטריצה. אחר כך לחצו על העמודה <bdi dir="ltr" class="val">Drink</bdi> בגרף.</div>
+    <div class="selfq"><b>🤔 בדיקה עצמית:</b> כשנבחר <bdi dir="ltr" class="val">Grade 12</bdi>, כמה יחידות <bdi dir="ltr" class="val">Drink</bdi> נמכרו? ואיך תגרמו לגרף אחד להמשיך להציג את כל הכיתות?
+      <details><summary>ענינו? לבדיקת התשובה</summary><p>7 יחידות. בוחרים את הסלייסר ← <bdi dir="ltr" class="ui">Edit interactions</bdi> ← <bdi dir="ltr" class="ui">None</bdi> מעל הגרף הזה.</p></details>
+    </div>
+    <label class="check"><input type="checkbox" data-card="slicer"><span><b>תרגלתי ואני יכולה להסביר את זה בקול</b><small>נשמר במכשיר הזה</small></span></label>
+  </article>
+  <article class="card" id="conditional-format" aria-labelledby="h-conditional-format">
+    <div class="card-h"><span class="ce" aria-hidden="true">🎨</span><div><small>כרטיס 8 מתוך 8</small><h3 id="h-conditional-format">עיצוב מותנה בטבלה ובמטריצה</h3><p><b>בשביל מה:</b> לצבוע תאים כך שהעין תמצא מיד את הגבוה והנמוך.</p></div></div>
+    <div class="lbl2">👣 איך עושים</div>
+    <ol class="how"><li><span>בחרו את הטבלה או המטריצה. ב-<bdi dir="ltr" class="ui">Visualizations</bdi>, בשדה <bdi dir="ltr" class="ui">Values</bdi>, לחצו על החץ שליד השדה (או לחיצה ימנית) ← <bdi dir="ltr" class="ui">Conditional formatting</bdi>.</span></li><li><span><bdi dir="ltr" class="ui">Background color</bdi>: ב-<bdi dir="ltr" class="ui">Format style</bdi> בחרו <bdi dir="ltr" class="ui">Gradient</bdi>, וצבע לערך הנמוך ולגבוה. אפשר גם <bdi dir="ltr" class="ui">Rules</bdi> לטווחים.</span></li><li><span><bdi dir="ltr" class="ui">Data bars</bdi>: פס בתוך התא, שאורכו לפי הערך.</span></li><li><span>להסרה: אותו תפריט ← <bdi dir="ltr" class="ui">Remove conditional formatting</bdi>.</span></li><li><span>עיקרון: צבע אחד, משמעות אחת. אדום-ירוק על נתון שאינו "טוב/רע" מטעה.</span></li></ol>
+    
+    <div class="lbl2">🎬 לצפייה (לבחור אחד)</div>
+    <div class="vids"><a class="vid" href="https://www.youtube.com/watch?v=glhP-EdkSdM" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="ltr">Adding Icons and Data Bars in a Power BI table &amp; matrix – Conditional formatting</b><small>🇬🇧 English · PorcuBI - Valerie Junk · <bdi dir="ltr">4:50</bdi></small></span></a><a class="vid" href="https://www.youtube.com/watch?v=yES0nX44dNo" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><span class="vt"><b dir="rtl">עיצוב מותנה ב-Power BI | שיעור 9</b><small>🇮🇱 עברית · DATA WITH ELIRAN · <bdi dir="ltr">14:28</bdi> · ארוך, אפשר לקפוץ להדגמה</small></span></a><a class="vid learn" href="https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-conditional-table-formatting" target="_blank" rel="noopener"><span class="play" aria-hidden="true">📘</span><span class="vt"><b dir="ltr">Apply conditional table formatting in Power BI</b><small>Microsoft Learn · דף רשמי (אנגלית)</small></span></a></div>
+    
+    <div class="practice"><b>🏋️ תרגול על קובץ התרגול:</b> במטריצה מכרטיס 6 (<bdi dir="ltr" class="val">Grade</bdi> × <bdi dir="ltr" class="val">Category</bdi>): צבע רקע ב-<bdi dir="ltr" class="ui">Gradient</bdi> על <bdi dir="ltr" class="val">Quantity</bdi>. ובטבלה חדשה: <bdi dir="ltr" class="val">WaitTime</bdi> וממוצע <bdi dir="ltr" class="val">Satisfaction</bdi> עם <bdi dir="ltr" class="ui">Data bars</bdi>.</div>
+    <div class="selfq"><b>🤔 בדיקה עצמית:</b> אילו תאים במטריצה הכי כהים? ולמה צריך להיזהר במסקנה "י״ב הכי אוהבות כריכים"?
+      <details><summary>ענינו? לבדיקת התשובה</summary><p>שני תאים עם 8: <bdi dir="ltr" class="val">Grade 12</bdi>×<bdi dir="ltr" class="val">Sandwich</bdi> ו-<bdi dir="ltr" class="val">Grade 9</bdi>×<bdi dir="ltr" class="val">Snack</bdi>. אבל לכיתה י״ב יש הכי הרבה קניות בכלל (13), אז מספר גבוה יכול לנבוע מזה שיש יותר קונות, ולא דווקא מטעם. כדאי להשוות אחוזים, לא רק סכומים.</p></details>
+    </div>
+    <label class="check"><input type="checkbox" data-card="conditional-format"><span><b>תרגלתי ואני יכולה להסביר את זה בקול</b><small>נשמר במכשיר הזה</small></span></label>
+  </article>
+  </main>
+
+  <footer class="foot">
+    <p>כרטיסי מיומנות · Power BI Desktop · הקישורים נבדקו בנובמבר 2026</p>
+    <button type="button" id="resetBtn">איפוס הסימונים במכשיר הזה</button>
+  </footer>
+</div>
+<script>
+(function(){
+  var KEY='pbiSkillCards.v1';
+  var state={};
+  try{ state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ state={}; }
+  var boxes=document.querySelectorAll('input[data-card]');
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+  function render(){
+    var n=0;
+    boxes.forEach(function(b){
+      var id=b.getAttribute('data-card'), on=!!state[id];
+      b.checked=on; if(on) n++;
+      var card=document.getElementById(id); if(card) card.classList.toggle('done',on);
+      b.closest('.check').classList.toggle('on',on);
+      var chip=document.querySelector('[data-chip="'+id+'"]'); if(chip) chip.classList.toggle('on',on);
+    });
+    document.getElementById('xpFill').style.width=(n/8*100)+'%';
+    document.getElementById('xpBar').setAttribute('aria-valuenow',n);
+    document.getElementById('xpText').textContent=n+' מתוך 8 כרטיסים'+(n===8?' 🎉':'');
+  }
+  boxes.forEach(function(b){ b.addEventListener('change',function(){ state[b.getAttribute('data-card')]=b.checked; save(); render(); }); });
+  document.getElementById('resetBtn').addEventListener('click',function(){ if(confirm('לאפס את כל הסימונים?')){ state={}; save(); render(); } });
+  render();
+  // אחרי שהגופנים נטענים הפריסה זזה; מחזירים את הכרטיס מהקישור לראש המסך
+  if(location.hash && document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ var el=document.getElementById(decodeURIComponent(location.hash.slice(1))); if(el) el.scrollIntoView(); });
+  }
+})();
+</script>
+</body>
+</html>
